@@ -1,0 +1,14 @@
+Package: delimtools
+alias: delimtools-package
+Type: Package
+Title: Helper Functions for Species Delimitation Analysis
+Version: 1.0.0
+Date: 2024-02-26
+Authors@R: c(person(given="Pedro",family="Bittencourt",email="pedro.sennabittencourt@gmail.com",role=c("aut", "cre"), comment=c(ORCID= "0000-0002-4074-3541")),person(given= "Rupert",family= "Collins",email= "rupertcollins@gmail.com",role = c("aut", "ctb"),comment = c(ORCID= "0000-0002-9135-1169")), person(given= "Tomas", family= "Hrbek", email= "hrbek@evoamazon.net", role= c("aut", "ctb"), comment = c(ORCID= "0000-0003-3239-7068")))
+Description: This package contains helpers functions to process, analyse, and plot the output of single locus species delimitation methods. The main purpose of delimtools is to facilitate some work routines for the average R user, from the organization of data to plotting trees and associated data as easily as possible.
+License: MIT + file LICENSE
+Depends: dplyr, purrr
+Imports: ape, bGMYC, cli, forcats, ggfun, ggplot2, ggtree, ggtreeExtra, magrittr, RColorBrewer, readr, rlang, spider, splits, stringr, tibble, tidyr, tidyselect, vctrs
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
