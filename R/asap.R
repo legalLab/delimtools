@@ -49,14 +49,14 @@ asap <- function(infile, haps= NULL, model= 1, outfolder){
 
     res <- system(command=string_asap, intern = TRUE)
 
-    delim <- readr::read_csv(paste0(outfolder, "/", "groupe_1"), col_names = c("labels", "asap"))
+    delim <- readr::read_csv(paste0(outfolder, "/", basename(infile),".Partition_1.csv"), col_names = c("labels", "asap"))
   } else if(!is.null(haps)){
 
     string_asap <- paste0("asap", " -d ", model, " -a", " -o ", outfolder, " ", infile)
 
     res <- system(command=string_asap, intern = TRUE)
 
-    delim <- readr::read_csv(paste0(outfolder, "/", "groupe_1"), col_names = c("labels", "asap")) %>%
+    delim <- readr::read_csv(paste0(outfolder, "/", basename(infile),".Partition_1.csv"), col_names = c("labels", "asap")) %>%
       dplyr::filter(labels %in% haps)
   }
 
