@@ -10,56 +10,49 @@ delim_autoplot(
   consensus = TRUE,
   n_match = NULL,
   delim_order = NULL,
-  tbl_labs,
+  tbl_labs = NULL,
   col_vec = NULL,
-  width = 1,
-  pwidth = 0.3,
-  offset = 0.3,
-  consensus_offset = 0.03
+  hexpand = 0.1,
+  widths = c(0.5, 0.2)
 )
 }
 \arguments{
 \item{delim}{Output from \code{\link[delimtools]{delim_join}}.}
 
-\item{tr}{A \code{\link[tidytree]{treedata-class}} object.}
+\item{tr}{A \code{\link[tidytree]{treedata-class}} object. Both phylogram and
+ultrametric trees are supported.}
 
 \item{consensus}{Logical. Should the majority-vote consensus to be estimated?}
 
 \item{n_match}{An Integer. If \code{consensus = TRUE}, threshold for majority-vote
 calculations. See \code{\link[delimtools]{delim_consensus}} for details.}
 
-\item{delim_order}{A character vector of species delimitation names ordered by user. Default to NULL.}
+\item{delim_order}{A character vector of species delimitation names ordered by user.
+Default to NULL.}
 
 \item{tbl_labs}{A \code{\link[tibble]{tbl_df}} of customized labels for tree plotting. The
-first column must match tip labels of the \code{tr} object.}
+first column must match tip labels of the \code{tr} object, while the second column
+should have customized labels.}
 
 \item{col_vec}{A color vector for species delimitation partitions.}
 
-\item{width}{Numeric. Width of species delimitations bars.}
+\item{hexpand}{Numeric. Expand xlim of tree by a ratio of x axis range. Useful if
+tiplabels become truncated when plotting. Default to \code{0.1}.}
 
-\item{pwidth}{Numeric. The width of the \code{\link[ggplot2]{geom_tile}}. Default to 0.2,
-meaning 0.2 times of x range of tree.}
-
-\item{offset}{Numeric. Distance between \code{tr} and \code{\link[ggplot2]{geom_tile}}.
-Default to 0.03, meaning 0.03 times of x range of tree.
-See \code{\link[ggtreeExtra]{geom_fruit}} for details.}
-
-\item{consensus_offset}{Numeric. Distance of the consensus \code{\link[ggplot2]{geom_tile}} to the
-species delimitation plot. Default to 0.03, meaning 0.03 times of x range of tree.}
-
-\item{...}{Aditional parameters for \code{\link[ggtreeExtra]{geom_fruit}} (to be implemented).}
+\item{widths}{A numeric vector containing the relative widths of the tree and
+species delimitation bars. See \code{\link[patchwork]{wrap_plots}} for details.
+Defaults to \code{c(0.5, 0.2)}.}
 }
 \description{
 \code{delim_autoplot()} returns a phylogenetic tree plotted using
-\code{\link[ggtree]{ggtree}} alongside with a customized heatmap using
-\code{\link[ggplot2]{geom_tile}} and \code{\link[ggtreeExtra]{geom_fruit}}.
+\code{\link[ggtree]{ggtree}} alongside with a customized tile plot using
+\code{\link[ggplot2]{geom_tile}} and \code{\link[patchwork]{wrap_plots}}.
 }
 \details{
 \code{delim_autoplot()} is a wrapper for tree plotting with associated data implemented
-using \code{\link[ggtree]{ggtree}} and \code{\link[ggtreeExtra]{geom_fruit}}. If
+using \code{\link[ggtree]{ggtree}} and \code{\link[patchwork]{wrap_plots}}. If
 \code{consensus = TRUE}, a consensus bar will be plotted next to the species delimitation plot,
-summarising partitions across samples. If no consensus is reached, an "X" will be plotted instead. Currently,
-this functions works only with phylogenetic trees obtained using BEAST 2 software.
+summarizing partitions across samples. If no consensus is reached, an "X" will be plotted instead.
 }
 \author{
 Pedro S. Bittencourt, Rupert A. Collins.
