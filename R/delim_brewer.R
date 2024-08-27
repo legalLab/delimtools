@@ -20,9 +20,11 @@
 #' @importFrom RColorBrewer brewer.pal
 #'
 #' @export
-delim_brewer <- function(delim, name, n){
+delim_brewer <- function(delim, name, n, seed){
 
   getPalette <- colorRampPalette(RColorBrewer::brewer.pal(n, name))
+
+  set.seed(seed)
 
   cols <- sample(getPalette(n=length(as.character(unique(unlist(delim[,-1]))))))
 
