@@ -5,7 +5,8 @@
 #' (\url{https://github.com/Pas-Kapli/mptp}).
 #'
 #' @param infile Path to tree file in Newick format.
-#' @param outfolder Path to output folder.
+#' @param exe Path to an mPTP executable.
+#' @param outfolder Path to output folder. Default to NULL. If not specified, a temporary location is used.
 #' @param method Which algorithm for Maximum Likelihood point-estimate to be used. Available options are:
 #' \itemize{
 #' \item single Single-rate PTP model. It assumes that every species evolved with the same rate.
@@ -16,9 +17,10 @@
 #'
 #' @details
 #' \code{mptp()} relies on \code{\link[base]{system}} to invoke mPTP software through
-#' a command-line interface. Hence, you must have the software installed on your
-#' operating system root in order to use this function properly. \code{mptp()}
+#' a command-line interface. Hence, you must have the software available as an executable file on 
+#' your system in order to use this function properly. \code{mptp()}
 #' saves all output files in \code{outfolder} and imports the results generated to \code{Environment}.
+#' If an \code{outfolder} is not provided by the user, then a temporary location is used.
 #'
 #' @return
 #' an object of class \code{\link[tibble]{tbl_df}}
@@ -27,10 +29,29 @@
 #' Paschalia Kapli, Sarah Lutteropp, Jiajie Zhang, Kassian Kobert, Pavlos Pavlides, Alexandros Stamatakis, Tomáš Flouri.
 #'
 #' @importFrom tibble tibble
-#' @importFrom cli cli_abort
+#' @importFrom cli cli_abort cli_alert_info
+#' @importFrom glue glue
 #'
 #' @export
-mptp <- function(infile, outfolder, method = c("multi", "single"), outgroup=NULL){
+mptp <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "single"), outgroup=NULL){
+
+  if(!file.exists(exe)){
+
+    cli::cli_abort("Error: Please provide a valid path to the mPTP executable file.")
+  
+  }
+
+  if(is.null(outfolder)){
+
+    outfolder <- tempdir()
+
+  }
+
+  if(!dir.exists(outfolder)){
+
+    cli::cli_abort("Error: Please provide a valid results directory.")
+
+  }
 
   if(missing(method)){
 
@@ -49,13 +70,11 @@ mptp <- function(infile, outfolder, method = c("multi", "single"), outgroup=NULL
 
     if(method == "multi"){
 
-      string_mptp <- paste0("mptp", " --tree_file ", infile, " --output_file ",
-                            outfolder, " --ml ", "--", method, " --outgroup ",
-                            paste(outgroup, collapse = ","), " --outgroup_crop")
+      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --outgroup {paste(outgroup, collapse = ',')} --outgroup_crop")
       res <- system(command=string_mptp, intern = TRUE)
       writeLines(res)
 
-      lines <- readLines(paste0(outfolder, ".txt"))[-c(1:8)] |>
+      lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |>
         sub(":", "", x=_)
 
       split_vec <- function(vec, sep = "") {
@@ -73,13 +92,11 @@ mptp <- function(infile, outfolder, method = c("multi", "single"), outgroup=NULL
 
     else if(method == "single"){
 
-      string_mptp <- paste0("mptp", " --tree_file ", infile, " --output_file ",
-                            outfolder, " --ml ", "--", method, " --outgroup ",
-                            paste(outgroup, collapse = ","), " --outgroup_crop")
+      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --outgroup {paste(outgroup, collapse = ',')} --outgroup_crop")
       res <- system(command=string_mptp, intern = TRUE)
       writeLines(res)
 
-      lines <- readLines(paste0(outfolder, ".txt"))[-c(1:8)] |>
+      lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |>
         sub(":", "", x=_)
 
       split_vec <- function(vec, sep = "") {
@@ -98,12 +115,11 @@ mptp <- function(infile, outfolder, method = c("multi", "single"), outgroup=NULL
 
     if(method == "multi"){
 
-      string_mptp <- paste0("mptp", " --tree_file ", infile, " --output_file ",
-                            outfolder, " --ml ", "--", method)
+      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method}")
       res <- system(command=string_mptp, intern = TRUE)
       writeLines(res)
 
-      lines <- readLines(paste0(outfolder, ".txt"))[-c(1:8)] |>
+      lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |>
         sub(":", "", x=_)
 
       split_vec <- function(vec, sep = "") {
@@ -121,12 +137,11 @@ mptp <- function(infile, outfolder, method = c("multi", "single"), outgroup=NULL
 
     else if(method == "single"){
 
-      string_mptp <- paste0("mptp", " --tree_file ", infile, " --output_file ",
-                            outfolder, " --ml ", "--", method)
+string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method}")
       res <- system(command=string_mptp, intern = TRUE)
       writeLines(res)
 
-      lines <- readLines(paste0(outfolder, ".txt"))[-c(1:8)] |>
+      lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |>
         sub(":", "", x=_)
 
       split_vec <- function(vec, sep = "") {
@@ -142,5 +157,6 @@ mptp <- function(infile, outfolder, method = c("multi", "single"), outgroup=NULL
 
     }
   }
+  cli::cli_alert_info("mPTP files are located in '{outfolder}'.")
   return(mptp_df)
 }#
