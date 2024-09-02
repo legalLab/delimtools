@@ -72,7 +72,7 @@ delim_autoplot <- function(delim, tr, consensus=TRUE, n_match= NULL,
 
     pp <- p+
       ggtree::hexpand(ratio= hexpand)+
-      ggtree::geom_tiplab(aes(label= get(colnames(ftab)[2])), size=3.5)+
+      ggtree::geom_tiplab(aes(label= get(colnames(tbl_labs)[2])), size=3.5)+
       ggtree::geom_point2(aes(subset=!is.na(posterior) & posterior >= 0.95))
 
   } else {
@@ -81,7 +81,7 @@ delim_autoplot <- function(delim, tr, consensus=TRUE, n_match= NULL,
 
     pp <- p+
       ggtree::hexpand(ratio= hexpand)+
-      ggtree::geom_tiplab(aes(label= get(colnames(ftab)[2])), size=3.5, align = TRUE)+
+      ggtree::geom_tiplab(aes(label= get(colnames(tbl_labs)[2])), size=3.5, align = TRUE)+
       ggtree::geom_point2(aes(subset=!isTip & support >= 75))
   }
 
