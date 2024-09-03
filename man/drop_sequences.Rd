@@ -2,14 +2,18 @@
 % Please edit documentation in R/drop_sequences.R
 \name{drop_sequences}
 \alias{drop_sequences}
-\title{Remove Sequences of a FASTA File}
+\title{Remove Sequences of a DNAbin list object}
 \usage{
-drop_sequences(fasta, drop)
+drop_sequences(fasta, identifier, drop = TRUE)
 }
 \arguments{
 \item{fasta}{a \code{\link[ape]{DNAbin}} object.}
 
-\item{drop}{a character vector specifying the sequences to remove.}
+\item{identifier}{a character vector containing sequence names.}
+
+\item{drop}{Logical. If \code{TRUE}, sequence names in \code{identifier} will
+be dropped from \code{fasta}. If \code{FALSE}, sequence names absent in \code{identifier}
+will be dropped instead.}
 }
 \value{
 an object of class \code{\link[ape]{"DNAbin"}}.
@@ -19,7 +23,22 @@ an object of class \code{\link[ape]{"DNAbin"}}.
 }
 \details{
 \code{drop_sequences()} relies on exact match between sequence names within
-a fasta file and \code{drop} argument.
+a fasta file and \code{identifier} argument.
+}
+\examples{
+
+# Import data from ape package.
+data(woodmouse, package = "ape")
+
+# Create a vector of sequence names to drop or keep.
+identifier <- dimnames(woodmouse)[[1]][1:3]
+
+# Remove sequences listed in identifier
+drop_sequences(woodmouse, identifier, drop = TRUE)
+
+# Remove sequences not listed in identifier
+drop_sequences(woodmouse, identifier, drop = FALSE)
+
 }
 \author{
 Pedro S. Bittencourt
