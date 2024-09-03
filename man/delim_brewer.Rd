@@ -4,7 +4,7 @@
 \alias{delim_brewer}
 \title{Customize Delimitation Colors}
 \usage{
-delim_brewer(delim, name, n)
+delim_brewer(delim, name, n, seed)
 }
 \arguments{
 \item{delim}{Output from \code{\link[delimtools]{delim_join}}.}
