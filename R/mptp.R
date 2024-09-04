@@ -31,9 +31,12 @@
 #' @importFrom tibble tibble
 #' @importFrom cli cli_abort cli_alert_info
 #' @importFrom glue glue
+#' @importFrom ape read.tree cophenetic.phylo
+#' @importFrom delimtools min_brlen
+
 #'
 #' @export
-mptp <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "single"), outgroup=NULL){
+mptp <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "single"), outgroup=NULL, minbrlen = 0.0001){
 
   if(!file.exists(exe)){
 
@@ -70,7 +73,7 @@ mptp <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "sing
 
     if(method == "multi"){
 
-      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --outgroup {paste(outgroup, collapse = ',')} --outgroup_crop")
+      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --outgroup {paste(outgroup, collapse = ',')} --outgroup_crop --minbr {minbrlen}")
       res <- system(command=string_mptp, intern = TRUE)
       writeLines(res)
 
@@ -92,7 +95,7 @@ mptp <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "sing
 
     else if(method == "single"){
 
-      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --outgroup {paste(outgroup, collapse = ',')} --outgroup_crop")
+      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --outgroup {paste(outgroup, collapse = ',')} --outgroup_crop --minbr {minbrlen}")
       res <- system(command=string_mptp, intern = TRUE)
       writeLines(res)
 
@@ -115,7 +118,7 @@ mptp <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "sing
 
     if(method == "multi"){
 
-      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method}")
+      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --minbr {minbrlen}")
       res <- system(command=string_mptp, intern = TRUE)
       writeLines(res)
 
@@ -137,7 +140,7 @@ mptp <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "sing
 
     else if(method == "single"){
 
-string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method}")
+string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --minbr {minbrlen}")
       res <- system(command=string_mptp, intern = TRUE)
       writeLines(res)
 
@@ -157,6 +160,28 @@ string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/
 
     }
   }
+
+  minbrlen.tab <- min_brlen(tree = infile, print = FALSE)#delimtools::
+
+  minbrlen.est <- minbrlen.tab |> pull(dist) |> min() |> format(scientific=FALSE)
+
+  if(minbrlen.est < format(minbrlen, scientific=FALSE)) {
+  
+  writeLines("\n")
+
+  cli::cli_alert_info(
+    "Warning: there are tip-to-tip distances smaller than the specified minimum branch length ({format(minbrlen, scientific=FALSE)}).
+    Consider using `delimtools::min_brlen()` to explore branch lengths in your tree."
+    )
+
+  writeLines("\n")
+
+  }
+
   cli::cli_alert_info("mPTP files are located in '{outfolder}'.")
+
+  writeLines("\n")
+
   return(mptp_df)
-}#
+
+}
