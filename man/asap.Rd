@@ -4,10 +4,12 @@
 \alias{asap}
 \title{A Command-Line Interface for ASAP - Assemble Species by Automatic Partitioning}
 \usage{
-asap(infile, haps = NULL, model = 1, outfolder)
+asap(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL)
 }
 \arguments{
 \item{infile}{Path to fasta file.}
+
+\item{exe}{Path to an ASAP executable.}
 
 \item{haps}{Optional. A vector of haplotypes to keep into the \code{\link[tibble]{tbl_df}}.}
 
@@ -19,7 +21,7 @@ asap(infile, haps = NULL, model = 1, outfolder)
   \item 3: simple distance (p-distance)
 }}
 
-\item{outfolder}{Path to output folder.}
+\item{outfolder}{Path to output folder. Default to NULL. If not specified, a temporary location is used.}
 }
 \value{
 an object of class \code{\link[tibble]{tbl_df}}
@@ -30,8 +32,8 @@ an object of class \code{\link[tibble]{tbl_df}}
 }
 \details{
 \code{asap()} relies on \code{\link[base]{system}} to invoke ASAP software through
-a command-line interface. Hence, you must have the software installed on your
-operating system root in order to use this function properly.
+a command-line interface. Hence, you must have the software available as an executable file on 
+your system in order to use this function properly.
 \code{asap()} saves all output files in \code{outfolder} and imports the first partition
 file generated to \code{Environment}.
 }

@@ -4,12 +4,21 @@
 \alias{mptp}
 \title{A Command-Line Interface for mPTP - multi-rate Poisson Tree Processes}
 \usage{
-mptp(infile, outfolder, method = c("multi", "single"), outgroup = NULL)
+mptp(
+  infile,
+  exe = NULL,
+  outfolder = NULL,
+  method = c("multi", "single"),
+  outgroup = NULL,
+  minbrlen = 1e-04
+)
 }
 \arguments{
 \item{infile}{Path to tree file in Newick format.}
 
-\item{outfolder}{Path to output folder.}
+\item{exe}{Path to an mPTP executable.}
+
+\item{outfolder}{Path to output folder. Default to NULL. If not specified, a temporary location is used.}
 
 \item{method}{Which algorithm for Maximum Likelihood point-estimate to be used. Available options are:
 \itemize{
@@ -29,9 +38,10 @@ an object of class \code{\link[tibble]{tbl_df}}
 }
 \details{
 \code{mptp()} relies on \code{\link[base]{system}} to invoke mPTP software through
-a command-line interface. Hence, you must have the software installed on your
-operating system root in order to use this function properly. \code{mptp()}
+a command-line interface. Hence, you must have the software available as an executable file on 
+your system in order to use this function properly. \code{mptp()}
 saves all output files in \code{outfolder} and imports the results generated to \code{Environment}.
+If an \code{outfolder} is not provided by the user, then a temporary location is used.
 }
 \author{
 Paschalia Kapli, Sarah Lutteropp, Jiajie Zhang, Kassian Kobert, Pavlos Pavlides, Alexandros Stamatakis, Tomáš Flouri.
