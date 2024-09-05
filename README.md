@@ -3,6 +3,10 @@
 
 # delimtools
 
+## IMPORTANT
+
+This software is under active development, and as such cannot be assumed to be free of bugs or poor functionality. Always inspect results carefully. If you find a problem, please report it with as much detail as possible in [Issues](https://github.com/LegaLab/delimtools/issues). Unfortunately in it's current form, some of the functions (`abgd_tbl()`, `asap_tbl()` and `mptp_tbl()`)  will not work on Windows operating systems, only on Unix (MacOS, Linux). This is because third party binaries (executable programs) are required. We are working to implement importing results from the webservers that are commonly used to run these analyses. There are also difficulties with installing R required package dependancies to run `gmyc_tbl()` and `bgmyc_tbl()` because these are no longer under development and available on CRAN, and must be installed from archived sources. Please refer to [github.com/boopsboops/delimtools-testing](https://github.com/boopsboops/delimtools-testing/blob/main/scripts/install.md) for instructions on how to install.
+
 ## Overview
 
 The official GitHub repository for the R package `delimtools` ([Bittencourt et al., 20XX](https://doi.org/10.xxx)).
