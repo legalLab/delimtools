@@ -1,7 +1,7 @@
 #' A Command-Line Interface for mPTP - multi-rate Poisson Tree Processes
 #'
 #' @description
-#' \code{mptp()} returns species partition hypothesis estimated by mPTP software
+#' \code{mptp_tbl()} returns species partition hypothesis estimated by mPTP software
 #' (\url{https://github.com/Pas-Kapli/mptp}).
 #'
 #' @param infile Path to tree file in Newick format.
@@ -16,9 +16,9 @@
 #' mPTP will crop the specified labels from the tree.
 #'
 #' @details
-#' \code{mptp()} relies on \code{\link[base]{system}} to invoke mPTP software through
+#' \code{mptp_tbl()} relies on \code{\link[base]{system}} to invoke mPTP software through
 #' a command-line interface. Hence, you must have the software available as an executable file on 
-#' your system in order to use this function properly. \code{mptp()}
+#' your system in order to use this function properly. \code{mptp_tbl()}
 #' saves all output files in \code{outfolder} and imports the results generated to \code{Environment}.
 #' If an \code{outfolder} is not provided by the user, then a temporary location is used.
 #'
@@ -36,7 +36,7 @@
 
 #'
 #' @export
-mptp <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "single"), outgroup=NULL, minbrlen = 0.0001){
+mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "single"), outgroup=NULL, minbrlen = 0.0001){
 
   if(!file.exists(exe)){
 

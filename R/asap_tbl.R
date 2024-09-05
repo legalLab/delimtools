@@ -1,7 +1,7 @@
 #' A Command-Line Interface for ASAP - Assemble Species by Automatic Partitioning
 #'
 #' @description
-#' \code{asap()} returns species partition hypothesis estimated by ASAP software
+#' \code{asap_tbl()} returns species partition hypothesis estimated by ASAP software
 #' (\url{https://bioinfo.mnhn.fr/abi/public/asap/}).
 #'
 #' @param infile Path to fasta file.
@@ -17,10 +17,10 @@
 #' @param outfolder Path to output folder. Default to NULL. If not specified, a temporary location is used.
 #'
 #' @details
-#' \code{asap()} relies on \code{\link[base]{system}} to invoke ASAP software through
+#' \code{asap_tbl()} relies on \code{\link[base]{system}} to invoke ASAP software through
 #' a command-line interface. Hence, you must have the software available as an executable file on 
 #' your system in order to use this function properly.
-#' \code{asap()} saves all output files in \code{outfolder} and imports the first partition
+#' \code{asap_tbl()} saves all output files in \code{outfolder} and imports the first partition
 #' file generated to \code{Environment}.
 #'
 #' @return
@@ -30,7 +30,7 @@
 #' Nicolas Puillandre, Sophie Brouillet, Guillaume Achaz.
 #'
 #' @examples
-#' asap_df <- asap(infile = "data/pacus/pacus.trimmed.fasta", model= 3, outfolder = "pacus.asap")
+#' asap_df <- asap_tbl(infile = "data/pacus/pacus.trimmed.fasta", model= 3, outfolder = "pacus.asap")
 #'
 #' @importFrom cli cli_warn col_yellow cli_abort
 #' @importFrom readr read_csv
@@ -38,7 +38,7 @@
 #' @importFrom here here
 #'
 #' @export
-asap <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL){
+asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL){
 
   if(!file.exists(exe)){
 
