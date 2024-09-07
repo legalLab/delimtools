@@ -25,6 +25,7 @@
 #' @importFrom knitr kable
 #' @importFrom tidyr pivot_longer
 #' @importFrom dplyr filter arrange slice_head count
+#' @importFrom methods is
 #'
 #'
 #' @export
@@ -33,7 +34,7 @@ min_brlen <- function(tree, n = 5, print = TRUE) {
 
   # checks
 
-  if(class(tree) == "phylo") {
+  if(methods::is(tree, "phylo")) {
     
     tr <- tree
 
