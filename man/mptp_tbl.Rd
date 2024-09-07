@@ -28,6 +28,10 @@ mptp_tbl(
 
 \item{outgroup}{A vector of outgroup labels. Default to NULL. If specified,
 mPTP will crop the specified labels from the tree.}
+
+\item{minbrlen}{Numeric. Branch lengths smaller or equal to the value provided
+are ignored from computations. Default to 0.0001. Use \code{\link[delimtools]{min_brlen}}
+for fine tuning.}
 }
 \value{
 an object of class \code{\link[tibble]{tbl_df}}

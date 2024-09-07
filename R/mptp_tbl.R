@@ -12,6 +12,9 @@
 #' \item single Single-rate PTP model. It assumes that every species evolved with the same rate.
 #' \item multi Multi-rate mPTP model. It assumes that all species have different evolutionary rates.
 #' }
+#' @param minbrlen Numeric. Branch lengths smaller or equal to the value provided
+#' are ignored from computations. Default to 0.0001. Use \code{\link[delimtools]{min_brlen}}
+#' for fine tuning. 
 #' @param outgroup A vector of outgroup labels. Default to NULL. If specified,
 #' mPTP will crop the specified labels from the tree.
 #'
