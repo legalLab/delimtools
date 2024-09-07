@@ -21,6 +21,7 @@
 #' @import purrr
 #' @import dplyr
 #' @import stringr
+#' @importFrom methods is
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyr pivot_wider
 #' @importFrom tidyr unite
@@ -31,7 +32,7 @@
 #' @export
 delim_join <- function(delim){
 
-  if(is(delim, "list")){
+  if(methods::is(delim, "list")){
 
     # Reduce to a tibble and turn into a list
     dlist <- delim %>%
@@ -74,7 +75,7 @@ delim_join <- function(delim){
       dplyr::relocate(colnames(delim)) %>%
       dplyr::arrange(match(labels, delim$labels))
 
-  } else if(is(delim, "data.frame")){
+  } else if(methods::is(delim, "data.frame")){
 
     # pivot data to long format and turn into a list
     dlist <- delim %>%

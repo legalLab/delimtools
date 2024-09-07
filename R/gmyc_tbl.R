@@ -19,13 +19,14 @@
 #' Thomas Ezard, Tomochika Fujisawa, Tim Barraclough.
 #'
 #' @import splits
+#' @importFrom methods is
 #' @importFrom cli cli_abort
 #' @importFrom tibble tibble
 #'
 #' @export
 gmyc_tbl <- function(gmyc_res){
 
-  if(is(gmyc_res, "gmyc")){
+  if(methods::is(gmyc_res, "gmyc")){
 
     gmyc_spec <- splits::spec.list(gmyc_res)
 

@@ -40,6 +40,7 @@
 #' @importFrom delimtools delim_brewer
 #' @importFrom forcats fct_inorder fct_rev
 #' @importFrom ggfun xrange yrange
+#' @importFrom methods is
 #' @importFrom patchwork wrap_plots
 #' @importFrom tibble tibble
 #' @importFrom tidyr pivot_longer 
@@ -49,7 +50,7 @@
 delim_autoplot <- function(delim, tr, consensus=TRUE, n_match= NULL,
                             delim_order= NULL, tbl_labs= NULL, col_vec= NULL,
                             hexpand= 0.1, widths= c(0.5, 0.2)){
-  if(!is(tr, "treedata")){
+  if(!methods::is(tr, "treedata")){
 
     cli::cli_abort(c("Tree file must be from class {.cls treedata}.",
                      "i"= "You've supplied a tree file of class {.cls {class(tr)}}",

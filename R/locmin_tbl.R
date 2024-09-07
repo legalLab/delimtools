@@ -26,11 +26,12 @@
 #' @importFrom tibble tibble
 #' @importFrom dplyr filter
 #' @importFrom magrittr %>%
+#' @importFrom methods is
 #'
 #' @export
 locmin_tbl <- function(distobj, threshold = 0.01, haps= NULL){
 
-  if(is(distobj, "dist") & is.null(haps)){
+  if(methods::is(distobj, "dist") & is.null(haps)){
 
     labs <- labels(distobj)
     clu <- spider::tclust(distobj, threshold) %>%

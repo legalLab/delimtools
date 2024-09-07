@@ -17,12 +17,13 @@
 #' @author
 #' Rupert A. Collins, Pedro S. Bittencourt
 #'
+#' @importFrom grDevices colorRampPalette
 #' @importFrom RColorBrewer brewer.pal
 #'
 #' @export
 delim_brewer <- function(delim, name, n, seed){
 
-  getPalette <- colorRampPalette(RColorBrewer::brewer.pal(n, name))
+  getPalette <- grDevices::colorRampPalette(RColorBrewer::brewer.pal(n, name))
 
   set.seed(seed)
 

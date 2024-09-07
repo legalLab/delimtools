@@ -22,6 +22,7 @@
 #'
 #' @import dplyr
 #' @import tibble
+#' @importFrom delimtools clean_dna hap_collapse
 #' @importFrom tidyr unnest
 #' @importFrom tidyr replace_na
 #' @importFrom stringr str_detect
@@ -31,14 +32,14 @@ haplotype_tbl <- function(dna, verbose= TRUE){
 
   if(verbose==TRUE){
     # clean dna
-    dat_all_ali <- clean_dna(dna, verbose = TRUE)
+    dat_all_ali <- delimtools::clean_dna(dna, verbose = TRUE)
   } else {
     # clean dna
-    dat_all_ali <- clean_dna(dna, verbose = FALSE)
+    dat_all_ali <- delimtools::clean_dna(dna, verbose = FALSE)
   }
 
   # collapse to haplotypes
-  dat_all_haps <- hap_collapse(dat_all_ali, collapseSubstrings= TRUE, clean=FALSE)
+  dat_all_haps <- delimtools::hap_collapse(dat_all_ali, collapseSubstrings= TRUE, clean=FALSE)
 
   # convert to all to character
   dat_haps_char <- lapply(dat_all_haps, function(x) paste(x, collapse=""))

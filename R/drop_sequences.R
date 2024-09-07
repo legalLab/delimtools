@@ -20,6 +20,7 @@
 #' @import dplyr
 #' @importFrom ape as.list.DNAbin
 #' @importFrom cli cli_abort cli_warn
+#' @importFrom methods is
 #'
 #' @author
 #' Pedro S. Bittencourt
@@ -40,7 +41,7 @@
 #' 
 #' @export
 drop_sequences <- function(fasta, identifier, drop = TRUE){
-  if(!is(fasta, "DNAbin")){
+  if(!methods::is(fasta, "DNAbin")){
     
     cli::cli_abort(c("Input data must have class {.cls DNAbin}.",
                      "x" = "You've supplied an input of class {.cls {class(fasta)}}.",
