@@ -16,7 +16,8 @@
 #' Rupert A. Collins
 #'
 #' @examples
-#' morph.df <- morph_tbl(labels = c("seq1", "seq2", "seq3", "seq4"), sppVector = c("spA", "spB", "spC", "spC"))
+#' morph.df <- morph_tbl(labels = c("seq1", "seq2", "seq3", "seq4"), 
+#'                       sppVector = c("spA", "spB", "spC", "spC"))
 #'
 #' @importFrom cli cli_abort
 #' @importFrom tibble tibble

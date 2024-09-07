@@ -21,7 +21,8 @@ an object of class \code{\link[tibble]{tbl_df}}
 \code{morph_tbl()} uses information in a species name vector to label each unique sample with a number corresponding to this name.
 }
 \examples{
-morph.df <- morph_tbl(labels = c("seq1", "seq2", "seq3", "seq4"), sppVector = c("spA", "spB", "spC", "spC"))
+morph.df <- morph_tbl(labels = c("seq1", "seq2", "seq3", "seq4"), 
+                      sppVector = c("spA", "spB", "spC", "spC"))
 
 }
 \author{
