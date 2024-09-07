@@ -12,6 +12,8 @@ delim_brewer(delim, name, n, seed)
 \item{name}{A palette name. See \code{\link[RColorBrewer]{RColorBrewer}} for options.}
 
 \item{n}{Number of different colors to interpolate. Minimum 3 and maximum depending on palette.}
+
+\item{seed}{Integer. Number to initialize random number generator.}
 }
 \description{
 \code{delim_brewer()} returns a set of colors created by interpolating

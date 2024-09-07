@@ -7,6 +7,7 @@
 #' @param delim Output from \code{\link[delimtools]{delim_join}}.
 #' @param name A palette name. See \code{\link[RColorBrewer]{RColorBrewer}} for options.
 #' @param n Number of different colors to interpolate. Minimum 3 and maximum depending on palette.
+#' @param seed Integer. Number to initialize random number generator. 
 #'
 #' @details
 #' \code{delim_brewer()} interpolates over a color palette and returns a vector of random colors
