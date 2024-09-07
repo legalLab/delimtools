@@ -4,10 +4,10 @@
 \alias{hap_collapse}
 \title{Removes Duplicated Sequences from Alignment}
 \usage{
-hap_collapse(data, collapseSubstrings = TRUE, clean = TRUE)
+hap_collapse(fasta, collapseSubstrings = TRUE, clean = TRUE)
 }
 \arguments{
-\item{data}{an object of class \code{\link[ape]{DNAbin}}.}
+\item{fasta}{an object of class \code{\link[ape]{DNAbin}}.}
 
 \item{collapseSubstrings}{logical. Whether to collapse or not collapse shorter but identical sequences.}
 
@@ -29,6 +29,30 @@ shorter but identical sequences as different haplotypes and will keep them.
 If \code{clean = TRUE}, the function will call \code{\link[delimtools]{clean_dna}}
 to remove any non ACTG bases from alignment prior to collapsing haplotypes. If
 \code{clean = FALSE}, the function will treat data as it is, and will not remove any bases.
+}
+\examples{
+
+# create a vector of DNA sequences
+seqs <- c(seq1= "ATGCTAGTTCGC",
+          seq2= "ATGCTAGTTCGC",
+          seq3= "ATGCTAGTTCGC",
+          seq4= "ATGCTAGTTCG-",
+          seq5= "ATGCTAGTT---",
+          seq6= "ATGCTAGTTCGN",
+          seq7= "ATGCTA-TTCGC",
+          seq8= "ATGCTA-TTCG-",
+          seq9= "ATGCTANTTCGN",
+          seq10="ATGCTAGTT")
+          
+# convert to DNAbin
+dummy <- tolower(seqs) |>
+ strsplit(split= "") |>
+ ape::as.DNAbin.list()
+ 
+# run hap_collapse with different settings
+
+# 2 DNA sequences (seq1/seq7)
+
 }
 \author{
 Rupert A. Collins
