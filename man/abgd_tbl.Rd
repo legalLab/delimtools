@@ -20,6 +20,8 @@ abgd_tbl(
 
 \item{haps}{Optional. A vector of haplotypes to keep into the \code{\link[tibble]{tbl_df}}.}
 
+\item{slope}{Numeric. Relative gap width (slope). Default to 1.5.}
+
 \item{model}{An integer specifying evolutionary model to be used. Available options are:
 \itemize{
   \item 0: Kimura-2P

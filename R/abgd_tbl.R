@@ -7,6 +7,7 @@
 #' @param infile Path to fasta file.
 #' @param exe Path to an ABGD executable.
 #' @param haps Optional. A vector of haplotypes to keep into the \code{\link[tibble]{tbl_df}}.
+#' @param slope Numeric. Relative gap width (slope). Default to 1.5.
 #' @param model An integer specifying evolutionary model to be used. Available options are:
 #' \itemize{
 #'   \item 0: Kimura-2P
