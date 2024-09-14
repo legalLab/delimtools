@@ -4,7 +4,7 @@
 #' \code{mptp_tbl()} returns species partition hypothesis estimated by mPTP software
 #' (\url{https://github.com/Pas-Kapli/mptp}).
 #'
-#' @param infile Path to tree file in Newick format.
+#' @param infile Path to tree file in Newick format. Should be dichotomous and rooted.
 #' @param exe Path to an mPTP executable.
 #' @param outfolder Path to output folder. Default to NULL. If not specified, a temporary location is used.
 #' @param method Which algorithm for Maximum Likelihood point-estimate to be used. Available options are:
