@@ -15,8 +15,7 @@
 #' @param minbrlen Numeric. Branch lengths smaller or equal to the value provided
 #' are ignored from computations. Default to 0.0001. Use \code{\link[delimtools]{min_brlen}}
 #' for fine tuning. 
-#' @param outgroup A vector of outgroup labels. Default to NULL. If specified,
-#' mPTP will crop the specified labels from the tree.
+#' @param webserver A .txt file containing mPTP results obtained from a webserver. Default to NULL.
 #'
 #' @details
 #' \code{mptp_tbl()} relies on \code{\link[base]{system}} to invoke mPTP software through
@@ -24,6 +23,8 @@
 #' your system in order to use this function properly. \code{mptp_tbl()}
 #' saves all output files in \code{outfolder} and imports the results generated to \code{Environment}.
 #' If an \code{outfolder} is not provided by the user, then a temporary location is used.
+#' Alternatively, \code{mptp_tbl()} can parse a file obtained from webserver such as 
+#' https://mptp.h-its.org/.
 #'
 #' @return
 #' an object of class \code{\link[tibble]{tbl_df}}
@@ -39,152 +40,141 @@
 
 #'
 #' @export
-mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "single"), outgroup=NULL, minbrlen = 0.0001){
+mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "single"), minbrlen = 0.0001, webserver = NULL) {
 
-  if(!file.exists(exe)){
+  split_vec <- function(vec, sep = "") {
+    is.sep <- vec == sep
+    split(vec[!is.sep], cumsum(is.sep)[!is.sep]+1)
+  }
+
+  if(!is.null(webserver) && file.exists(webserver)) {
+
+    header <- readLines(webserver)[1]
+
+    if(!grepl("mptp", header)) {
+
+      cli::cli_abort("Error: Looks like your file does not contain valid mPTP results ...")
+
+    }
+
+    lines <- readLines(webserver)[-c(1:6)] |> sub(":", "", x=_)
+
+    mptp.ls <- split_vec(lines)
+
+    mptp.ls <- lapply(mptp.ls, function(x) x[-1])
+
+    if(grepl("single", header)) {
+
+      mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], ptp = as.numeric(unlist(x)))))
+
+    }
+
+    if(grepl("multi", header)) {
+
+      mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], mptp = as.numeric(unlist(x)))))
+
+    }
+    
+    return(mptp.df)
+
+  }
+
+
+  if(!file.exists(exe)) {
 
     cli::cli_abort("Error: Please provide a valid path to the mPTP executable file.")
   
   }
 
-  if(is.null(outfolder)){
+  if(is.null(outfolder)) {
 
     outfolder <- tempdir()
 
   }
 
-  if(!dir.exists(outfolder)){
+  if(!dir.exists(outfolder)) {
 
     cli::cli_abort("Error: Please provide a valid results directory.")
 
   }
 
-  if(missing(method)){
+  if(missing(method)) {
 
     cli::cli_abort(c("Please provide a valid option for {.arg method}.",
                      "i" = "Available options are {.val multi} or {.val single}."))
 
   }
 
-  if(method != "single" && method != "multi"){
+  if(method != "single" && method != "multi") {
 
     cli::cli_abort(c("Please provide a valid option for {.arg method}.",
                      "i" = "Available options are {.val multi} or {.val single}."))
   }
 
-  if(!is.null(outgroup)){
+  if(method == "multi") {
 
-    if(method == "multi"){
+    string.mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --minbr {minbrlen}")
+    res <- system(command=string.mptp, intern = TRUE)
+    writeLines(res)
+  
+    lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |> sub(":", "", x=_)
+  
+    mptp.ls <- split_vec(lines)
+  
+    mptp.ls <- lapply(mptp.ls, function(x) x[-1])
+  
+    mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], mptp = as.numeric(unlist(x)))))
 
-      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --outgroup {paste(outgroup, collapse = ',')} --outgroup_crop --minbr {minbrlen}")
-      res <- system(command=string_mptp, intern = TRUE)
-      writeLines(res)
-
-      lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |>
-        sub(":", "", x=_)
-
-      split_vec <- function(vec, sep = "") {
-        is_sep <- vec == sep
-        split(vec[!is_sep], cumsum(is_sep)[!is_sep]+1)
-      }
-
-      mptp_ls <- split_vec(lines)
-
-      mptp_ls <- lapply(mptp_ls, function(x) x[-1])
-
-      mptp_df <- do.call(rbind, lapply(names(mptp_ls), function(x) tibble::tibble(labels = mptp_ls[[x]], mptp = as.numeric(unlist(x)))))
-
-    }
-
-    else if(method == "single"){
-
-      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --outgroup {paste(outgroup, collapse = ',')} --outgroup_crop --minbr {minbrlen}")
-      res <- system(command=string_mptp, intern = TRUE)
-      writeLines(res)
-
-      lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |>
-        sub(":", "", x=_)
-
-      split_vec <- function(vec, sep = "") {
-        is_sep <- vec == sep
-        split(vec[!is_sep], cumsum(is_sep)[!is_sep]+1)
-      }
-
-      mptp_ls <- split_vec(lines)
-
-      mptp_ls <- lapply(mptp_ls, function(x) x[-1])
-
-      mptp_df <- do.call(rbind, lapply(names(mptp_ls), function(x) tibble::tibble(labels = mptp_ls[[x]], ptp = as.numeric(unlist(x)))))
-
-    }
-  } else if(is.null(outgroup)){
-
-    if(method == "multi"){
-
-      string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --minbr {minbrlen}")
-      res <- system(command=string_mptp, intern = TRUE)
-      writeLines(res)
-
-      lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |>
-        sub(":", "", x=_)
-
-      split_vec <- function(vec, sep = "") {
-        is_sep <- vec == sep
-        split(vec[!is_sep], cumsum(is_sep)[!is_sep]+1)
-      }
-
-      mptp_ls <- split_vec(lines)
-
-      mptp_ls <- lapply(mptp_ls, function(x) x[-1])
-
-      mptp_df <- do.call(rbind, lapply(names(mptp_ls), function(x) tibble::tibble(labels = mptp_ls[[x]], mptp = as.numeric(unlist(x)))))
-
-    }
-
-    else if(method == "single"){
-
-string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --minbr {minbrlen}")
-      res <- system(command=string_mptp, intern = TRUE)
-      writeLines(res)
-
-      lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |>
-        sub(":", "", x=_)
-
-      split_vec <- function(vec, sep = "") {
-        is_sep <- vec == sep
-        split(vec[!is_sep], cumsum(is_sep)[!is_sep]+1)
-      }
-
-      mptp_ls <- split_vec(lines)
-
-      mptp_ls <- lapply(mptp_ls, function(x) x[-1])
-
-      mptp_df <- do.call(rbind, lapply(names(mptp_ls), function(x) tibble::tibble(labels = mptp_ls[[x]], ptp = as.numeric(unlist(x)))))
-
-    }
   }
 
-  minbrlen.tab <- min_brlen(tree = infile, print = FALSE)#delimtools::
+  if(method == "single"){
+
+    string.mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --minbr {minbrlen}")
+    res <- system(command=string.mptp, intern = TRUE)
+    writeLines(res)
+
+    lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |> sub(":", "", x=_)
+
+    mptp.ls <- split_vec(lines)
+
+    mptp.ls <- lapply(mptp.ls, function(x) x[-1])
+
+    mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], ptp = as.numeric(unlist(x)))))
+
+  }
+
+  minbrlen.tab <- delimtools::min_brlen(tree = infile, print = FALSE)
 
   minbrlen.est <- minbrlen.tab |> pull(dist) |> min() |> format(scientific=FALSE)
 
   if(minbrlen.est < format(minbrlen, scientific=FALSE)) {
   
-  writeLines("\n")
+    writeLines("\n")
+  
+    cli::cli_alert_info(
+      "Warning: there are tip-to-tip distances smaller than the specified minimum branch length ({format(minbrlen, scientific=FALSE)}).
+      Consider using `delimtools::min_brlen()` to explore branch lengths in your tree."
+      )
+  
+    writeLines("\n")
 
-  cli::cli_alert_info(
-    "Warning: there are tip-to-tip distances smaller than the specified minimum branch length ({format(minbrlen, scientific=FALSE)}).
-    Consider using `delimtools::min_brlen()` to explore branch lengths in your tree."
-    )
+  }
 
-  writeLines("\n")
+  tr <- ape::read.tree(infile)
 
+  if(!is.rooted(tr)) {
+
+    cli::cli_alert_info(
+    "Warning: your tree is unrooted and has been subject to default rooting by mptp. Consider rooting your tree."
+      )
+
+    writeLines("\n")
   }
 
   cli::cli_alert_info("mPTP files are located in '{outfolder}'.")
 
   writeLines("\n")
 
-  return(mptp_df)
+  return(mptp.df)
 
 }
