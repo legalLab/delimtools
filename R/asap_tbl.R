@@ -15,6 +15,7 @@
 #'   \item 3: simple distance (p-distance)
 #' }
 #' @param outfolder Path to output folder. Default to NULL. If not specified, a temporary location is used.
+#' @param webserver A .csv file containing ASAP results obtained from a webserver. Default to NULL.
 #'
 #' @details
 #' \code{asap_tbl()} relies on \code{\link[base]{system}} to invoke ASAP software through
@@ -22,6 +23,8 @@
 #' your system in order to use this function properly.
 #' \code{asap_tbl()} saves all output files in \code{outfolder} and imports the first partition
 #' file generated to \code{Environment}.
+#' Alternatively, \code{asap_tbl()} can parse a .csv file obtained from webserver such as 
+#' https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html.
 #'
 #' @return
 #' an object of class \code{\link[tibble]{tbl_df}}
@@ -38,7 +41,21 @@
 #' @importFrom here here
 #'
 #' @export
-asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL){
+asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL, webserver = NULL) {
+
+  if(!is.null(webserver) && !file.exists(webserver)) {
+
+    cli::cli_abort("Error: Please provide a valid path to an ASAP results file.")
+
+  }
+
+  if(!is.null(webserver) && file.exists(webserver)) {
+
+    delim <- readr::read_csv(webserver, col_names = c("labels", "asap"), col_types = "c")
+
+    return(delim)
+
+  }
 
   if(!file.exists(exe)){
 
