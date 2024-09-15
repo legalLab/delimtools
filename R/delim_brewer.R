@@ -1,11 +1,12 @@
 #' Customize Delimitation Colors
 #'
 #' @description
-#' \code{delim_brewer()} returns a set of colors created by interpolating
-#' color palettes from \code{\link[RColorBrewer]{RColorBrewer}}.
+#' \code{delim_brewer()} returns a set of colors created by interpolating or using
+#' color palettes from \code{\link[RColorBrewer]{RColorBrewer}}, \code{\link[viridisLite]{viridisLite}}
+#' or \code{\link[randomcoloR]{randomcoloR}}.
 #'
 #' @param delim Output from \code{\link[delimtools]{delim_join}}.
-#' @param package Package which contains color palettes. Available options are "RColorBrewer" and "viridisLite".
+#' @param package Package which contains color palettes. Available options are "RColorBrewer", "viridisLite" or "randomcoloR".
 #' @param palette A palette name. See \code{\link[RColorBrewer]{brewer.pal}} for RColorBrewer 
 #' or \code{\link[viridisLite]{viridis}} for viridisLite options.
 #' @param n Number of different colors to interpolate. Minimum 3 and maximum depending on palette.
@@ -27,19 +28,31 @@
 #' @importFrom scales pal_viridis
 #' @importFrom tidyr pivot_longer
 #' @importFrom withr with_seed
+#' @importFrom randomcoloR distinctColorPalette
 #'
 #' @export
-delim_brewer <- function(delim, package, palette, n, seed){
+delim_brewer <- function(delim, package = NULL, palette = NULL, seed = NULL){
+
+  nclust <- delim |>
+    tidyr::pivot_longer(cols=-labels, names_to = "method", values_to = "clusters") |>
+    dplyr::summarise(n= dplyr::n_distinct(clusters, na.rm = TRUE)) |>
+    dplyr::pull(1)
   
-  if(is.null(package)){
+  if(package == "randomcoloR" && !is.null(palette)) {
+    
+    cli::cli_warn("Argument {.arg palette} not required for {.pkg randomcoloR}")
+
+  }
+  
+  if(is.null(package)) {
     
     package <- "RColorBrewer"
     
     cli::cli_warn(c("x"= "Argument {.arg package} not found. Using {.pkg RColorBrewer} package.",
-                    "i"= "Available packages are {.pkg RColorBrewer} and {.pkg viridisLite}"))
+                    "i"= "Available packages are {.pkg RColorBrewer}, {.pkg viridisLite} and {.pkg randomcoloR}"))
   }
   
-  if(is.null(palette)){
+  if(is.null(palette) && package != "randomcoloR") {
     
     palette <- "Set1"
     
@@ -57,24 +70,40 @@ delim_brewer <- function(delim, package, palette, n, seed){
   }
   
   if(package == "RColorBrewer"){
+
+    mpal <- RColorBrewer::brewer.pal.info[palette,]$maxcolors
+
+    if(nclust <= mpal) {
+
+      cpal <- RColorBrewer::brewer.pal(nclust, palette)
+
+    }
     
-    getPalette <- grDevices::colorRampPalette(RColorBrewer::brewer.pal(n, palette))
+    get_palette <- grDevices::colorRampPalette(RColorBrewer::brewer.pal(mpal, palette))
+
+    cpal <- get_palette(nclust)
+
     
-  } else if(package == "viridisLite"){
+  } else if(package == "viridisLite") {
     
-    getPalette <- grDevices::colorRampPalette(scales::pal_viridis(option = palette)(n))
+    cpal <- scales::pal_viridis(option = palette)(nclust)
+
+    if(length(unique(cpal)) < nclust) {
+      
+      get_palette <- grDevices::colorRampPalette(scales::pal_viridis(option = palette)(nclust))
+
+      cpal <- get_palette(nclust)
+
+    }
     
+  } else if(package == "randomcoloR") {
+    
+    cpal <- randomcoloR::distinctColorPalette(k=nclust)
+
   }
+
+  cols <- withr::with_seed(seed= seed, code= sample(cpal))
   
-  # number of unique spps
-  n.spp <- delim |>
-    tidyr::pivot_longer(cols=-labels, names_to = "method", values_to = "spp") |>
-    dplyr::summarise(n= dplyr::n_distinct(spp, na.rm = TRUE)) |>
-    dplyr::pull(1)
-  
-  cols <- withr::with_seed(seed= seed, code= sample(getPalette(n= n.spp)))
-  
-  cols2 <- rbind(cols, rev(cols))[seq_along(cols)]
-  
-  return(cols2)
+  return(cols)
+
 }
