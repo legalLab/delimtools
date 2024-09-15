@@ -10,7 +10,8 @@ abgd_tbl(
   haps = NULL,
   slope = 1.5,
   model = 3,
-  outfolder = NULL
+  outfolder = NULL,
+  webserver = NULL
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ abgd_tbl(
 }}
 
 \item{outfolder}{Path to output folder. Default to NULL. If not specified, a temporary location is used.}
+
+\item{webserver}{A .txt file containing ABGD results obtained from a webserver. Default to NULL.}
 }
 \value{
 an object of class \code{\link[tibble]{tbl_df}}
@@ -45,6 +48,8 @@ a command-line interface. Hence, you must have the software available as an exec
 your system in order to use this function properly.
 \code{abgd_tbl()} saves all output files in \code{outfolder} and imports the first recursive partition
 file generated to \code{Environment}.
+Alternatively, \code{abgd_tbl()} can parse a .txt file obtained from a webserver such as 
+https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html.
 }
 \examples{
 abgd_df <- abgd_tbl(infile = "data/pacus/pacus.trimmed.fasta", model= 3, outfolder = "pacus.asap")

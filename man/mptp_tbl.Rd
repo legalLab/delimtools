@@ -9,12 +9,12 @@ mptp_tbl(
   exe = NULL,
   outfolder = NULL,
   method = c("multi", "single"),
-  outgroup = NULL,
-  minbrlen = 1e-04
+  minbrlen = 1e-04,
+  webserver = NULL
 )
 }
 \arguments{
-\item{infile}{Path to tree file in Newick format.}
+\item{infile}{Path to tree file in Newick format. Should be dichotomous and rooted.}
 
 \item{exe}{Path to an mPTP executable.}
 
@@ -26,12 +26,11 @@ mptp_tbl(
 \item multi Multi-rate mPTP model. It assumes that all species have different evolutionary rates.
 }}
 
-\item{outgroup}{A vector of outgroup labels. Default to NULL. If specified,
-mPTP will crop the specified labels from the tree.}
-
 \item{minbrlen}{Numeric. Branch lengths smaller or equal to the value provided
 are ignored from computations. Default to 0.0001. Use \code{\link[delimtools]{min_brlen}}
 for fine tuning.}
+
+\item{webserver}{A .txt file containing mPTP results obtained from a webserver. Default to NULL.}
 }
 \value{
 an object of class \code{\link[tibble]{tbl_df}}
@@ -46,6 +45,8 @@ a command-line interface. Hence, you must have the software available as an exec
 your system in order to use this function properly. \code{mptp_tbl()}
 saves all output files in \code{outfolder} and imports the results generated to \code{Environment}.
 If an \code{outfolder} is not provided by the user, then a temporary location is used.
+Alternatively, \code{mptp_tbl()} can parse a file obtained from webserver such as 
+https://mptp.h-its.org/.
 }
 \author{
 Paschalia Kapli, Sarah Lutteropp, Jiajie Zhang, Kassian Kobert, Pavlos Pavlides, Alexandros Stamatakis, Tomáš Flouri.

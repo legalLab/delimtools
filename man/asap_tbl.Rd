@@ -4,7 +4,14 @@
 \alias{asap_tbl}
 \title{A Command-Line Interface for ASAP - Assemble Species by Automatic Partitioning}
 \usage{
-asap_tbl(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL)
+asap_tbl(
+  infile,
+  exe = NULL,
+  haps = NULL,
+  model = 3,
+  outfolder = NULL,
+  webserver = NULL
+)
 }
 \arguments{
 \item{infile}{Path to fasta file.}
@@ -22,6 +29,8 @@ asap_tbl(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL)
 }}
 
 \item{outfolder}{Path to output folder. Default to NULL. If not specified, a temporary location is used.}
+
+\item{webserver}{A .csv file containing ASAP results obtained from a webserver. Default to NULL.}
 }
 \value{
 an object of class \code{\link[tibble]{tbl_df}}
@@ -36,6 +45,8 @@ a command-line interface. Hence, you must have the software available as an exec
 your system in order to use this function properly.
 \code{asap_tbl()} saves all output files in \code{outfolder} and imports the first partition
 file generated to \code{Environment}.
+Alternatively, \code{asap_tbl()} can parse a .csv file obtained from webserver such as 
+https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html.
 }
 \examples{
 asap_df <- asap_tbl(infile = "data/pacus/pacus.trimmed.fasta", model= 3, outfolder = "pacus.asap")
