@@ -20,8 +20,12 @@
 #' @author
 #' Rupert A. Collins, Pedro S. Bittencourt
 #'
+#' @import dplyr
+#' @importFrom cli cli_warn
 #' @importFrom grDevices colorRampPalette
 #' @importFrom RColorBrewer brewer.pal
+#' @importFrom scales pal_viridis
+#' @importFrom tidyr pivot_longer
 #' @importFrom withr with_seed
 #'
 #' @export
