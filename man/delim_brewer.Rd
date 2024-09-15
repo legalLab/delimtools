@@ -4,12 +4,15 @@
 \alias{delim_brewer}
 \title{Customize Delimitation Colors}
 \usage{
-delim_brewer(delim, name, n, seed)
+delim_brewer(delim, package, palette, n, seed)
 }
 \arguments{
 \item{delim}{Output from \code{\link[delimtools]{delim_join}}.}
 
-\item{name}{A palette name. See \code{\link[RColorBrewer]{RColorBrewer}} for options.}
+\item{package}{Package which contains color palettes. Available options are "RColorBrewer" and "viridisLite".}
+
+\item{palette}{A palette name. See \code{\link[RColorBrewer]{brewer.pal}} for RColorBrewer 
+or \code{\link[viridisLite]{viridis}} for viridisLite options.}
 
 \item{n}{Number of different colors to interpolate. Minimum 3 and maximum depending on palette.}
 
@@ -22,8 +25,8 @@ color palettes from \code{\link[RColorBrewer]{RColorBrewer}}.
 \details{
 \code{delim_brewer()} interpolates over a color palette and returns a vector of random colors
 whose length is equal to the sum of unique species delimitation partitions in \code{delim}.
-For reproducibility, make sure to use in combination with \code{\link[base]{set.seed}}.
-One should also try different seeds to get best color combinations for plotting.
+For reproducibility, make sure to provide a \code{seed}. If not provided, \code{\link[base]{Sys.time}} 
+will be used as seed instead. One should also try different seeds to get best color combinations for plotting.
 }
 \author{
 Rupert A. Collins, Pedro S. Bittencourt
