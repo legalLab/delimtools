@@ -8,7 +8,7 @@ Authors@R: c(person(given="Pedro",family="Bittencourt",email="pedro.sennabittenc
 Description: This package contains helpers functions to process, analyse, and plot the output of single locus species delimitation methods. The main purpose of delimtools is to facilitate some work routines for the average R user, from the organization of data to plotting trees and associated data as easily as possible.
 License: MIT + file LICENSE
 Depends: dplyr, purrr
-Imports: ape, bGMYC, cli, forcats, ggfun, glue, ggplot2, gtools, ggtree, here, knitr, magrittr, methods, patchwork, RColorBrewer, readr, rlang, spider, splits, stringr, tibble, tidyr, tidyselect, vctrs
+Imports: ape, bGMYC, cli, forcats, ggfun, glue, ggplot2, gtools, ggtree, here, knitr, magrittr, methods, patchwork, randomcoloR, RColorBrewer, readr, rlang, scales, spider, splits, stringr, tibble, tidyr, tidyselect, vctrs, withr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
