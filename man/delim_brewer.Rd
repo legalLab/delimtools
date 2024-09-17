@@ -15,8 +15,6 @@ delim_brewer(delim, package = NULL, palette = NULL, seed = NULL)
 or \code{\link[viridisLite]{viridis}} for viridisLite options.}
 
 \item{seed}{Integer. Number to initialize random number generator.}
-
-\item{n}{Number of different colors to interpolate. Minimum 3 and maximum depending on palette.}
 }
 \description{
 \code{delim_brewer()} returns a set of colors created by interpolating or using

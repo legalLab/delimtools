@@ -9,7 +9,6 @@
 #' @param package Package which contains color palettes. Available options are "RColorBrewer", "viridisLite" or "randomcoloR".
 #' @param palette A palette name. See \code{\link[RColorBrewer]{brewer.pal}} for RColorBrewer 
 #' or \code{\link[viridisLite]{viridis}} for viridisLite options.
-#' @param n Number of different colors to interpolate. Minimum 3 and maximum depending on palette.
 #' @param seed Integer. Number to initialize random number generator. 
 #'
 #' @details
