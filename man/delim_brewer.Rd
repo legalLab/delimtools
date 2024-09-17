@@ -4,23 +4,24 @@
 \alias{delim_brewer}
 \title{Customize Delimitation Colors}
 \usage{
-delim_brewer(delim, package, palette, n, seed)
+delim_brewer(delim, package = NULL, palette = NULL, seed = NULL)
 }
 \arguments{
 \item{delim}{Output from \code{\link[delimtools]{delim_join}}.}
 
-\item{package}{Package which contains color palettes. Available options are "RColorBrewer" and "viridisLite".}
+\item{package}{Package which contains color palettes. Available options are "RColorBrewer", "viridisLite" or "randomcoloR".}
 
 \item{palette}{A palette name. See \code{\link[RColorBrewer]{brewer.pal}} for RColorBrewer 
 or \code{\link[viridisLite]{viridis}} for viridisLite options.}
 
-\item{n}{Number of different colors to interpolate. Minimum 3 and maximum depending on palette.}
-
 \item{seed}{Integer. Number to initialize random number generator.}
+
+\item{n}{Number of different colors to interpolate. Minimum 3 and maximum depending on palette.}
 }
 \description{
-\code{delim_brewer()} returns a set of colors created by interpolating
-color palettes from \code{\link[RColorBrewer]{RColorBrewer}}.
+\code{delim_brewer()} returns a set of colors created by interpolating or using
+color palettes from \code{\link[RColorBrewer]{RColorBrewer}}, \code{\link[viridisLite]{viridisLite}}
+or \code{\link[randomcoloR]{randomcoloR}}.
 }
 \details{
 \code{delim_brewer()} interpolates over a color palette and returns a vector of random colors
