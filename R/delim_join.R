@@ -33,6 +33,9 @@
 delim_join <- function(delim){
 
   if(methods::is(delim, "list")){
+    
+    # check delimitations
+    if(isTRUE(delimtools::check_delim(delim))){
 
     # Reduce to a tibble and turn into a list
     dlist <- delim %>%
@@ -74,8 +77,14 @@ delim_join <- function(delim){
                            .fns= ~stringr::str_split_fixed(., "-", n=2)[,2])) %>%
       dplyr::relocate(colnames(delim)) %>%
       dplyr::arrange(match(labels, delim$labels))
-
+    }
   } else if(methods::is(delim, "data.frame")){
+    
+    if(anyNA(delim)){
+      cli::cli_abort(c("Missing values found across columns.",
+                       "x" = "You've supplied an input with missing values.",
+                       "i" = "Please provide a numeric value or remove rows with NAs"))
+    }
 
     # pivot data to long format and turn into a list
     dlist <- delim %>%
