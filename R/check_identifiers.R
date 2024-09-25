@@ -36,18 +36,32 @@ check_identifiers <- function(data, identifier, dna){
   id2 <- names(dna)
 
   if(length(id1) != length(id2)){
+    
+    get_diff <- function(x, y){
+      
+      xdiff <- x[!x %in% y] |> unique()
+      ydiff <- y[!y %in% x] |> unique()
+      
+      invisible(list(ydiff, xdiff))
+    }
+    
+    gdiff <- get_diff(id1, id2)
+    
+    
     cli::cli_abort(c("Identifiers are not of equal length:",
-                     "x" = "You've supplied inputs with different size lengths.",
-                     "i" = "Your data length: {length(id1)}",
-                     "i" = "Your sequence length: {length(id2)}"))
+                     "x" = "You've supplied inputs with size lengths of {length(id1)} and {length(id2)}.",
+                     "i" = "Identifiers absent in {.arg {deparse(substitute(data))}}:",
+                     stringr::str_flatten_comma(gdiff[[1]]),
+                     "i" = "Identifiers absent in {.arg {deparse(substitute(dna))}}:",
+                     stringr::str_flatten_comma(gdiff[[2]])))
   }
 
   if(any(duplicated(id1)|duplicated(id2))){
     cli::cli_abort(c("Duplicate identifiers found.",
                      "x" = "You've supplied inputs with duplicated identifier names.",
-                     "i" = "Duplicated identifiers in data file:",
+                     "i" = "Duplicated identifiers in {.arg {deparse(substitute(data))}}:",
                      stringr::str_flatten_comma(id1[vctrs::vec_duplicate_detect(id1)]),
-                     "i" = "Duplicated identifiers in sequence file:",
+                     "i" = "Duplicated identifiers in {.arg {deparse(substitute(dna))}}:",
                      stringr::str_flatten_comma(id2[vctrs::vec_duplicate_detect(id2)])))
   }
 
@@ -59,14 +73,14 @@ check_identifiers <- function(data, identifier, dna){
   } else {
 
     diff <- vctrs::vec_chop(diff, sizes= c(length(diff)/2, length(diff)/2))
-    names(diff) <- c("Identifiers absent or mistyped in data file",
-                     "Identifiers absent or mistyped in sequence file")
+    names(diff) <- c("Identifiers absent or mistyped in deparse(substitute(data))}",
+                     "Identifiers absent or mistyped in deparse(substitute(dna))}")
 
     cli::cli_warn(c("Identifiers must be identical across files.",
                     "x" = "The identifiers bellow are either absent or mistyped.",
-                    "i" = "Identifiers absent or mistyped in data file:",
+                    "i" = "Identifiers absent or mistyped in {.arg {deparse(substitute(data))}}:",
                     stringr::str_flatten_comma(diff[[1]]),
-                    "i" = "Identifiers absent or mistyped in sequence file:",
+                    "i" = "Identifiers absent or mistyped in {.arg {deparse(substitute(dna))}}:",
                     stringr::str_flatten_comma(diff[[2]])))
     invisible(diff)
   }
