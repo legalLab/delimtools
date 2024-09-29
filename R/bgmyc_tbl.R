@@ -6,7 +6,7 @@
 #'
 #' @param bgmyc_res Output from \code{\link[bGMYC]{bgmyc.singlephy}}.
 #' @param ppcutoff  Posterior probability threshold for clustering samples into
-#' species partitions. See \code{\link[bGMYC]{bgmyc.point}} for details.
+#' species partitions. See \code{\link[bGMYC]{bgmyc.point}} for details. Default to 0.05.
 #'
 #' @details
 #' \code{\link[bGMYC]{bGMYC}} package uses \code{\link[bGMYC]{spec.probmat}} to create a
@@ -27,7 +27,7 @@
 #' @importFrom tibble tibble
 #'
 #' @export
-bgmyc_tbl <- function(bgmyc_res, ppcutoff){
+bgmyc_tbl <- function(bgmyc_res, ppcutoff= 0.05){
 
   if(methods::is(bgmyc_res, "singlebgmyc")){
 
