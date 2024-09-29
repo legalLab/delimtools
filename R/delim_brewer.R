@@ -39,7 +39,7 @@ delim_brewer <- function(delim, package = NULL, palette = NULL, seed = NULL){
   
   if(package == "randomcoloR" && !is.null(palette)) {
     
-    cli::cli_warn("Argument {.arg palette} not required for {.pkg randomcoloR}")
+    cli::cli_warn("{cli::col_yellow({cli::symbol$warning})} Argument {.arg palette} not required for {.pkg randomcoloR}")
 
   }
   
@@ -47,7 +47,7 @@ delim_brewer <- function(delim, package = NULL, palette = NULL, seed = NULL){
     
     package <- "RColorBrewer"
     
-    cli::cli_warn(c("x"= "Argument {.arg package} not found. Using {.pkg RColorBrewer} package.",
+    cli::cli_warn(c("{cli::col_yellow({cli::symbol$warning})} Argument {.arg package} not found. Using {.pkg RColorBrewer} package.",
                     "i"= "Available packages are {.pkg RColorBrewer}, {.pkg viridisLite} and {.pkg randomcoloR}"))
   }
   
@@ -55,7 +55,7 @@ delim_brewer <- function(delim, package = NULL, palette = NULL, seed = NULL){
     
     palette <- "Set1"
     
-    cli::cli_warn(c("x"= "Argument {.arg palette} not found. Using {.pkg RColorBrewer} {.strong Set1} palette.",
+    cli::cli_warn(c("{cli::col_yellow({cli::symbol$warning})} Argument {.arg palette} not found. Using {.pkg RColorBrewer} {.strong Set1} palette.",
                     "i"= "Check {.pkg RColorBrewer} and {.pkg viridisLite} packages for more palette options."))
   }
   
@@ -63,7 +63,7 @@ delim_brewer <- function(delim, package = NULL, palette = NULL, seed = NULL){
     
     seed <- Sys.time()
     
-    cli::cli_warn(c("x"= "Argument {.arg seed} not found. Using {.fn Sys.time} as seed.",
+    cli::cli_warn(c("{cli::col_yellow({cli::symbol$warning})} Argument {.arg seed} not found. Using {.fn Sys.time} as seed.",
                     "i"= "For reproducibility, you may want to set a custom {.arg seed} instead. {.arg seed} is printed below:",
                     "{seed}"))
   }
