@@ -16,7 +16,8 @@
 #' @param tbl_labs A \code{\link[tibble]{tbl_df}} of customized labels for tree plotting. The
 #' first column must match tip labels of the \code{tr} object, while the second column
 #' should have customized labels.
-#' @param col_vec A color vector for species delimitation partitions.
+#' @param col_vec A color vector for species delimitation partitions. See 
+#' \code{\link[delimtools]{delim_brewer}} for customized color palette options.
 #' @param widths A numeric vector containing the relative widths of the tree and
 #' species delimitation bars. See \code{\link[patchwork]{wrap_plots}} for details.
 #' Defaults to \code{c(0.5, 0.2)}.
@@ -63,7 +64,7 @@ delim_autoplot <- function(delim, tr, consensus=TRUE, n_match= NULL,
     tbl_labs <- tibble::tibble(label= tidytree::tip.label(tr),
                                labs= label)
 
-    cli::cli_warn("Argument {.arg tbl_labs} not provided. Using tiplabels instead.")
+    cli::cli_warn("{cli::col_yellow({cli::symbol$warning})} Argument {.arg tbl_labs} not provided. Using tiplabels instead.")
 
   }
 
@@ -89,18 +90,21 @@ delim_autoplot <- function(delim, tr, consensus=TRUE, n_match= NULL,
   if(is.null(delim_order)){
     delim_order <- colnames(delim)[-1]
 
-    cli::cli_warn("Argument {.arg delim_order} not provided. Using default order from {.arg delim}.")
+    cli::cli_warn("{cli::col_yellow({cli::symbol$warning})} Argument {.arg delim_order} not provided. 
+                  Using default order from {.arg {deparse(substitute(delim))}}.")
 
   }
 
   if(is.null(col_vec)){
-    col_vec <- delimtools::delim_brewer(delim, "Set1", 9)
-
-    cli::cli_warn("Argument {.arg col_vec} not provided.
-                  Customizing one using {.fn delimtools::delim_brewer}.")
-
+    
+    cli::cli_warn(c("{cli::col_yellow({cli::symbol$warning})} Argument {.arg col_vec} not provided.
+                  Customizing one using {.fn delim_brewer}.",
+                  "i"= "Please use {.fn delimtools::delim_brewer} to create even better colour palettes!"))
+    
+    col_vec <- suppressWarnings(delimtools::delim_brewer(delim, package= NULL, palette= NULL, seed= NULL))
+    
   }
-
+  
   if(consensus == TRUE) {
 
     # reorder and turn into long format

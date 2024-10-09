@@ -34,7 +34,8 @@ Default to NULL.}
 first column must match tip labels of the \code{tr} object, while the second column
 should have customized labels.}
 
-\item{col_vec}{A color vector for species delimitation partitions.}
+\item{col_vec}{A color vector for species delimitation partitions. See 
+\code{\link[delimtools]{delim_brewer}} for customized color palette options.}
 
 \item{hexpand}{Numeric. Expand xlim of tree by a ratio of x axis range. Useful if
 tiplabels become truncated when plotting. Default to \code{0.1}.}
