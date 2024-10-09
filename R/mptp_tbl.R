@@ -35,7 +35,7 @@
 #' @importFrom tibble tibble
 #' @importFrom cli cli_abort cli_alert_info
 #' @importFrom glue glue
-#' @importFrom ape read.tree cophenetic.phylo
+#' @importFrom ape read.tree cophenetic.phylo is.rooted
 #' @importFrom delimtools min_brlen
 
 #'
@@ -162,7 +162,7 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
 
   tr <- ape::read.tree(infile)
 
-  if(!is.rooted(tr)) {
+  if(!ape::is.rooted(tr)) {
 
     cli::cli_alert_info(
     "Warning: your tree is unrooted and has been subject to default rooting by mptp. Consider rooting your tree."
