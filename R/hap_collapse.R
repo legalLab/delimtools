@@ -4,7 +4,7 @@
 #' \code{hap_collapse()} collapses haplotypes from a \code{\link[ape]{DNAbin}} object,
 #' keeping unique haplotypes only.
 #'
-#' @param fasta an object of class \code{\link[ape]{DNAbin}}.
+#' @param dna an object of class \code{\link[ape]{DNAbin}}.
 #' @param collapseSubstrings logical. Whether to collapse or not collapse shorter but identical sequences.
 #' @param clean logical. Whether to remove or not remove non ACTG bases from alignment.
 #'
@@ -61,12 +61,12 @@
 #' @importFrom delimtools clean_dna drop_sequences
 #'
 #' @export
-hap_collapse <- function(fasta, collapseSubstrings = TRUE, clean = TRUE){
+hap_collapse <- function(dna, collapseSubstrings = TRUE, clean = TRUE){
   if(clean==TRUE){
-    data <- delimtools::clean_dna(fasta)
+    data <- delimtools::clean_dna(dna)
   }
   else{
-    data <- as.list(fasta)
+    data <- as.list(dna)
   }
   if(collapseSubstrings==TRUE){
     # sort by length
@@ -80,7 +80,7 @@ hap_collapse <- function(fasta, collapseSubstrings = TRUE, clean = TRUE){
     # get names of unique haplotypes
     names_haps <- names(data.ord.copy)[ind]
     # drop sequences from fasta
-    fasta_haps <- delimtools::drop_sequences(fasta, names_haps, drop = FALSE)
+    dna_haps <- delimtools::drop_sequences(dna, names_haps, drop = FALSE)
     
   }
   else{
@@ -93,8 +93,8 @@ hap_collapse <- function(fasta, collapseSubstrings = TRUE, clean = TRUE){
     # get names of duplicated haplotypes
     names_dups <- names(data.copy)[dups]
     # drop sequences from fasta
-    fasta_haps <- delimtools::drop_sequences(fasta, names_dups, drop = TRUE)
+    dna_haps <- delimtools::drop_sequences(dna, names_dups, drop = TRUE)
     
   }
-  return(fasta_haps)
+  return(dna_haps)
 }
