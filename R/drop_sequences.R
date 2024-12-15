@@ -3,7 +3,7 @@
 #' @description
 #' \code{drop_sequences()} removes sequences of a FASTA file by its names.
 #'
-#' @param fasta a \code{\link[ape]{DNAbin}} object.
+#' @param dna a \code{\link[ape]{DNAbin}} object.
 #' @param identifier a character vector containing sequence names.
 #' @param drop Logical. If \code{TRUE}, sequence names in \code{identifier} will
 #' be dropped from \code{fasta}. If \code{FALSE}, sequence names absent in \code{identifier}
@@ -40,31 +40,31 @@
 #' drop_sequences(woodmouse, identifier, drop = FALSE)
 #' 
 #' @export
-drop_sequences <- function(fasta, identifier, drop = TRUE){
-  if(!methods::is(fasta, "DNAbin")){
+drop_sequences <- function(dna, identifier, drop = TRUE){
+  if(!methods::is(dna, "DNAbin")){
     
     cli::cli_abort(c("Input data must have class {.cls DNAbin}.",
-                     "x" = "You've supplied an input of class {.cls {class(fasta)}}.",
+                     "x" = "You've supplied an input of class {.cls {class(dna)}}.",
                      "i" = "Try importing your input file using {.pkg ape} {.fn read.FASTA}."))
   }
   
-  if(!is.list(fasta)) {
+  if(!is.list(dna)) {
     
-    cli::cli_warn("{cli::col_yellow({cli::symbol$warning})} {.arg fasta} is a {typeof(fasta)} object. Coercing to a {.cls DNAbin} list object.")
+    cli::cli_warn("{cli::col_yellow({cli::symbol$warning})} {.arg dna} is a {typeof(dna)} object. Coercing to a {.cls DNAbin} list object.")
     
-    fasta <- ape::as.list.DNAbin(fasta)
+    dna <- ape::as.list.DNAbin(dna)
     
   }
   
   if(drop == TRUE){
     
-    fasta <- fasta %>% purrr::discard(names(.) %in% identifier)
+    dna <- dna %>% purrr::discard(names(.) %in% identifier)
     
   } else {
     
-    fasta <- fasta %>% purrr::keep(names(.) %in% identifier)
+    dna <- dna %>% purrr::keep(names(.) %in% identifier)
   }
   
-  return(fasta)
+  return(dna)
   
 }
