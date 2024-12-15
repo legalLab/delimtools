@@ -52,15 +52,15 @@ haplotype_tbl <- function(dna, verbose= TRUE){
   names(seqs_in) <- names(dat_collapseds_char)
 
   # turn into dataframe
-    pair_list <- tidyr::unnest(tibble::enframe(seqs_in,name="collapsed", value= "haplotype"), cols = "haplotype") %>%
+    pair_list <- tidyr::unnest(tibble::enframe(seqs_in,name="collapsed", value= "labels"), cols = "labels") %>%
       dplyr::distinct(collapsed, .keep_all = TRUE) %>%
-      dplyr::group_by(haplotype) %>%
+      dplyr::group_by(labels) %>%
       dplyr::reframe(n_seqs= n(),
                      collapsed= paste(collapsed, collapse = ", "))
 
     # join
-    haps_df <- tibble::tibble(haplotype= unlist(names(dat_haps_char))) %>%
-      dplyr::full_join(., pair_list, by="haplotype") %>%
+    haps_df <- tibble::tibble(labels= unlist(names(dat_haps_char))) %>%
+      dplyr::full_join(., pair_list, by="labels") %>%
       dplyr::mutate(n_seqs= tidyr::replace_na(n_seqs, 1),
                     n_seqs= dplyr::if_else(!is.na(collapsed), n_seqs+1, n_seqs)) %>%
       dplyr::arrange(desc(n_seqs))
