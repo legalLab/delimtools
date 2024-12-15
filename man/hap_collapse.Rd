@@ -4,10 +4,10 @@
 \alias{hap_collapse}
 \title{Removes Duplicated Sequences from Alignment}
 \usage{
-hap_collapse(fasta, collapseSubstrings = TRUE, clean = TRUE)
+hap_collapse(dna, collapseSubstrings = TRUE, clean = TRUE)
 }
 \arguments{
-\item{fasta}{an object of class \code{\link[ape]{DNAbin}}.}
+\item{dna}{an object of class \code{\link[ape]{DNAbin}}.}
 
 \item{collapseSubstrings}{logical. Whether to collapse or not collapse shorter but identical sequences.}
 
