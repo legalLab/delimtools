@@ -4,10 +4,10 @@
 \alias{drop_sequences}
 \title{Remove Sequences of a DNAbin list object}
 \usage{
-drop_sequences(fasta, identifier, drop = TRUE)
+drop_sequences(dna, identifier, drop = TRUE)
 }
 \arguments{
-\item{fasta}{a \code{\link[ape]{DNAbin}} object.}
+\item{dna}{a \code{\link[ape]{DNAbin}} object.}
 
 \item{identifier}{a character vector containing sequence names.}
 
