@@ -9,8 +9,8 @@
 #' See \code{link[delimtools]{clean_dna}} for details.
 #'
 #' @details
-#' \code{haplotype_tbl()} uses a combination of \code{link[delimtools]{clean_dna}} and
-#' \code{link[delimtools]{hap_collapse}} to summarise haplotypes into a tibble. Each row
+#' \code{haplotype_tbl()} uses a combination of \code{\link[delimtools]{clean_dna}} and
+#' \code{\link[delimtools]{hap_collapse}} to summarise haplotypes into a tibble. Each row
 #' of the tibble has an unique haplotype, its frequency and all its collapsed duplicates in a
 #' flattened string.
 #'
