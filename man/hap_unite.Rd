@@ -8,7 +8,7 @@ hap_unite(hap_tbl, delim)
 }
 \arguments{
 \item{hap_tbl}{output from \code{\link[delimtools]{haplotype_tbl}} or 
-\code{link[delimtools]{collapse_others}}.}
+\code{\link[delimtools]{collapse_others}}.}
 
 \item{delim}{output from \code{\link[delimtools]{delim_join}} or 
 \code{\link[delimtools]{delim_consensus}}.}
@@ -18,18 +18,18 @@ an object of class \code{\link[tibble]{tbl_df}}.
 }
 \description{
 \code{hap_unite()} returns a single \code{\link[tibble]{tbl_df}} combining all
-results from \code{\link[delimtools]{haplotype_tbl}} or \code{link[delimtools]{collapse_others}} 
+results from \code{\link[delimtools]{haplotype_tbl}} or \code{\link[delimtools]{collapse_others}} 
 with results from \code{\link[delimtools]{delim_join}} or \code{\link[delimtools]{delim_consensus}}.
 }
 \details{
 Many functions in this package relies on the usage of unique haplotypes due to 
 known issues when using identical or duplicated sequences for species delimitation analysis. 
 Thus, these outputs will very often refer only to unique haplotypes within a given dataset, 
-which can be determined by using functions like \code{link[delimtools]{hap_collapse}}. 
+which can be determined by using functions like \code{\link[delimtools]{hap_collapse}}. 
 Assuming that a duplicated or identical sequence should share the same properties as the first 
 sequence of the group has, \code{hap_unite()} combines the output of \code{\link[delimtools]{haplotype_tbl}} 
 with the output of \code{\link[delimtools]{delim_join}}. Alternativelly, one may use 
-\code{link[delimtools]{collapse_others}} and \code{\link[delimtools]{delim_consensus}} as well. 
+\code{\link[delimtools]{collapse_others}} and \code{\link[delimtools]{delim_consensus}} as well. 
 This output may be used for downstream analysis or to determine in which cluster a given sequence belongs.
 }
 \author{
