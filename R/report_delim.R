@@ -63,7 +63,8 @@ report_delim <- function(delim, tabulate= TRUE){
           dplyr::group_by(dplyr::pick(2)) |> 
           dplyr::tally(sort= TRUE) |>
           dplyr::rename_with(~ "partition", .cols= 1) |>
-          knitr::kable(align= "lr")
+          knitr::kable(align= "lr") |> 
+          print()
             
     } else {
       
@@ -79,17 +80,17 @@ report_delim <- function(delim, tabulate= TRUE){
                           names_to = "method",
                           values_to = "spp")
     
-    all_unique <- rep |> dplyr::summarise(n= dplyr::n_distinct(spp, na.rm = TRUE))
+    all.unique <- rep |> dplyr::summarise(n= dplyr::n_distinct(spp, na.rm = TRUE))
     
-    cli::cli_inform(c("i" = "Joined delimitations have a total of {.strong {purrr::pluck(all_unique,1)}} unique species partitions."))
+    cli::cli_inform(c("i" = "Joined delimitations have a total of {.strong {purrr::pluck(all.unique,1)}} unique species partitions."))
     
     if(tabulate == TRUE) {
       
-      group_unique <- rep |> dplyr::summarise(partitions= dplyr::n_distinct(spp, na.rm = TRUE), .by = "method")
+      group.unique <- rep |> dplyr::summarise(partitions= dplyr::n_distinct(spp, na.rm = TRUE), .by = "method")
       
       cli::cli_inform(c("i" = "Check below the number of species partitions per method:"))
       
-      print(knitr::kable(group_unique))
+      group.unique |> dplyr::arrange(desc(partitions)) |> knitr::kable(align= "lr") |> print()
       
       invisible(delim)
       
