@@ -7,6 +7,7 @@
 #' @param bgmyc_res Output from \code{\link[bGMYC]{bgmyc.singlephy}}.
 #' @param ppcutoff  Posterior probability threshold for clustering samples into
 #' species partitions. See \code{\link[bGMYC]{bgmyc.point}} for details. Default to 0.05.
+#' @param delimname Character. String to rename the delimitation method in the table. Default to 'bgmyc'.
 #'
 #' @details
 #' \code{\link[bGMYC]{bGMYC}} package uses \code{\link[bGMYC]{spec.probmat}} to create a
@@ -25,9 +26,12 @@
 #' @import bGMYC
 #' @importFrom cli cli_abort
 #' @importFrom tibble tibble
+#' @importFrom rlang sym
 #'
 #' @export
-bgmyc_tbl <- function(bgmyc_res, ppcutoff= 0.05){
+bgmyc_tbl <- function(bgmyc_res, ppcutoff = 0.05, delimname = "bgmyc"){
+
+  dname <- rlang::sym(delimname)
 
   if(methods::is(bgmyc_res, "singlebgmyc")){
 
@@ -36,7 +40,7 @@ bgmyc_tbl <- function(bgmyc_res, ppcutoff= 0.05){
     splist <- bGMYC::bgmyc.point(bgmyc_probmat, ppcutoff)
 
     bgmyc_tbl <- tibble::tibble(labels= unlist(splist),
-                                bgmyc= rep(seq_along(splist),
+                                !!dname:= rep(seq_along(splist),
                                            sapply(splist, length)))
     return(bgmyc_tbl)
   } else {

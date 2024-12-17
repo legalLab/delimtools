@@ -1,5 +1,7 @@
-parsimnet_tbl <- function(dna, parsimnet){
+parsimnet_tbl <- function(dna, parsimnet, delimname = "parsimnet"){
   
+  dname <- rlang::sym(delimname)
+
   if(!methods::is(dna, "DNAbin")){
     
     cli::cli_abort(c("Input data must have class {.cls DNAbin}.",
@@ -21,7 +23,7 @@ parsimnet_tbl <- function(dna, parsimnet){
     stringr::str_remove_all("net") |>
     as.numeric()
   
-  parsimnet_tbl <- tibble::tibble(labels= names(dna)[row_id], parsimnet= row_group)
+  parsimnet_tbl <- tibble::tibble(labels= names(dna)[row_id], !!dname:= row_group)
   
   return(parsimnet_tbl)
 }

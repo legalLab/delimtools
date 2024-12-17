@@ -16,6 +16,7 @@
 #' are ignored from computations. Default to 0.0001. Use \code{\link[delimtools]{min_brlen}}
 #' for fine tuning. 
 #' @param webserver A .txt file containing mPTP results obtained from a webserver. Default to NULL.
+#' @param delimname Character. String to rename the delimitation method in the table. Default to 'mptp'.
 #'
 #' @details
 #' \code{mptp_tbl()} relies on \code{\link[base]{system}} to invoke mPTP software through
@@ -37,10 +38,13 @@
 #' @importFrom glue glue
 #' @importFrom ape read.tree cophenetic.phylo is.rooted
 #' @importFrom delimtools min_brlen
+#' @importFrom rlang sym
 
 #'
 #' @export
-mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "single"), minbrlen = 0.0001, webserver = NULL) {
+mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "single"), minbrlen = 0.0001, webserver = NULL, delimname = "mptp") {
+
+  dname <- rlang::sym(delimname)
 
   split_vec <- function(vec, sep = "") {
     is.sep <- vec == sep
@@ -65,13 +69,13 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
 
     if(grepl("single", header)) {
 
-      mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], ptp = as.numeric(unlist(x)))))
+      mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], !!dname := as.numeric(unlist(x)))))
 
     }
 
     if(grepl("multi", header)) {
 
-      mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], mptp = as.numeric(unlist(x)))))
+      mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], !!dname := as.numeric(unlist(x)))))
 
     }
     
@@ -123,7 +127,7 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
   
     mptp.ls <- lapply(mptp.ls, function(x) x[-1])
   
-    mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], mptp = as.numeric(unlist(x)))))
+    mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], !!dname := as.numeric(unlist(x)))))
 
   }
 
@@ -139,7 +143,7 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
 
     mptp.ls <- lapply(mptp.ls, function(x) x[-1])
 
-    mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], ptp = as.numeric(unlist(x)))))
+    mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], !!dname := as.numeric(unlist(x)))))
 
   }
 

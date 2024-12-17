@@ -16,6 +16,7 @@
 #' }
 #' @param outfolder Path to output folder. Default to NULL. If not specified, a temporary location is used.
 #' @param webserver A .csv file containing ASAP results obtained from a webserver. Default to NULL.
+#' @param delimname Character. String to rename the delimitation method in the table. Default to 'asap'.
 #'
 #' @details
 #' \code{asap_tbl()} relies on \code{\link[base]{system}} to invoke ASAP software through
@@ -41,7 +42,7 @@
 #' @importFrom here here
 #'
 #' @export
-asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL, webserver = NULL) {
+asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL, webserver = NULL, delimname = "asap") {
 
   if(!is.null(webserver) && !file.exists(webserver)) {
 
@@ -51,7 +52,7 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
 
   if(!is.null(webserver) && file.exists(webserver)) {
 
-    delim <- readr::read_csv(webserver, col_names = c("labels", "asap"), col_types = "c")
+    delim <- readr::read_csv(webserver, col_names = c("labels", delimname), col_types = "c")
 
     return(delim)
 
@@ -87,14 +88,14 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
 
     res <- system(command=string_asap, intern = TRUE)
 
-    delim <- readr::read_csv(paste0(outfolder, "/", basename(infile),".Partition_1.csv"), col_names = c("labels", "asap"), col_types = "c")
+    delim <- readr::read_csv(paste0(outfolder, "/", basename(infile),".Partition_1.csv"), col_names = c("labels", delimname), col_types = "c")
   } else if(!is.null(haps)){
 
     string_asap <- paste0(exe, " -d ", model, " -a", " -o ", outfolder, " ", infile)
 
     res <- system(command=string_asap, intern = TRUE)
 
-    delim <- readr::read_csv(paste0(outfolder, "/", basename(infile),".Partition_1.csv"), col_names = c("labels", "asap"), col_types = "c") %>%
+    delim <- readr::read_csv(paste0(outfolder, "/", basename(infile),".Partition_1.csv"), col_names = c("labels", delimname), col_types = "c") %>%
       dplyr::filter(labels %in% haps)
   }
 
@@ -113,4 +114,3 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
 
   return(delim)
 }
-

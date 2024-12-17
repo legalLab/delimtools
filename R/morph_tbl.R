@@ -5,6 +5,7 @@
 #'
 #' @param labels Vector of unique sequence ID labels.
 #' @param sppVector Vector of corresponding morphological species delimitation groups.
+#' @param delimname Character. String to rename the delimitation method in the table. Default to 'morph'.
 #'
 #' @details
 #' \code{morph_tbl()} uses information in a species name vector to label each unique sample with a number corresponding to this name.
@@ -22,9 +23,12 @@
 #' @importFrom cli cli_abort
 #' @importFrom tibble tibble
 #' @importFrom dplyr mutate group_by cur_group_id ungroup select
+#' @importFrom rlang sym
 #'
 #' @export
-morph_tbl <- function(labels, sppVector){
+morph_tbl <- function(labels, sppVector, delimname = "morph"){
+
+  dname <- rlang::sym(delimname)
 
   if(missing(labels) | missing(sppVector)){
 
@@ -40,7 +44,7 @@ morph_tbl <- function(labels, sppVector){
 
   delim <- tibble::tibble(labels = as.character(labels), sppVector = as.character(sppVector)) |>
     dplyr::group_by(sppVector) |>
-    mutate(morph = dplyr::cur_group_id()) |> 
+    mutate(!!dname := dplyr::cur_group_id()) |> 
     dplyr::ungroup() |>
     dplyr::select(-sppVector)
 

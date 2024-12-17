@@ -17,6 +17,7 @@
 #' }
 #' @param outfolder Path to output folder. Default to NULL. If not specified, a temporary location is used.
 #' @param webserver A .txt file containing ABGD results obtained from a webserver. Default to NULL.
+#' @param delimname Character. String to rename the delimitation method in the table. Default to 'abgd'.
 #'
 #' @details
 #' \code{abgd_tbl()} relies on \code{\link[base]{system}} to invoke ABGD software through
@@ -43,9 +44,12 @@
 #' @importFrom stringr str_replace_all
 #' @importFrom tidyr separate_longer_delim
 #' @importFrom tools file_path_sans_ext
+#' @importFrom rlang sym
 #'
 #' @export
-abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, outfolder = NULL, webserver = NULL) {
+abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, outfolder = NULL, webserver = NULL, delimname = "abgd") {
+
+  dname <- rlang::sym(delimname)
 
   if(!is.null(webserver) && !file.exists(webserver)) {
 
@@ -55,13 +59,13 @@ abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, ou
 
   if(!is.null(webserver) && file.exists(webserver)) {
 
-    delim <- readr::read_delim(webserver, delim = ";", col_names = c("abgd", "labels"), col_types = "c")
+    delim <- readr::read_delim(webserver, delim = ";", col_names = c(delimname, "labels"), col_types = "c")
     
     delim <- delim |> 
-      dplyr::mutate(abgd = 1:nrow(delim)) |> 
+      dplyr::mutate(!!dname := 1:nrow(delim)) |> 
       dplyr::mutate(labels = stringr::str_replace_all(labels, "id: " , "")) |> 
       tidyr::separate_longer_delim(cols = labels,delim = " ") |> 
-      dplyr::relocate(labels, .before = abgd)
+      dplyr::relocate(labels, .before = !!dname)
 
     return(delim)
 
@@ -102,13 +106,13 @@ abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, ou
   fpath <- glue::glue('{outfolder}/{tools::file_path_sans_ext(basename(infile))}.part.1.txt')
 
 
-  delim <- readr::read_delim(fpath, delim = ";", col_names = c("abgd", "labels"), col_types = "c")
+  delim <- readr::read_delim(fpath, delim = ";", col_names = c(delimname, "labels"), col_types = "c")
     
   delim <- delim |> 
-    dplyr::mutate(abgd = 1:nrow(delim)) |> 
+    dplyr::mutate(!!dname := 1:nrow(delim)) |> 
     dplyr::mutate(labels = stringr::str_replace_all(labels, "id: " , "")) |> 
     tidyr::separate_longer_delim(cols = labels,delim = " ") |> 
-    dplyr::relocate(labels, .before = abgd)
+    dplyr::relocate(labels, .before = !!dname)
   
   if(!is.null(haps)){
 

@@ -8,6 +8,7 @@
 #' @param threshold Distance cutoff for clustering. Default of 0.01. See
 #' \code{\link[spider]{localMinima}} for details.
 #' @param haps Optional. A vector of haplotypes to keep into the \code{\link[tibble]{tbl_df}}.
+#' @param delimname Character. String to rename the delimitation method in the table. Default to 'locmin'.
 #'
 #' @details
 #' \code{\link[spider]{spider}} package uses \code{\link[spider]{localMinima}} to
@@ -27,9 +28,12 @@
 #' @importFrom dplyr filter
 #' @importFrom magrittr %>%
 #' @importFrom methods is
+#' @importFrom rlang sym
 #'
 #' @export
-locmin_tbl <- function(distobj, threshold = 0.01, haps= NULL){
+locmin_tbl <- function(distobj, threshold = 0.01, haps = NULL, delimname = "locmin"){
+
+  dname <- rlang::sym(delimname)
 
   if(methods::is(distobj, "dist") & is.null(haps)){
 
@@ -38,7 +42,7 @@ locmin_tbl <- function(distobj, threshold = 0.01, haps= NULL){
       lapply(., function(x) labs[x])
 
     locmin_df <- tibble::tibble(labels= unlist(clu),
-                                locmin= rep(seq_along(clu),
+                                !!dname:= rep(seq_along(clu),
                                             sapply(clu, length)))
 
 
@@ -49,7 +53,7 @@ locmin_tbl <- function(distobj, threshold = 0.01, haps= NULL){
       lapply(., function(x) labs[x])
 
     locmin_df <- tibble::tibble(labels= unlist(clu),
-                                locmin= rep(seq_along(clu),
+                                !!dname:= rep(seq_along(clu),
                                             sapply(clu, length))) %>%
       dplyr::filter(labels %in% haps)
   } else {

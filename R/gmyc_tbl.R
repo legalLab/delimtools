@@ -5,6 +5,7 @@
 #' object of class \code{\link[tibble]{tbl_df}}.
 #'
 #' @param gmyc_res Output from \code{\link[splits]{gmyc}}.
+#' @param delimname Character. String to rename the delimitation method in the table. Default to 'gmyc'.
 #'
 #' @details
 #' \code{\link[splits]{splits}} package uses \code{\link[splits]{gmyc}} to optimize
@@ -22,16 +23,19 @@
 #' @importFrom methods is
 #' @importFrom cli cli_abort
 #' @importFrom tibble tibble
+#' @importFrom rlang sym
 #'
 #' @export
-gmyc_tbl <- function(gmyc_res){
+gmyc_tbl <- function(gmyc_res, delimname = "gmyc"){
+
+  dname <- rlang::sym(delimname)
 
   if(methods::is(gmyc_res, "gmyc")){
 
     gmyc_spec <- splits::spec.list(gmyc_res)
 
     gmyc_tbl <- tibble::tibble(labels= as.character(gmyc_spec$sample_name),
-                               gmyc= gmyc_spec$GMYC_spec)
+                               !!dname:= gmyc_spec$GMYC_spec)
 
     return(gmyc_tbl)
 
@@ -41,4 +45,3 @@ gmyc_tbl <- function(gmyc_res){
                      "i" = "You've supplied an input of class {.cls {class(gmyc_res)}}."))
   }
 }
-
