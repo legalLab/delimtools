@@ -5,12 +5,12 @@
 #' 
 #' @param delim Output from any \code{*_tbl()} (e.g. \code{\link[delimtools]{gmyc_tbl}}),
 #' \code{\link[delimtools]{delim_join}} or \code{\link[delimtools]{delim_consensus}}.
-#' @param summary Logical. If TRUE, returns a message and a summary of \code{delim}. If FALSE, 
+#' @param tabulate Logical. If TRUE, returns a message and a tabulated summary of \code{delim}. If FALSE, 
 #' only the message is printed on Console.
 #' 
 #' @details 
 #' For each column in \code{delim}, \code{report_delim()} will calculate the 
-#' number of unique partitions. If \code{delim} is an output from \code{*_tbl()},
+#' number of unique partitions and print them to Console. If \code{delim} is an output from \code{*_tbl()},
 #' \code{report_delim()} will get unique species partitions using \code{\link[vctrs]{vec_unique_count}}.
 #' If \code{delim} is an output from \code{\link[delimtools]{delim_join}} 
 #' or \code{\link[delimtools]{delim_consensus}}, values are summarized by using 
@@ -27,6 +27,7 @@
 #' @importFrom tidyr pivot_longer
 #' @importFrom purrr pluck
 #' @importFrom vctrs vec_unique_count
+#' @importFrom dplyr group_by pick tally rename_with n_distinct summarise
 #' 
 #' @author
 #' Rupert A. Collins, Pedro S. Bittencourt
@@ -46,45 +47,45 @@
 #' report_delim()
 #' 
 #' @export
-report_delim <- function(delim, summary= TRUE){
+report_delim <- function(delim, tabulate= TRUE){
   
   n_cols <- colnames(delim[,-1])
-  
+
   if(length(n_cols) == 1) {
     
     rep <- vctrs::vec_unique_count(purrr::pluck(delim, 2))
-    
-    
-    if(summary == TRUE){
+
+    if(tabulate == TRUE) {
       
-      cli::cli_inform("The {.arg delim} below has a total of {.strong {rep}} 
-                      unique species partitions.", wrap= TRUE)
-      
-      return(delim)
-      
+      cli::cli_inform(c("i" = "Delim {.arg {n_cols}} has a total of {.strong {rep}} unique species partitions:"))
+
+      delim |> 
+          dplyr::group_by(dplyr::pick(2)) |> 
+          dplyr::tally(sort= TRUE) |>
+          dplyr::rename_with(~ "partition", .cols= 1) |>
+          knitr::kable(align= "lr")
+            
     } else {
       
-      cli::cli_inform("{.arg delim} has a total of {.strong {rep}} 
-                      unique species partitions.", wrap= TRUE)
+      cli::cli_inform(c("i" = "Delim {.arg {n_cols}} has a total of {.strong {rep}} unique species partitions."))
       
       invisible(delim)
     }
     
-  } else if(length(n_cols) > 1){
+  } else if(length(n_cols) > 1) {
     
-    rep <- delim %>%
+    rep <- delim |>
       tidyr::pivot_longer(cols=-labels,
                           names_to = "method",
                           values_to = "spp")
     
-    all_unique <- rep %>% dplyr::summarise(n= dplyr::n_distinct(spp, na.rm = TRUE))
+    all_unique <- rep |> dplyr::summarise(n= dplyr::n_distinct(spp, na.rm = TRUE))
     
-    cli::cli_inform(c("i" = "{.arg delim} has a total of
-                      {.strong {purrr::pluck(all_unique,1)}} unique species partitions"))
+    cli::cli_inform(c("i" = "Joined delimitations have a total of {.strong {purrr::pluck(all_unique,1)}} unique species partitions."))
     
-    if(summary==TRUE) {
+    if(tabulate == TRUE) {
       
-      group_unique <- rep %>% dplyr::summarise(partitions= dplyr::n_distinct(spp, na.rm = TRUE), .by = "method")
+      group_unique <- rep |> dplyr::summarise(partitions= dplyr::n_distinct(spp, na.rm = TRUE), .by = "method")
       
       cli::cli_inform(c("i" = "Check below the number of species partitions per method:"))
       
