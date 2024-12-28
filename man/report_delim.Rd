@@ -4,13 +4,13 @@
 \alias{report_delim}
 \title{Report Unique Species Partitions}
 \usage{
-report_delim(delim, summary = TRUE)
+report_delim(delim, tabulate = TRUE)
 }
 \arguments{
 \item{delim}{Output from any \code{*_tbl()} (e.g. \code{\link[delimtools]{gmyc_tbl}}),
 \code{\link[delimtools]{delim_join}} or \code{\link[delimtools]{delim_consensus}}.}
 
-\item{summary}{Logical. If TRUE, returns a message and a summary of \code{delim}. If FALSE, 
+\item{tabulate}{Logical. If TRUE, returns a message and a tabulated summary of \code{delim}. If FALSE, 
 only the message is printed on Console.}
 }
 \value{
@@ -21,7 +21,7 @@ an object of class \code{\link[tibble]{tbl_df}}.
 }
 \details{
 For each column in \code{delim}, \code{report_delim()} will calculate the 
-number of unique partitions. If \code{delim} is an output from \code{*_tbl()},
+number of unique partitions and print them to Console. If \code{delim} is an output from \code{*_tbl()},
 \code{report_delim()} will get unique species partitions using \code{\link[vctrs]{vec_unique_count}}.
 If \code{delim} is an output from \code{\link[delimtools]{delim_join}} 
 or \code{\link[delimtools]{delim_consensus}}, values are summarized by using 
