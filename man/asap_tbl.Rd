@@ -10,7 +10,8 @@ asap_tbl(
   haps = NULL,
   model = 3,
   outfolder = NULL,
-  webserver = NULL
+  webserver = NULL,
+  delimname = "asap"
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ asap_tbl(
 \item{outfolder}{Path to output folder. Default to NULL. If not specified, a temporary location is used.}
 
 \item{webserver}{A .csv file containing ASAP results obtained from a webserver. Default to NULL.}
+
+\item{delimname}{Character. String to rename the delimitation method in the table. Default to 'asap'.}
 }
 \value{
 an object of class \code{\link[tibble]{tbl_df}}

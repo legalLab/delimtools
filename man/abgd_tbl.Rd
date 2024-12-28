@@ -11,7 +11,8 @@ abgd_tbl(
   slope = 1.5,
   model = 3,
   outfolder = NULL,
-  webserver = NULL
+  webserver = NULL,
+  delimname = "abgd"
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ abgd_tbl(
 \item{outfolder}{Path to output folder. Default to NULL. If not specified, a temporary location is used.}
 
 \item{webserver}{A .txt file containing ABGD results obtained from a webserver. Default to NULL.}
+
+\item{delimname}{Character. String to rename the delimitation method in the table. Default to 'abgd'.}
 }
 \value{
 an object of class \code{\link[tibble]{tbl_df}}

@@ -4,7 +4,7 @@
 \alias{locmin_tbl}
 \title{Turns Local Minima Results into a Tibble}
 \usage{
-locmin_tbl(distobj, threshold = 0.01, haps = NULL)
+locmin_tbl(distobj, threshold = 0.01, haps = NULL, delimname = "locmin")
 }
 \arguments{
 \item{distobj}{A distance object (usually from \code{\link[ape]{dist.dna}}).}
@@ -13,6 +13,8 @@ locmin_tbl(distobj, threshold = 0.01, haps = NULL)
 \code{\link[spider]{localMinima}} for details.}
 
 \item{haps}{Optional. A vector of haplotypes to keep into the \code{\link[tibble]{tbl_df}}.}
+
+\item{delimname}{Character. String to rename the delimitation method in the table. Default to 'locmin'.}
 }
 \value{
 An object of class \code{\link[tibble]{tbl_df}}.

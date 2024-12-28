@@ -10,7 +10,8 @@ mptp_tbl(
   outfolder = NULL,
   method = c("multi", "single"),
   minbrlen = 1e-04,
-  webserver = NULL
+  webserver = NULL,
+  delimname = "mptp"
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ are ignored from computations. Default to 0.0001. Use \code{\link[delimtools]{mi
 for fine tuning.}
 
 \item{webserver}{A .txt file containing mPTP results obtained from a webserver. Default to NULL.}
+
+\item{delimname}{Character. String to rename the delimitation method in the table. Default to 'mptp'.}
 }
 \value{
 an object of class \code{\link[tibble]{tbl_df}}

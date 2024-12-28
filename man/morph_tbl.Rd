@@ -4,12 +4,14 @@
 \alias{morph_tbl}
 \title{Generating a morphological delimitation table}
 \usage{
-morph_tbl(labels, sppVector)
+morph_tbl(labels, sppVector, delimname = "morph")
 }
 \arguments{
 \item{labels}{Vector of unique sequence ID labels.}
 
 \item{sppVector}{Vector of corresponding morphological species delimitation groups.}
+
+\item{delimname}{Character. String to rename the delimitation method in the table. Default to 'morph'.}
 }
 \value{
 an object of class \code{\link[tibble]{tbl_df}}

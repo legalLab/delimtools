@@ -4,13 +4,15 @@
 \alias{bgmyc_tbl}
 \title{Turns bGMYC Results Into a Tibble}
 \usage{
-bgmyc_tbl(bgmyc_res, ppcutoff = 0.05)
+bgmyc_tbl(bgmyc_res, ppcutoff = 0.05, delimname = "bgmyc")
 }
 \arguments{
 \item{bgmyc_res}{Output from \code{\link[bGMYC]{bgmyc.singlephy}}.}
 
 \item{ppcutoff}{Posterior probability threshold for clustering samples into
 species partitions. See \code{\link[bGMYC]{bgmyc.point}} for details. Default to 0.05.}
+
+\item{delimname}{Character. String to rename the delimitation method in the table. Default to 'bgmyc'.}
 }
 \value{
 an object of class \code{\link[tibble]{tbl_df}}.

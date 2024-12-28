@@ -4,10 +4,12 @@
 \alias{gmyc_tbl}
 \title{Turns GMYC Results Into a Tibble}
 \usage{
-gmyc_tbl(gmyc_res)
+gmyc_tbl(gmyc_res, delimname = "gmyc")
 }
 \arguments{
 \item{gmyc_res}{Output from \code{\link[splits]{gmyc}}.}
+
+\item{delimname}{Character. String to rename the delimitation method in the table. Default to 'gmyc'.}
 }
 \value{
 An object of class \code{\link[tibble]{tbl_df}}.
