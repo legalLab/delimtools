@@ -97,7 +97,7 @@ delim_brewer <- function(delim, package = NULL, palette = NULL, seed = NULL){
     
   } else if(package == "randomcoloR") {
     
-    cpal <- randomcoloR::distinctColorPalette(k=nclust)
+    cpal <- withr::with_seed(seed= seed, code= randomcoloR::distinctColorPalette(k=nclust))
 
   }
 
