@@ -7,11 +7,11 @@
 check_identifiers(data, identifier, dna)
 }
 \arguments{
-\item{data}{an object of class \code{\link[tibble]{tbl_df}} containing sequence metadata.}
+\item{data}{an object of class \link[tibble:tbl_df-class]{tbl_df} containing sequence metadata.}
 
 \item{identifier}{column in \code{data} which contains sequence identifiers.}
 
-\item{dna}{a \code{\link[ape]{DNAbin}} object.}
+\item{dna}{a \link[ape:DNAbin]{DNAbin} object.}
 }
 \value{
 A list containing erroneus identifiers between metadata and sequence file.
@@ -27,6 +27,10 @@ duplicated entries, or differences in size lengths. If any of these problems are
 warnings will appear in \code{Console} and corrections should be made to prevent
 unintended consequences later. A list containing erroneous identifiers is returned
 invisibly.
+}
+\examples{
+check_identifiers(geophagus_info, "gbAccession", geophagus)
+
 }
 \author{
 Pedro S. Bittencourt, Rupert A. Collins.

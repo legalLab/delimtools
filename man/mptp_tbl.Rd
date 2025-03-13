@@ -3,6 +3,11 @@
 \name{mptp_tbl}
 \alias{mptp_tbl}
 \title{A Command-Line Interface for mPTP - multi-rate Poisson Tree Processes}
+\source{
+Kapli T., Lutteropp S., Zhang J., Kobert K., Pavlidis P., Stamatakis A., Flouri T. 2016.
+Multi-rate Poisson tree processes for single-locus species delimitation under
+maximum likelihood and Markov chain Monte Carlo. Bioinformatics 33(11):1630-1638.
+}
 \usage{
 mptp_tbl(
   infile,
@@ -28,28 +33,62 @@ mptp_tbl(
 }}
 
 \item{minbrlen}{Numeric. Branch lengths smaller or equal to the value provided
-are ignored from computations. Default to 0.0001. Use \code{\link[delimtools]{min_brlen}}
-for fine tuning.}
+are ignored from computations. Default to 0.0001. Use \link{min_brlen}for fine tuning.}
 
 \item{webserver}{A .txt file containing mPTP results obtained from a webserver. Default to NULL.}
 
 \item{delimname}{Character. String to rename the delimitation method in the table. Default to 'mptp'.}
 }
 \value{
-an object of class \code{\link[tibble]{tbl_df}}
+an object of class \link[tibble:tbl_df-class]{tbl_df}
 }
 \description{
 \code{mptp_tbl()} returns species partition hypothesis estimated by mPTP software
-(\url{https://github.com/Pas-Kapli/mptp}).
+\url{https://github.com/Pas-Kapli/mptp}.
 }
 \details{
-\code{mptp_tbl()} relies on \code{\link[base]{system}} to invoke mPTP software through
-a command-line interface. Hence, you must have the software available as an executable file on 
-your system in order to use this function properly. \code{mptp_tbl()}
-saves all output files in \code{outfolder} and imports the results generated to \code{Environment}.
+\code{mptp_tbl()} relies on \link[base:system]{system} to invoke mPTP software through
+a command-line interface. Hence, you must have the software available as an executable file on
+your system in order to use this function properly. \code{mptp_tbl()} saves all output files in
+\code{outfolder} and imports the results generated to \code{Environment}.
 If an \code{outfolder} is not provided by the user, then a temporary location is used.
-Alternatively, \code{mptp_tbl()} can parse a file obtained from webserver such as 
-https://mptp.h-its.org/.
+Alternatively, \code{mptp_tbl()} can parse a file obtained from webserver such as
+\url{https://mptp.h-its.org/}.
+}
+\examples{
+\dontrun{
+
+# get path to phylogram
+path_to_file <- system.file("extdata/geophagus_raxml.nwk", package = "delimtools")
+
+# run mPTP in single threshold mode (PTP)
+ptp_df <- mptp_tbl(
+  infile = "inst/extdata/geophagus_raxml.nwk",
+  exe = "/usr/local/bin/mptp",
+  method = "single",
+  minbrlen = 0.0001,
+  delimname = "ptp",
+  outfolder = NULL
+)
+
+# check
+ptp_df
+
+# run mPTP in multi threshold mode (mPTP)
+
+mptp_df <- mptp_tbl(
+  infile = "inst/extdata/geophagus_raxml.nwk",
+  exe = "/usr/local/bin/mptp",
+  method = "single",
+  minbrlen = 0.0001,
+  delimname = "mptp",
+  outfolder = NULL
+)
+
+# check
+mptp_df
+}
+
 }
 \author{
 Paschalia Kapli, Sarah Lutteropp, Jiajie Zhang, Kassian Kobert, Pavlos Pavlides, Alexandros Stamatakis, Tomáš Flouri.

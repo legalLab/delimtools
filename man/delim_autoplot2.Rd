@@ -17,22 +17,22 @@ delim_autoplot2(
 )
 }
 \arguments{
-\item{delim}{Output from \code{\link[delimtools]{delim_join}}.}
+\item{delim}{Output from \link{delim_join}.}
 
-\item{tr}{A \code{\link[tidytree]{treedata-class}} object. Both phylogram and
+\item{tr}{A \link[tidytree:treedata-class]{treedata} object. Both phylogram and
 ultrametric trees are supported.}
 
 \item{consensus}{Logical. Should the majority-vote consensus to be estimated?}
 
 \item{n_match}{An Integer. If \code{consensus = TRUE}, threshold for majority-vote
-calculations. See \code{\link[delimtools]{delim_consensus}} for details.}
+calculations. See \link{delim_consensus} for details.}
 
 \item{delim_order}{A character vector of species delimitation names ordered by user.
 Default to NULL.}
 
-\item{tbl_labs}{A \code{\link[tibble]{tbl_df}} of customized labels for tree plotting. The
+\item{tbl_labs}{A \link[tibble:tbl_df-class]{tbl_df} of customized labels for tree plotting. The
 first column must match tip labels of the \code{tr} object, while the second column
-should have customized labels, and third column must have species names for each tip of the tree.}
+should have customized labels.}
 
 \item{species}{column name in \code{tbl_labs} which contains species names for each tip of the tree.}
 
@@ -40,21 +40,40 @@ should have customized labels, and third column must have species names for each
 tiplabels become truncated when plotting. Default to \code{0.1}.}
 
 \item{widths}{A numeric vector containing the relative widths of the tree and
-species delimitation bars. See \code{\link[patchwork]{wrap_plots}} for details.
+species delimitation bars. See \link[patchwork:wrap_plots]{wrap_plots} for details.
 Defaults to \code{c(0.5, 0.2)}.}
 }
 \description{
-\code{delim_autoplot2()} returns a phylogenetic tree plotted using
-\code{\link[ggtree]{ggtree}} alongside with a customized tile plot using
-\code{\link[ggplot2]{geom_tile}} and \code{\link[patchwork]{wrap_plots}}.
+\code{delim_autoplot2()} returns a phylogenetic tree plotted using \code{ggtree} alongside
+with a customized tile plot using \link[ggplot2:geom_tile]{geom_tile} combined by
+\link[patchwork:wrap_plots]{wrap_plots}.
 }
 \details{
 \code{delim_autoplot2()} is a wrapper for tree plotting with associated data implemented
-using \code{\link[ggtree]{ggtree}} and \code{\link[patchwork]{wrap_plots}}. If
-\code{consensus = TRUE}, a consensus bar will be plotted next to the species delimitation plot,
+using \code{ggtree}, \code{ggplot2}, and \code{patchwork}. If \code{consensus = TRUE}, a consensus bar will be plotted next to the species delimitation plot,
 summarizing partitions across samples. If no consensus is reached, an "X" will be plotted instead.
-This function is a modified version of \code{\link[delimtools]{delim_autoplot}} which plots 
+This function is a modified version of \link{delim_autoplot} which plots
 species partitions using a black and grey color scheme.
+}
+\examples{
+# create labels
+labs <- geophagus_info |> dplyr::select(gbAccession, scientificName)
+
+# view partitions using an ultrametric tree
+p <- delim_autoplot2(geophagus_delims,
+  geophagus_beast,
+  tbl_labs = labs,
+  species = "scientificName"
+)
+p
+
+# view partitions using a phylogram
+p1 <- delim_autoplot2(geophagus_delims,
+  geophagus_raxml,
+  tbl_labs = labs,
+  species = "scientificName"
+)
+
 }
 \author{
 Pedro S. Bittencourt, Rupert A. Collins.

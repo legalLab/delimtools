@@ -4,54 +4,42 @@
 \alias{hap_collapse}
 \title{Removes Duplicated Sequences from Alignment}
 \usage{
-hap_collapse(dna, collapseSubstrings = TRUE, clean = TRUE)
+hap_collapse(dna, clean = TRUE, collapseSubstrings = TRUE, verbose = TRUE)
 }
 \arguments{
-\item{dna}{an object of class \code{\link[ape]{DNAbin}}.}
+\item{dna}{A \link[ape:DNAbin]{DNAbin} object.}
+
+\item{clean}{logical. Whether to remove or not remove non ACTG bases from alignment.}
 
 \item{collapseSubstrings}{logical. Whether to collapse or not collapse shorter but identical sequences.}
 
-\item{clean}{logical. Whether to remove or not remove non ACTG bases from alignment.}
+\item{verbose}{logical. Returns a warning if any sequence contains non ACTG bases.
+See \link{clean_dna} for details.}
 }
 \value{
-an object of class \code{\link[ape]{DNAbin}}.
+A \link[ape:DNAbin]{DNAbin} object.
 }
 \description{
-\code{hap_collapse()} collapses haplotypes from a \code{\link[ape]{DNAbin}} object,
+\code{hap_collapse()} collapses haplotypes from a \link[ape:DNAbin]{DNAbin} object,
 keeping unique haplotypes only.
 }
 \details{
-\code{hap_collapse()} collapses a \code{\link[ape]{DNAbin}} object, keeping unique
-haplotypes only. If \code{collapseSubstrings = TRUE}, the function will consider
-shorter but identical sequences as the same haplotype and collapse them, returning the
-longest sequence. If \code{collapseSubstrings = FALSE}, the function will consider
+\code{hap_collapse()} collapses a \link[ape:DNAbin]{DNAbin} object, keeping unique
+haplotypes only. If \code{clean = TRUE}, the function will call \link{clean_dna} to remove
+any non ACTG bases from alignment prior to collapsing haplotypes. If \code{clean = FALSE},
+the function will treat data as it is, and will not remove any bases. If
+\code{collapseSubstrings = TRUE}, the function will consider shorter but identical
+sequences as the same haplotype and collapse them, returning the longest
+sequence. If \code{collapseSubstrings = FALSE}, the function will consider
 shorter but identical sequences as different haplotypes and will keep them.
-If \code{clean = TRUE}, the function will call \code{\link[delimtools]{clean_dna}}
-to remove any non ACTG bases from alignment prior to collapsing haplotypes. If
-\code{clean = FALSE}, the function will treat data as it is, and will not remove any bases.
 }
 \examples{
 
-# create a vector of DNA sequences
-seqs <- c(seq1= "ATGCTAGTTCGC",
-          seq2= "ATGCTAGTTCGC",
-          seq3= "ATGCTAGTTCGC",
-          seq4= "ATGCTAGTTCG-",
-          seq5= "ATGCTAGTT---",
-          seq6= "ATGCTAGTTCGN",
-          seq7= "ATGCTA-TTCGC",
-          seq8= "ATGCTA-TTCG-",
-          seq9= "ATGCTANTTCGN",
-          seq10="ATGCTAGTT")
-          
-# convert to DNAbin
-dummy <- tolower(seqs) |>
- strsplit(split= "") |>
- ape::as.DNAbin.list()
- 
-# run hap_collapse with different settings
+# collapse into unique haplotypes, including shorter sequences
+hap_collapse(geophagus, clean = TRUE, collapseSubstrings = TRUE)
 
-# 2 DNA sequences (seq1/seq7)
+# collapse into unique haplotypes keeping shorter sequences
+hap_collapse(geophagus, clean = TRUE, collapseSubstrings = FALSE)
 
 }
 \author{

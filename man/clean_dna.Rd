@@ -7,21 +7,25 @@
 clean_dna(dna, verbose = TRUE)
 }
 \arguments{
-\item{dna}{an object of class \code{\link[ape]{DNAbin}}.}
+\item{dna}{an object of class \link[ape:DNAbin]{DNAbin}.}
 
 \item{verbose}{logical. Returns a warning if any sequence contains non ACTG bases.}
 }
 \value{
-an object of class \code{\link[ape]{DNAbin}}.
+an object of class \link[ape:DNAbin]{DNAbin}.
 }
 \description{
-\code{clean_dna()} removes all character not a valid ACTG base from a \code{\link[ape]{DNAbin}}
+\code{clean_dna()} removes all character not a valid ACTG base from a \link[ape:DNAbin]{DNAbin}
 object.
 }
 \details{
 \code{clean_dna()} detects and removes any non ACTG bases from alignment. This includes:
 "N", "-", "?", "R", "Y", etc. If \code{verbose = TRUE}, returns a warning if these characters
 are inside the sequences, i.e, are not alignment padding chars at the ends.
+}
+\examples{
+geo_clean <- clean_dna(geophagus)
+
 }
 \author{
 Rupert A. Collins

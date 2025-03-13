@@ -7,24 +7,34 @@
 delim_consensus(delim, n_match = NULL)
 }
 \arguments{
-\item{delim}{Output from \code{\link[delimtools]{delim_join}}.}
+\item{delim}{Output from \link{delim_join}.}
 
 \item{n_match}{An integer. Threshold for Majority-Vote calculations. If not specified,
 returns a warning and the threshold will be defined as \code{ceiling(ncol(delim[, -1])/2)}.}
 }
 \value{
-an object of class \code{\link[tibble]{tbl_df}}.
+an object of class \link[tibble:tbl_df-class]{tbl_df}.
 }
 \description{
 \code{delim_consensus()} estimates a majority-vote consensus over the output of
-\code{\link[delimtools]{delim_join}} in a row-wise manner.
+\link{delim_join} in a row-wise manner.
 }
 \details{
 \code{delim_consensus()} iterates row-by-row, counting the number of matching species
-partition names across all species delimitations methods in \code{\link[delimtools]{delim_join}} output.
+partition names across all species delimitations methods in \link{delim_join} output.
 If the sum of identical partition names is greater or equal \code{n_match},
 the consensus column will be filled with its partition name. Otherwise,
-consensus column will be filled with \code{\link[base]{NA}}.
+consensus column will be filled with \link[base:NA]{NA}.
+}
+\examples{
+
+# estimate a majority vote consensus
+delim_consensus <- delim_consensus(geophagus_delims, n_match= 5)
+
+# check
+delim_consensus
+
+
 }
 \author{
 Pedro S. Bittencourt

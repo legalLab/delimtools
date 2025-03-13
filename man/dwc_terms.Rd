@@ -7,7 +7,7 @@
 dwc_terms(dwc, terms)
 }
 \arguments{
-\item{dwc}{a list of standard terms and definitions created using \code{\link[delimtools]{get_dwc}}}
+\item{dwc}{a list of standard terms and definitions created using \link{get_dwc}.}
 
 \item{terms}{a vector or list of terms to check.}
 }

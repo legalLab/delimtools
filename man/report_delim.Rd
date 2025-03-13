@@ -7,40 +7,29 @@
 report_delim(delim, tabulate = TRUE)
 }
 \arguments{
-\item{delim}{Output from any \code{*_tbl()} (e.g. \code{\link[delimtools]{gmyc_tbl}}),
-\code{\link[delimtools]{delim_join}} or \code{\link[delimtools]{delim_consensus}}.}
+\item{delim}{Output from any \verb{*_tbl()} (e.g. \link{gmyc_tbl}), \link{delim_join} or \link{delim_consensus}.}
 
-\item{tabulate}{Logical. If TRUE, returns a message and a tabulated summary of \code{delim}. If FALSE, 
+\item{tabulate}{Logical. If TRUE, returns a message and a tabulated summary of \code{delim}. If FALSE,
 only the message is printed on Console.}
 }
 \value{
-an object of class \code{\link[tibble]{tbl_df}}.
+an object of class \link[tibble:tbl_df-class]{tbl_df}].
 }
 \description{
 \code{report_delim()} reports the number of unique species partitions in \code{delim}.
 }
 \details{
-For each column in \code{delim}, \code{report_delim()} will calculate the 
-number of unique partitions and print them to Console. If \code{delim} is an output from \code{*_tbl()},
-\code{report_delim()} will get unique species partitions using \code{\link[vctrs]{vec_unique_count}}.
-If \code{delim} is an output from \code{\link[delimtools]{delim_join}} 
-or \code{\link[delimtools]{delim_consensus}}, values are summarized by using 
-\code{\link[dplyr]{n_distinct}} with \code{na.rm = TRUE}. This is to prevent any columns with
+For each column in \code{delim}, \code{report_delim()} will calculate the
+number of unique partitions and print them to \code{Console}. If \code{delim} is an output from \verb{*_tbl()},
+\code{report_delim()} will get unique species partitions using \link[vctrs:vec_unique]{vec_unique_count}.
+If \code{delim} is an output from \link{delim_join} or \link{delim_consensus}, values are summarized by using
+\link[dplyr:n_distinct]{n_distinct} with \code{na.rm = TRUE}. This is to prevent any columns with
 NA values to be interpreted as species partitions.
 }
 \examples{
-# Create a species partition
-delim_df <- tibble::tibble(labels= stringr::str_c("seq", 1:5), 
-delim_A= c(rep(1,3), rep(2,2)), 
-delim_B= c(rep(1,1), rep(2,2), rep(3,2)),
-delim_C= c(rep(1,1), rep(2,2), rep(3,2)))
 
-# View
-delim_df
-
-# Report species partitions across delims 
-delim_join(delim_df) \%>\%
-report_delim()
+# report geophagus delimitations
+report_delim(geophagus_delims)
 
 }
 \author{

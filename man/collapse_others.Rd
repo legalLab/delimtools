@@ -4,29 +4,36 @@
 \alias{collapse_others}
 \title{Summarise Haplotype Metadata Down to One Row}
 \usage{
-collapse_others(data, hap_tbl, identifier, cols)
+collapse_others(data, hap_tbl, labels, cols)
 }
 \arguments{
-\item{data}{an object of class \code{\link[tibble]{tbl_df}} containing sequence metadata.}
+\item{data}{An object of class \link[tibble:tbl_df-class]{tbl_df} containing sequence metadata.}
 
-\item{hap_tbl}{output from \code{link[delimtools]{haplotype_tbl()}}.}
+\item{hap_tbl}{Output from \link{haplotype_tbl}.}
 
-\item{identifier}{a character vector of unique sequence labels.}
+\item{labels}{Column name which contains sequence names.}
 
-\item{cols}{a character vector of variables to collapse.}
+\item{cols}{A character vector of variables to collapse.}
 }
 \value{
-an object of class \code{\link[tibble]{tbl_df}}.
+an object of class \link[tibble:tbl_df-class]{tbl_df}.
 }
 \description{
-\code{collapse_others()} returns a \code{\link[tibble]{tbl_df}} summarising
+\code{collapse_others()} returns a \link[tibble:tbl_df-class]{tbl_df} summarising
 all unique haplotype frequencies, duplicates and selected metadata into a single row.
 }
 \details{
 \code{collapse_others()} is a helper function to summarise metadata along with
-\code{\link[delimtools]{haplotype_tbl()}}. For any given \code{cols},
-\code{collapse_others()} flattens its content by unique haplotypes and its duplicates
-in \code{hap_tbl}.
+\link{haplotype_tbl}. For any given \code{cols}, \code{collapse_others()} flattens its content
+by unique haplotypes and its duplicates in \code{hap_tbl}.
+}
+\examples{
+# summarise haplotypes
+hap_tbl <- haplotype_tbl(geophagus)
+
+# summarise country
+others_df <- collapse_others(geophagus_info, hap_tbl, "gbAccession", "country")
+
 }
 \author{
 Pedro S. Bittencourt, Rupert A. Collins.

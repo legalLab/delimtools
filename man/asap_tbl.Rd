@@ -3,6 +3,10 @@
 \name{asap_tbl}
 \alias{asap_tbl}
 \title{A Command-Line Interface for ASAP - Assemble Species by Automatic Partitioning}
+\source{
+Puillandre N., Brouillet S., Achaz G. 2021. ASAP: assemble species by automatic
+partitioning. Molecular Ecology Resources 21:609–620.
+}
 \usage{
 asap_tbl(
   infile,
@@ -19,14 +23,14 @@ asap_tbl(
 
 \item{exe}{Path to an ASAP executable.}
 
-\item{haps}{Optional. A vector of haplotypes to keep into the \code{\link[tibble]{tbl_df}}.}
+\item{haps}{Optional. A vector of haplotypes to keep into the \link[tibble:tbl_df-class]{tbl_df}.}
 
 \item{model}{An integer specifying evolutionary model to be used. Available options are:
 \itemize{
-  \item 0: Kimura-2P
-  \item 1: Jukes-Cantor (default)
-  \item 2: Tamura-Nei
-  \item 3: simple distance (p-distance)
+\item 0: Kimura-2P
+\item 1: Jukes-Cantor (default)
+\item 2: Tamura-Nei
+\item 3: simple distance (p-distance)
 }}
 
 \item{outfolder}{Path to output folder. Default to NULL. If not specified, a temporary location is used.}
@@ -36,23 +40,35 @@ asap_tbl(
 \item{delimname}{Character. String to rename the delimitation method in the table. Default to 'asap'.}
 }
 \value{
-an object of class \code{\link[tibble]{tbl_df}}
+an object of class \link[tibble:tbl_df-class]{tbl_df}
 }
 \description{
 \code{asap_tbl()} returns species partition hypothesis estimated by ASAP software
-(\url{https://bioinfo.mnhn.fr/abi/public/asap/}).
+\url{https://bioinfo.mnhn.fr/abi/public/asap/}.
 }
 \details{
-\code{asap_tbl()} relies on \code{\link[base]{system}} to invoke ASAP software through
-a command-line interface. Hence, you must have the software available as an executable file on 
+\code{asap_tbl()} relies on \link[base:system]{system} to invoke ASAP software through
+a command-line interface. Hence, you must have the software available as an executable file on
 your system in order to use this function properly.
 \code{asap_tbl()} saves all output files in \code{outfolder} and imports the first partition
 file generated to \code{Environment}.
-Alternatively, \code{asap_tbl()} can parse a .csv file obtained from webserver such as 
-https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html.
+Alternatively, \code{asap_tbl()} can parse a .csv file obtained from webserver such as
+\url{https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html}.
 }
 \examples{
-asap_df <- asap_tbl(infile = "data/pacus/pacus.trimmed.fasta", model= 3, outfolder = "pacus.asap")
+
+\dontrun{
+
+#' # get path to fasta file
+path_to_file <- system.file("extdata/geophagus.fasta", package = "delimtools")
+
+# run ASAP
+asap_df <- asap_tbl(infile = path_to_file, exe= "/usr/local/bin/asap", model= 3)
+
+# check
+asap_df
+
+}
 
 }
 \author{

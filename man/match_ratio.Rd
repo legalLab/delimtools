@@ -3,32 +3,42 @@
 \name{match_ratio}
 \alias{match_ratio}
 \title{Compute Agreement Between Alternative Species Delimitation Partitions}
+\source{
+Ahrens D., Fujisawa T., Krammer H. J., Eberle J., Fabrizi S., Vogler A. P. 2016. Rarity and
+Incomplete Sampling in DNA-Based Species Delimitation. Systematic Biology 65 (3): 478-494.
+}
 \usage{
 match_ratio(delim)
 }
 \arguments{
-\item{delim}{Output from \code{\link[delimtools]{delim_join}}.}
+\item{delim}{Output from \link{delim_join}.}
 }
 \value{
-an object of class \code{\link[tibble]{tbl_df}}.
+an object of class \link[tibble:tbl_df-class]{tbl_df}.
 }
 \description{
 \code{match_ratio()} uses the Match Ratio statistic of Ahrens et al. (2014) to
 compute agreement between all pairs of species delimitation partitions in
-\code{\link[delimtools]{delim_join}} output.
+\link{delim_join} output.
 }
 \details{
 \code{match_ratio()} iterates between all species delimitation partitions in
-\code{\link[delimtools]{delim_join}} output and returns a \code{\link[tibble]{tbl_df}} 
+\link{delim_join} output and returns a \link[tibble:tbl_df-class]{tbl_df}
 containing the following columns:
 \itemize{
-  \item \code{pairs} pairs of species delimitation methods analyzed.
-  \item \code{delim_1} number of species partitions in method 1.
-  \item \code{delim_2} number of species partitions in method 2.
-  \item \code{n_match} number of identical species partitions in methods 1 and 2.
-  \item \code{match_ratio} match ratio statistic, where 0 indicates no agreement between 
-  pairs of species delimitation partitions and 1 indicates complete agreement between
-  them.}
+\item \code{pairs} pairs of species delimitation methods analyzed.
+\item \code{delim_1} number of species partitions in method 1.
+\item \code{delim_2} number of species partitions in method 2.
+\item \code{n_match} number of identical species partitions in methods 1 and 2.
+\item \code{match_ratio} match ratio statistic, where 0 indicates no agreement between
+pairs of species delimitation partitions and 1 indicates complete agreement between
+them.}
+}
+\examples{
+
+# estimate match ratio statistics
+match_ratio(geophagus_delims)
+
 }
 \author{
 Pedro S. Bittencourt

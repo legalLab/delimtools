@@ -2,7 +2,7 @@
 % Please edit documentation in R/morph_tbl.R
 \name{morph_tbl}
 \alias{morph_tbl}
-\title{Generating a morphological delimitation table}
+\title{Generating a Morphological Delimitation Table}
 \usage{
 morph_tbl(labels, sppVector, delimname = "morph")
 }
@@ -14,7 +14,7 @@ morph_tbl(labels, sppVector, delimname = "morph")
 \item{delimname}{Character. String to rename the delimitation method in the table. Default to 'morph'.}
 }
 \value{
-an object of class \code{\link[tibble]{tbl_df}}
+an object of class \link[tibble:tbl_df-class]{tbl_df}.
 }
 \description{
 \code{morph_tbl()} returns species partition hypothesis estimated from a prior taxonomic identifications supplied by the user.
@@ -23,8 +23,15 @@ an object of class \code{\link[tibble]{tbl_df}}
 \code{morph_tbl()} uses information in a species name vector to label each unique sample with a number corresponding to this name.
 }
 \examples{
-morph.df <- morph_tbl(labels = c("seq1", "seq2", "seq3", "seq4"), 
-                      sppVector = c("spA", "spB", "spC", "spC"))
+
+# create a tibble
+morph_df <- morph_tbl(
+  labels = geophagus_info$gbAccession,
+  sppVector = geophagus_info$scientificName
+)
+
+# check
+morph_df
 
 }
 \author{

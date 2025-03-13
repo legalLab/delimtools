@@ -3,26 +3,54 @@
 \name{gmyc_tbl}
 \alias{gmyc_tbl}
 \title{Turns GMYC Results Into a Tibble}
+\source{
+Pons J., Barraclough T. G., Gomez-Zurita J., Cardoso A., Duran D. P., Hazell S.,
+Kamoun S., Sumlin W. D., Vogler A. P. 2006. Sequence-based species delimitation for
+the DNA taxonomy of undescribed insects. Systematic Biology. 55:595-609.
+
+Monaghan M. T., Wild R., Elliot M., Fujisawa T., Balke M., Inward D. J. G., Lees D. C., Ranaivosolo R.,
+Eggleton P., Barraclough T. G., Vogler A. P. 2009. Accelerated species inventory
+on Madagascar using coalescent-based models of species delineation.
+Systematic Biology. 58:298-311.
+
+Fujisawa T., Barraclough T. G. 2013. Delimiting Species Using Single-Locus Data
+and the Generalized Mixed Yule Coalescent Approach: A Revised Method and Evaluation
+on Simulated Data Sets. Systematic Biology. 62(5):707–724.
+}
 \usage{
 gmyc_tbl(gmyc_res, delimname = "gmyc")
 }
 \arguments{
-\item{gmyc_res}{Output from \code{\link[splits]{gmyc}}.}
+\item{gmyc_res}{Output from \link[splits:gmyc]{gmyc}.}
 
 \item{delimname}{Character. String to rename the delimitation method in the table. Default to 'gmyc'.}
 }
 \value{
-An object of class \code{\link[tibble]{tbl_df}}.
+An object of class \link[tibble:tbl_df-class]{tbl_df}.
 }
 \description{
-\code{gmyc_tbl()} processes output from \code{\link[splits]{gmyc}} into an
+\code{gmyc_tbl()} processes output from \link[splits:gmyc]{gmyc} into an
 object of class \code{\link[tibble]{tbl_df}}.
 }
 \details{
-\code{\link[splits]{splits}} package uses \code{\link[splits]{gmyc}} to optimize
-genetic clusters and \code{\link[splits]{spec.list}} to cluster samples into
+\code{splits} package uses \link[splits:gmyc]{gmyc} to optimize
+genetic clusters and \link[splits:gmyc]{spec.list} to cluster samples into
 species partitions. \code{gmyc_tbl()} turns these results into a tibble which matches
-the output from \code{\link[delimtools]{bgmyc_tbl()}} and \code{\link[delimtools]{locmin_tbl()}}.
+the output from \link{bgmyc_tbl} and \link{locmin_tbl}.
+}
+\examples{
+\dontrun{
+
+# run GMYC
+gmyc_res <- splits::gmyc(ape::as.phylo(geophagus_beast))
+
+# create a tibble
+gmyc_df <- gmyc_tbl(gmyc_res)
+
+# check
+gmyc_df
+}
+
 }
 \author{
 Thomas Ezard, Tomochika Fujisawa, Tim Barraclough.

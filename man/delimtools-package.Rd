@@ -6,14 +6,24 @@
 \alias{delimtools-package}
 \title{Helper Functions for Species Delimitation Analysis}
 \description{
-This package contains helpers functions to process, analyse, and plot the output of single locus species delimitation methods. The main purpose of delimtools is to facilitate some work routines for the average R user, from the organization of data to plotting trees and associated data as easily as possible.
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
+Helpers functions to process, analyse, and visualize the output of single locus species delimitation methods.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/legalLab/delimtools}
+  \item Report bugs at \url{https://github.com/legalLab/delimtools/issues}
+}
+
 }
 \author{
-\strong{Maintainer}: Pedro Bittencourt \email{pedro.sennabittencourt@gmail.com} (\href{https://orcid.org/0000-0002-4074-3541}{ORCID})
+\strong{Maintainer}: Pedro Bittencourt \email{pedro.sennabittencourt@gmail.com} (\href{https://orcid.org/0000-0002-4074-3541}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{
-  \item Rupert Collins \email{rupertcollins@gmail.com} (\href{https://orcid.org/0000-0002-9135-1169}{ORCID}) [contributor]
+  \item Rupert Collins \email{rupertcollins@gmail.com} (\href{https://orcid.org/0000-0002-9135-1169}{ORCID}) [contributor, copyright holder]
   \item Tomas Hrbek \email{hrbek@evoamazon.net} (\href{https://orcid.org/0000-0003-3239-7068}{ORCID}) [contributor]
 }
 

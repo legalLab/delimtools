@@ -2,63 +2,57 @@
 % Please edit documentation in R/check_delim.R
 \name{check_delim}
 \alias{check_delim}
-\alias{check_delim.default}
-\alias{check_delim.list}
 \title{Checks If Two or More Species Delimitation Outputs are (Nearly) Equal}
 \usage{
-check_delim(delim_1, delim_2)
-
-\method{check_delim}{default}(delim_1, delim_2)
-
-\method{check_delim}{list}(list)
+check_delim(list)
 }
 \arguments{
-\item{delim_1}{an object of class \code{\link[tibble]{tbl_df}}.}
-
-\item{delim_2}{other object of class \code{\link[tibble]{tbl_df}}, to be compared with \code{delim_1}.}
-
-\item{list}{a list containing species delimitation outputs to check.}
+\item{list}{a \link[base:list]{list} containing two or more species delimitation outputs to check.}
 }
 \value{
 A single logical value, \code{TRUE} or \code{FALSE}.
 }
 \description{
-\code{check_delim()} checks if two or more species delimitation outputs have 
+\code{check_delim()} checks if two or more species delimitation outputs have
 differences in its dimensions, labels, and values.
 }
 \details{
-\code{check_delim()} will check if two or more species delimitation outputs have 
+\code{check_delim()} will check if two or more species delimitation outputs have
 different dimensions (rows, columns), if labels are the same or if there are
 any duplicated or absent labels, and if there are any NA values or if partitions
 were set using non numeric values. If \code{TRUE} for any of the cases listed above,
-\code{check_delim()} will return an error. To check more than two species delimitation
-outputs, a list must be provided.
+\code{check_delim()} will return an error.
 }
 \examples{
 
 # create dummy delimitation outputs
-delim_1 <- tibble::tibble(labels= paste0("seq",1:10),
-                           method_A= c(rep(1,5), rep(2,5)))
+delim_1 <- tibble::tibble(
+  labels = paste0("seq", 1:10),
+  method_A = c(rep(1, 5), rep(2, 5))
+)
 
-delim_2 <- tibble::tibble(labels= paste0("seq",1:10),
-                          method_B= c(rep(1,3), rep(2,2), rep(3, 5)))
+delim_2 <- tibble::tibble(
+  labels = paste0("seq", 1:10),
+  method_B = c(rep(1, 3), rep(2, 2), rep(3, 5))
+)
 
-delim_3 <- tibble::tibble(labels= paste0("seq", 1:10),
-                          method_C= c(rep(1,3), rep(2,2), rep(3,3), rep(4,2)))
+delim_3 <- tibble::tibble(
+  labels = paste0("seq", 1:10),
+  method_C = c(rep(1, 3), rep(2, 2), rep(3, 3), rep(4, 2))
+)
 
-delim_3_withNA <- tibble::tibble(labels= paste0("seq", 1:10),
-                                 method_C= c(rep(1,3), rep(2,2), rep(3,3), rep(NA,2)))
-                                 
+delim_3_withNA <- tibble::tibble(
+  labels = paste0("seq", 1:10),
+  method_C = c(rep(1, 3), rep(2, 2), rep(3, 3), rep(NA, 2))
+)
+
 # check outputs
-check_delim(delim_1, delim_2) # TRUE
-check_delim(delim_1, delim_3) # TRUE
-check_delim(delim_2, delim_3) # TRUE
-
-# check as list
 check_delim(list(delim_1, delim_2, delim_3))
 
 # check with an output containing NAs. Check_delim will return an error.
+\dontrun{
 check_delim(delim_1, delim_3_withNA)
+}
 
 }
 \author{

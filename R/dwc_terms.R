@@ -1,14 +1,14 @@
 #' Print Darwin Core Terms, Definitions and Examples as Bullet Lists
 #'
 #' @description
-#' \code{dwc_terms()} checks a vector or list of terms and return definitions and examples for
+#' `dwc_terms()` checks a vector or list of terms and return definitions and examples for
 #' each one of them.
 #'
-#' @param dwc a list of standard terms and definitions created using \code{\link[delimtools]{get_dwc}}
+#' @param dwc a list of standard terms and definitions created using [get_dwc].
 #' @param terms a vector or list of terms to check.
 #'
 #' @details
-#' For each term in a vector or list, \code{dwc_terms} will return a bullet list containing
+#' For each term in a vector or list, `dwc_terms` will return a bullet list containing
 #' the term, followed by its definition and examples.
 #'
 #' @return
@@ -21,17 +21,13 @@
 #' dwc <- get_dwc(type= "simple")
 #' dwc_terms(dwc, c("genus", "scientificName"))
 #'
-#' @import dplyr
-#' @importFrom stringr str_glue_data
-#' @importFrom cli cli_li
-#'
 #' @export
 dwc_terms <- function(dwc, terms){
 
-  dwc$terms %>%
-    dplyr::filter(term_localName %in% {{ terms }}) %>%
-    dplyr::arrange(match(term_localName, {{ terms }})) %>%
-    stringr::str_glue_data(., "{ term_localName }: { definition } Examples: { examples }", sep= " ") %>%
+  dwc$terms |>
+    dplyr::filter(.data$term_localName %in% {{ terms }}) |>
+    dplyr::arrange(match(.data$term_localName, {{ terms }})) |>
+    stringr::str_glue_data("{ term_localName }: { definition } Examples: { examples }", sep= " ") |>
     cli::cli_li()
 
 }

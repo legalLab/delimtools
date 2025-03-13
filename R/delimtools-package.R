@@ -2,6 +2,9 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @importFrom ggtree %<+%
+#' @importFrom methods is
+#' @importFrom rlang := .data
 ## usethis namespace: end
 NULL
 

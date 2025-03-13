@@ -4,26 +4,35 @@
 \alias{haplotype_tbl}
 \title{Summarise Haplotypes Down to One Row}
 \usage{
-haplotype_tbl(dna, verbose = TRUE)
+haplotype_tbl(dna, clean = TRUE, collapseSubstrings = TRUE, verbose = TRUE)
 }
 \arguments{
-\item{dna}{an object of class \code{\link[ape]{DNAbin}}.}
+\item{dna}{an object of class \link[ape:DNAbin]{DNAbin}.}
+
+\item{clean}{logical. Whether to remove or not remove non ACTG bases from alignment.}
+
+\item{collapseSubstrings}{logical. Whether to collapse or not collapse shorter but identical sequences.}
 
 \item{verbose}{logical. Returns a warning if any sequence contains non ACTG bases.
-See \code{link[delimtools]{clean_dna}} for details.}
+See \link{clean_dna} for details.}
 }
 \value{
-an object of class \code{\link[tibble]{tbl_df}}.
+an object of class \link[tibble:tbl_df-class]{tbl_df}.
 }
 \description{
-\code{haplotype_tbl()} returns a \code{\link[tibble]{tbl_df}} summarising
+\code{haplotype_tbl()} returns a \link[tibble:tbl_df-class]{tbl_df} summarising
 all unique haplotype frequencies and duplicates into a single row.
 }
 \details{
-\code{haplotype_tbl()} uses a combination of \code{\link[delimtools]{clean_dna}} and
-\code{\link[delimtools]{hap_collapse}} to summarise haplotypes into a tibble. Each row
-of the tibble has an unique haplotype, its frequency and all its collapsed duplicates in a
-flattened string.
+\code{haplotype_tbl()} uses a combination of \link{clean_dna} and \link{hap_collapse} to summarise
+haplotypes into a tibble. Each row of the tibble has an unique haplotype,
+its frequency and all its collapsed duplicates in a flattened string.
+}
+\examples{
+
+# get haplotype table
+haplotype_tbl(geophagus) 
+
 }
 \author{
 Rupert A. Collins, Pedro S. Bittencourt.

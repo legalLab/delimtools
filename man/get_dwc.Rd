@@ -18,13 +18,17 @@ a list.
 }
 \description{
 \code{get_dwc()} returns a list of standardized terms and definitions used by the Darwin Core
-Maintenance Interest Group (\url{https://dwc.tdwg.org/}).
+Maintenance Interest Group \url{https://dwc.tdwg.org/}.
 }
 \details{
 \code{get_dwc()} reads Darwin Core distribution documents and terms from Github repository
-(\url{https://github.com/tdwg/dwc}) directly into Environment. This function will return a list
-containing the most recent accepted terms as a vector and a \code{\link[tibble]{tbl_df}} containing
+\url{https://github.com/tdwg/dwc} directly into \code{Environment}. This function will return a list
+containing the most recent accepted terms as a vector and a \link[tibble:tbl_df-class]{tbl_df} containing
 terms, definitions, examples and details about each one of them.
+}
+\examples{
+dwc <- get_dwc(type= "simple") 
+
 }
 \author{
 Pedro S. Bittencourt, Rupert A. Collins

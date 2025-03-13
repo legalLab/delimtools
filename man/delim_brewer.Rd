@@ -7,25 +7,32 @@
 delim_brewer(delim, package = NULL, palette = NULL, seed = NULL)
 }
 \arguments{
-\item{delim}{Output from \code{\link[delimtools]{delim_join}}.}
+\item{delim}{Output from \link{delim_join}.}
 
-\item{package}{Package which contains color palettes. Available options are "RColorBrewer", "viridisLite" or "randomcoloR".}
+\item{package}{Package which contains color palettes. Available options are
+"RColorBrewer", "viridisLite" or "randomcoloR".}
 
-\item{palette}{A palette name. See \code{\link[RColorBrewer]{brewer.pal}} for RColorBrewer 
-or \code{\link[viridisLite]{viridis}} for viridisLite options.}
+\item{palette}{A palette name. \link[RColorBrewer:ColorBrewer]{brewer.pal} for RColorBrewer
+or \link[viridisLite:viridis.map]{viridis} for viridisLite options.}
 
 \item{seed}{Integer. Number to initialize random number generator.}
 }
 \description{
 \code{delim_brewer()} returns a set of colors created by interpolating or using
-color palettes from \code{\link[RColorBrewer]{RColorBrewer}}, \code{\link[viridisLite]{viridisLite}}
-or \code{\link[randomcoloR]{randomcoloR}}.
+color palettes from \link[RColorBrewer:ColorBrewer]{RColorBrewer},
+\link[viridisLite:viridis.map]{viridisLite} or \link[randomcoloR:distinctColorPalette]{randomcoloR}.
 }
 \details{
 \code{delim_brewer()} interpolates over a color palette and returns a vector of random colors
 whose length is equal to the sum of unique species delimitation partitions in \code{delim}.
-For reproducibility, make sure to provide a \code{seed}. If not provided, \code{\link[base]{Sys.time}} 
+For reproducibility, make sure to provide a \code{seed}. If not provided, \link[base:Sys.time]{Sys.time}
 will be used as seed instead. One should also try different seeds to get best color combinations for plotting.
+}
+\examples{
+
+# create a vector of colors
+cols <- delim_brewer(geophagus_delims, package = "randomcoloR")
+
 }
 \author{
 Rupert A. Collins, Pedro S. Bittencourt
