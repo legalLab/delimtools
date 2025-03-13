@@ -1,14 +1,58 @@
-Package: delimtools
-alias: delimtools-package
 Type: Package
+Package: delimtools
 Title: Helper Functions for Species Delimitation Analysis
-Version: 0.1.0
-Date: 2024-09-02
-Authors@R: c(person(given="Pedro",family="Bittencourt",email="pedro.sennabittencourt@gmail.com",role=c("aut", "cre"), comment=c(ORCID= "0000-0002-4074-3541")),person(given= "Rupert",family= "Collins",email= "rupertcollins@gmail.com",role = c("aut", "ctb"),comment = c(ORCID= "0000-0002-9135-1169")), person(given= "Tomas", family= "Hrbek", email= "hrbek@evoamazon.net", role= c("aut", "ctb"), comment = c(ORCID= "0000-0003-3239-7068")))
-Description: This package contains helpers functions to process, analyse, and plot the output of single locus species delimitation methods. The main purpose of delimtools is to facilitate some work routines for the average R user, from the organization of data to plotting trees and associated data as easily as possible.
+Version: 0.2.0
+Date: 2025-03-10
+Authors@R: c(
+    person("Pedro", "Bittencourt", , "pedro.sennabittencourt@gmail.com", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0002-4074-3541")),
+    person("Rupert", "Collins", , "rupertcollins@gmail.com", role = c("aut", "ctb", "cph"),
+           comment = c(ORCID = "0000-0002-9135-1169")),
+    person("Tomas", "Hrbek", , "hrbek@evoamazon.net", role = c("aut", "ctb"),
+           comment = c(ORCID = "0000-0003-3239-7068"))
+  )
+Description: Helpers functions to process, analyse,
+    and visualize the output of single locus species delimitation methods.
 License: MIT + file LICENSE
-Depends: dplyr, purrr
-Imports: ape, bGMYC, cli, forcats, furrr, ggfun, glue, ggplot2, gtools, ggtree, here, knitr, magrittr, methods, patchwork, randomcoloR, RColorBrewer, readr, rlang, scales, spider, splits, stringr, tibble, tidyr, tidyselect, tidytree, vctrs, withr
+Depends: R (>= 4.2.0)
+Imports:
+    cli,
+    dplyr,
+    glue,
+    ggtree,
+    methods,
+    purrr,
+    rlang,
+    stringr,
+    tidyr,
+    tidyselect
+Suggests: 
+    ape,
+    bGMYC (>= 1.0.2),
+    forcats,
+    furrr,
+    ggfun,
+    ggplot2,
+    gtools,
+    knitr,
+    patchwork,
+    randomcoloR,
+    readr,
+    RColorBrewer,
+    scales,
+    splits (>= 1.0.20),
+    spider,
+    tibble,
+    tidytree,
+    vctrs,
+    withr
+Additional_repositories: https://github.com/boopsboops/delimtools-testing/blob/main/scripts/install.md
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)
+NeedsCompilation: no
+Packaged: 2025-03-05 21:16:14 UTC; pedro
+Maintainer: Pedro Bittencourt <pedro.sennabittencourt@gmail.com>
+URL: https://github.com/legalLab/delimtools
+BugReports: https://github.com/legalLab/delimtools/issues
