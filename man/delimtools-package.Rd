@@ -14,6 +14,7 @@ Helpers functions to process, analyse, and visualize the output of single locus 
 Useful links:
 \itemize{
   \item \url{https://github.com/legalLab/delimtools}
+  \item \url{https://legallab.github.io/delimtools/}
   \item Report bugs at \url{https://github.com/legalLab/delimtools/issues}
 }
 

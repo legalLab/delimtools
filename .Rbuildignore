@@ -5,4 +5,9 @@
 ^README\.Rmd$
 ^README-.*\.png$
 ^CRAN-SUBMISSION$
+^install$
 ^repos$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

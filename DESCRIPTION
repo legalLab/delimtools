@@ -45,8 +45,8 @@ Suggests:
     tibble,
     tidytree,
     vctrs,
-    withr
-Additional_repositories: https://github.com/boopsboops/delimtools-testing/blob/main/scripts/install.md
+    withr,
+    rmarkdown
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
@@ -54,5 +54,6 @@ Roxygen: list(markdown = TRUE)
 NeedsCompilation: no
 Packaged: 2025-03-05 21:16:14 UTC; pedro
 Maintainer: Pedro Bittencourt <pedro.sennabittencourt@gmail.com>
-URL: https://github.com/legalLab/delimtools
+URL: https://github.com/legalLab/delimtools, https://legallab.github.io/delimtools/
 BugReports: https://github.com/legalLab/delimtools/issues
+VignetteBuilder: knitr
