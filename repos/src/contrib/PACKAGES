@@ -1,0 +1,77 @@
+Package: ape
+Version: 5.8-1
+Depends: R (>= 3.2.0)
+Imports: nlme, lattice, graphics, methods, stats, utils, parallel, Rcpp (>= 0.12.0), digest
+LinkingTo: Rcpp
+Suggests: gee, expm, igraph, phangorn, xml2
+License: GPL-2 | GPL-3
+MD5sum: e3946ed9c8cf0abd3b86810fe7267bb9
+NeedsCompilation: yes
+
+Package: bGMYC
+Version: 1.0.3
+Depends: ape (>= 3.0)
+MD5sum: c7d5172ba41ef3819bb35af2df35c558
+NeedsCompilation: no
+
+Package: digest
+Version: 0.6.37
+Depends: R (>= 3.3.0)
+Imports: utils
+Suggests: tinytest, simplermarkdown
+License: GPL (>= 2)
+MD5sum: f1772a9a1587e99f25f6d640b1a9e1fd
+NeedsCompilation: yes
+
+Package: lattice
+Version: 0.22-6
+Priority: recommended
+Depends: R (>= 4.0.0)
+Imports: grid, grDevices, graphics, stats, utils
+Suggests: KernSmooth, MASS, latticeExtra, colorspace
+Enhances: chron, zoo
+License: GPL (>= 2)
+MD5sum: 8d912f14f62d3d2e86200ea51514536a
+NeedsCompilation: yes
+
+Package: MASS
+Version: 7.3-65
+Priority: recommended
+Depends: R (>= 4.4.0), grDevices, graphics, stats, utils
+Imports: methods
+Suggests: lattice, nlme, nnet, survival
+License: GPL-2 | GPL-3
+MD5sum: b14ea190f5fe69f2d1d2245f18e76b97
+NeedsCompilation: yes
+
+Package: nlme
+Version: 3.1-167
+Priority: recommended
+Depends: R (>= 3.6.0)
+Imports: graphics, stats, utils, lattice
+Suggests: MASS, SASmixed
+License: GPL (>= 2)
+MD5sum: 0ffa8d67f5f336d35a8487ed0c1932ec
+NeedsCompilation: yes
+
+Package: paran
+Version: 1.5.3
+Depends: R (>= 1.8.0), MASS
+License: GPL-2
+MD5sum: bd73d5863fdf4975de2af389dff85071
+NeedsCompilation: no
+
+Package: Rcpp
+Version: 1.0.14
+Imports: methods, utils
+Suggests: tinytest, inline, rbenchmark, pkgKitten (>= 0.1.2)
+License: GPL (>= 2)
+MD5sum: 586ea2169464c4f35365bd1b8243428b
+NeedsCompilation: yes
+
+Package: splits
+Version: 1.0-20
+Depends: R (>= 3.0.0), ape, MASS, paran
+License: GPL (>= 2)
+MD5sum: a0568be6317b029e378a8ec3093f46ee
+NeedsCompilation: no

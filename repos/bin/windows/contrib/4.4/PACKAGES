@@ -1,0 +1,56 @@
+Package: ape
+Version: 5.8-1
+Depends: R (>= 3.2.0)
+Imports: nlme, lattice, graphics, methods, stats, utils, parallel, Rcpp (>= 0.12.0), digest
+LinkingTo: Rcpp
+Suggests: gee, expm, igraph, phangorn, xml2
+License: GPL-2 | GPL-3
+Archs: x64
+
+Package: digest
+Version: 0.6.37
+Depends: R (>= 3.3.0)
+Imports: utils
+Suggests: tinytest, simplermarkdown
+License: GPL (>= 2)
+Archs: x64
+
+Package: lattice
+Version: 0.22-6
+Priority: recommended
+Depends: R (>= 4.0.0)
+Imports: grid, grDevices, graphics, stats, utils
+Suggests: KernSmooth, MASS, latticeExtra, colorspace
+Enhances: chron, zoo
+License: GPL (>= 2)
+Archs: x64
+
+Package: MASS
+Version: 7.3-65
+Priority: recommended
+Depends: R (>= 4.4.0), grDevices, graphics, stats, utils
+Imports: methods
+Suggests: lattice, nlme, nnet, survival
+License: GPL-2 | GPL-3
+Archs: x64
+
+Package: nlme
+Version: 3.1-167
+Priority: recommended
+Depends: R (>= 3.6.0)
+Imports: graphics, stats, utils, lattice
+Suggests: MASS, SASmixed
+License: GPL (>= 2)
+Archs: x64
+
+Package: paran
+Version: 1.5.3
+Depends: R (>= 1.8.0), MASS
+License: GPL-2
+
+Package: Rcpp
+Version: 1.0.14
+Imports: methods, utils
+Suggests: tinytest, inline, rbenchmark, pkgKitten (>= 0.1.2)
+License: GPL (>= 2)
+Archs: x64
