@@ -148,27 +148,19 @@ repository. Set <code>dependencies = TRUE</code> to install
 <code>paran</code> package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"splits"</span>, repos <span class="op">=</span> <span class="st">"http://R-Forge.R-project.org"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Optionally, you can install it directly from <a href="https://github.com/legalLab/delimtools/tree/main/repos" class="external-link">repos</a>
-using <code>devtools</code> or by downloading the tarball and installing
-it manually:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_url</span><span class="op">(</span><span class="st">"https://github.com/legalLab/delimtools/raw/refs/heads/main/repos/splits_1.0-20.tar.gz"</span>,</span>
-<span>                      dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="bgmyc">bGMYC<a class="anchor" aria-label="anchor" href="#bgmyc"></a>
 </h3>
 <p>Although the <code>bGMYC</code> package can be installed from Noah
-Reid’s GitHub page, we recommend installing it from <a href="https://github.com/legalLab/delimtools/tree/main/repos" class="external-link">repos</a>
-since our version is stable when using <code>R &gt;= 4.x.x</code>. When
-running the “older” <code>bGMYC</code> version using
-<code>R &gt;= 4.x.x</code>, all tips of the ultrametric tree are
-classified as distinct lineages. Thus, install the “stable” version by
-using <code>devtools</code> or by downloading the tarball and installing
-it manually:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_url</span><span class="op">(</span><span class="st">"https://github.com/legalLab/delimtools/raw/refs/heads/main/repos/bGMYC_1.0.3.tar.gz"</span>,</span>
-<span>                      dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+Reid’s GitHub page, we recommend installing it from our <a href="https://github.com/pedrosenna/drat" class="external-link">drat repository</a> since our
+version is stable when using <code>R &gt;= 4.x.x</code>. When running
+the “older” <code>bGMYC</code> version using <code>R &gt;= 4.x.x</code>,
+all tips of the ultrametric tree are classified as distinct lineages.
+Thus, install the “stable” version by using <code>devtools</code> or by
+downloading the tarball and installing it manually:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"bGMYC"</span>, repos <span class="op">=</span> <span class="st">"https://pedrosenna.github.io/drat/"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -188,13 +180,13 @@ software to generate results and import them using its respective
 <p>To install <code>ABGD</code>, download latest release, decompress and
 compile. Optionally, you may add the folder to your PATH environment
 variable or move it to <code>/usr/local/bin</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">wget</span> https://bioinfo.mnhn.fr/abi/public/abgd/last.tgz <span class="at">-O</span> abgd.tgz</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzvf</span> abgd.tgz</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="bu">cd</span> Abgd</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">make</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">mkdir</span> bin</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="fu">mv</span> abgd bin/abgd</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="bu">cd</span> ..</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">wget</span> https://bioinfo.mnhn.fr/abi/public/abgd/last.tgz <span class="at">-O</span> abgd.tgz</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzvf</span> abgd.tgz</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="bu">cd</span> Abgd</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">mkdir</span> bin</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="fu">mv</span> abgd bin/abgd</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="bu">cd</span> ..</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="asap">ASAP<a class="anchor" aria-label="anchor" href="#asap"></a>
@@ -202,13 +194,13 @@ variable or move it to <code>/usr/local/bin</code>.</p>
 <p>To install <code>ASAP</code>, download latest release, decompress and
 compile. Optionally, you may add the folder to your PATH environment
 variable or move it to <code>/usr/local/bin</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">wget</span> https://bioinfo.mnhn.fr/abi/public/asap/last.tgz</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzvf</span> last.tgz</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="bu">cd</span> ASAP</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="fu">make</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="fu">mkdir</span> bin</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="fu">mv</span> asap bin/asap</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="bu">cd</span> ..</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">wget</span> https://bioinfo.mnhn.fr/abi/public/asap/last.tgz</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzvf</span> last.tgz</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="bu">cd</span> ASAP</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">mkdir</span> bin</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="fu">mv</span> asap bin/asap</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="bu">cd</span> ..</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="mptp">mPTP<a class="anchor" aria-label="anchor" href="#mptp"></a>
