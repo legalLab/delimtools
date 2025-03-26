@@ -13,7 +13,7 @@ Authors@R: c(
   )
 Description: Helpers functions to process, analyse, and visualize the output of 
              single locus species delimitation methods.
-             For full functionality, please install the software available at
+             For full functionality, please install suggested software at
              <https://legallab.github.io/delimtools/articles/install.html>.
 License: MIT + file LICENSE
 Depends: R (>= 4.2.0)
@@ -49,7 +49,7 @@ Suggests:
     vctrs,
     withr,
     rmarkdown
-Additional_repositories: https://github.com/legalLab/delimtools/repos
+Additional_repositories: https://r-forge.r-project.org/, https://pedrosenna.github.io/drat/
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
