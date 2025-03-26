@@ -54,21 +54,13 @@ install.packages("splits", repos = "http://R-Forge.R-project.org", dependencies 
 
 ```
 
-Optionally, you can install it directly from [repos](https://github.com/legalLab/delimtools/tree/main/repos) using `devtools` or by downloading the tarball and installing it manually:
-
-```{r, eval= FALSE}
-devtools::install_url("https://github.com/legalLab/delimtools/raw/refs/heads/main/repos/splits_1.0-20.tar.gz",
-                      dependencies = TRUE)
-```
-
 ### bGMYC
 
 Although the `bGMYC` package can be installed from Noah Reid's GitHub page, we recommend installing it from 
-[repos](https://github.com/legalLab/delimtools/tree/main/repos) since our version is stable when using `R >= 4.x.x`. When running the "older" `bGMYC` version using `R >= 4.x.x`, all tips of the ultrametric tree are classified as distinct lineages. Thus, install the "stable" version by using `devtools` or by downloading the tarball and installing it manually:
+our [drat repository](https://github.com/pedrosenna/drat) since our version is stable when using `R >= 4.x.x`. When running the "older" `bGMYC` version using `R >= 4.x.x`, all tips of the ultrametric tree are classified as distinct lineages. Thus, install the "stable" version by using `devtools` or by downloading the tarball and installing it manually:
 
 ```{r, eval= FALSE}
-devtools::install_url("https://github.com/legalLab/delimtools/raw/refs/heads/main/repos/bGMYC_1.0.3.tar.gz",
-                      dependencies = TRUE)
+install.packages("bGMYC", repos = "https://pedrosenna.github.io/drat/")
 
 ```
 
