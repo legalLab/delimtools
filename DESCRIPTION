@@ -50,7 +50,7 @@ Suggests:
     withr,
     rmarkdown
 Additional_repositories: https://r-forge.r-project.org/, https://pedrosenna.github.io/drat/
-Config/Needs/website: bGMYC=github::https://github.com/pedrosenna/bGMYC, splits=url::https://download.r-forge.r-project.org/src/contrib/
+Config/Needs/website: bGMYC=github::https://github.com/pedrosenna/bGMYC, splits=url::https://download.r-forge.r-project.org/src/contrib/splits_1.0-20.tar.gz
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
