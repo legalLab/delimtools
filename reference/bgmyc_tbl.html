@@ -91,10 +91,9 @@ the output from <a href="gmyc_tbl.html">gmyc_tbl</a> and <a href="locmin_tbl.htm
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># run bGMYC</span></span></span>
-<span class="r-in"><span><span class="va">bgmyc_res</span> <span class="op">&lt;-</span> <span class="fu">bGMYC</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bGMYC/man/bgmyc.singlephy.html" class="external-link">bgmyc.singlephy</a></span><span class="op">(</span><span class="va">geophagus_beast</span>,</span></span>
+<span class="r-in"><span><span class="va">bgmyc_res</span> <span class="op">&lt;-</span> <span class="fu">bGMYC</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bGMYC/man/bgmyc.singlephy.html" class="external-link">bgmyc.singlephy</a></span><span class="op">(</span><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">geophagus_beast</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  mcmc <span class="op">=</span> <span class="fl">11000</span>,</span></span>
 <span class="r-in"><span>  burnin <span class="op">=</span> <span class="fl">1000</span>,</span></span>
 <span class="r-in"><span>  thinning <span class="op">=</span> <span class="fl">100</span>,</span></span>
@@ -102,13 +101,48 @@ the output from <a href="gmyc_tbl.html">gmyc_tbl</a> and <a href="locmin_tbl.htm
 <span class="r-in"><span>  t2 <span class="op">=</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/summary.phylo.html" class="external-link">Ntip</a></span><span class="op">(</span><span class="va">geophagus_beast</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">50</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> You are running bGMYC on a single phylogenetic tree.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> This tree contains  137  tips.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The Yule process rate change parameter has a uniform prior ranging from  0  to  2 .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The coalescent process rate change parameter has a uniform prior ranging from  0  to  2 .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The threshold parameter, which is equal to the number of species, has a uniform prior ranging from  2  to  137 . The upper bound of this prior should not be more than the number of tips in your trees.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The MCMC will start with the Yule parameter set to  1 .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The MCMC will start with the coalescent parameter set to  0.5 .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The MCMC will start with the threshold parameter set to  50 . If this number is greater than the number of tips in your tree, an error will result.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Given your settings for mcmc, burnin and thinning, your analysis will result in  100  samples being retained.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 % </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 % </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30 % </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40 % </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50 % </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60 % </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80 % </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90 % </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100 % </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acceptance rates </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  py pc th </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.5518182 0.5462727 0.2234545 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># create a tibble</span></span></span>
 <span class="r-in"><span><span class="va">bgmyc_df</span> <span class="op">&lt;-</span> <span class="fu">bgmyc_tbl</span><span class="op">(</span><span class="va">bgmyc_res</span>, ppcutoff <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># check</span></span></span>
 <span class="r-in"><span><span class="va">bgmyc_df</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 137 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    labels     bgmyc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> GU701784.1     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> GU701785.1     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> JN988869.1     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> MH780911.1     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> OR732927.1     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> OR732928.1     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> MZ050845.1     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> MZ051032.1     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> MZ051706.1     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> MZ051794.1     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 127 more rows</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

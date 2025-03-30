@@ -42,7 +42,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">report_delim</span><span class="op">(</span><span class="va">delim</span>, tabulate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">report_delim</span><span class="op">(</span><span class="va">delim</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -53,9 +53,8 @@
 <dd><p>Output from any <code>*_tbl()</code> (e.g. <a href="gmyc_tbl.html">gmyc_tbl</a>), <a href="delim_join.html">delim_join</a> or <a href="delim_consensus.html">delim_consensus</a>.</p></dd>
 
 
-<dt id="arg-tabulate">tabulate<a class="anchor" aria-label="anchor" href="#arg-tabulate"></a></dt>
-<dd><p>Logical. If TRUE, returns a message and a tabulated summary of <code>delim</code>. If FALSE,
-only the message is printed on Console.</p></dd>
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
+<dd><p>Logical. If TRUE, returns a message and a tabulated summary of <code>delim</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -95,6 +94,20 @@ NA values to be interpreted as species partitions.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |morph  |         16|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |asap   |         14|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |mptp   |         11|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 137 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    labels     abgd  asap  bgmyc gmyc  locmin morph mptp  ptp  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> MZ504301.1 sp1   sp20  sp1   sp1   sp1    sp37  sp38  sp1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> MZ504318.1 sp1   sp20  sp1   sp1   sp1    sp37  sp38  sp1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> MZ504341.1 sp1   sp20  sp1   sp1   sp1    sp37  sp38  sp1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> MZ504337.1 sp1   sp20  sp1   sp1   sp1    sp37  sp38  sp1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> MZ504342.1 sp1   sp20  sp1   sp1   sp1    sp37  sp38  sp1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> MZ504304.1 sp1   sp20  sp1   sp1   sp1    sp37  sp38  sp1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> MZ504332.1 sp1   sp20  sp1   sp1   sp1    sp37  sp38  sp1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> MZ504343.1 sp1   sp20  sp1   sp1   sp1    sp37  sp38  sp1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> MZ504315.1 sp1   sp20  sp1   sp1   sp1    sp37  sp38  sp1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> MZ504345.1 sp1   sp20  sp1   sp1   sp1    sp37  sp38  sp1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 127 more rows</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
