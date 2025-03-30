@@ -135,7 +135,7 @@ posterior trees are provided. As an alternative, these analyses can be sped up s
 by running in parallel using \link[future:plan]{plan}.
 }
 \examples{
-\dontrun{
+\donttest{
 
 # gmyc confidence intervals
 
@@ -143,7 +143,7 @@ by running in parallel using \link[future:plan]{plan}.
 {
   future::plan("multisession")
 
-  gmyc_res <- gmyc_ci(geophagus_beast, geophagus_posterior)
+  gmyc_res <- gmyc_ci(ape::as.phylo(geophagus_beast), geophagus_posterior)
 
   # reset future parameters
   future::plan("sequential")

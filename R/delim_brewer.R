@@ -18,6 +18,9 @@
 #' For reproducibility, make sure to provide a `seed`. If not provided, [Sys.time][base::Sys.time]
 #' will be used as seed instead. One should also try different seeds to get best color combinations for plotting.
 #'
+#' @return
+#' A `character` vector of hexadecimal color codes.
+#'
 #' @author
 #' Rupert A. Collins, Pedro S. Bittencourt
 #'

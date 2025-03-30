@@ -59,7 +59,7 @@ Alternatively, \code{abgd_tbl()} can parse a .txt file obtained from a webserver
 \url{https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html}.
 }
 \examples{
-\dontrun{
+\donttest{
 
 #' # get path to fasta file
 path_to_file <- system.file("extdata/geophagus.fasta", package = "delimtools")

@@ -41,18 +41,8 @@ delim_3 <- tibble::tibble(
   method_C = c(rep(1, 3), rep(2, 2), rep(3, 3), rep(4, 2))
 )
 
-delim_3_withNA <- tibble::tibble(
-  labels = paste0("seq", 1:10),
-  method_C = c(rep(1, 3), rep(2, 2), rep(3, 3), rep(NA, 2))
-)
-
 # check outputs
 check_delim(list(delim_1, delim_2, delim_3))
-
-# check with an output containing NAs. Check_delim will return an error.
-\dontrun{
-check_delim(delim_1, delim_3_withNA)
-}
 
 }
 \author{

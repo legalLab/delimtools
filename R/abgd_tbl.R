@@ -39,7 +39,7 @@
 #' Gap Discovery for primary species delimitation. Molecular Ecology 21(8):1864-77.
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' #' # get path to fasta file
 #' path_to_file <- system.file("extdata/geophagus.fasta", package = "delimtools")

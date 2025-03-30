@@ -4,14 +4,14 @@
 \alias{min_brlen}
 \title{A function to report the smallest tip-to-tip distances in a phylogenetic tree}
 \usage{
-min_brlen(tree, n = 5, print = TRUE)
+min_brlen(tree, n = 5, verbose = TRUE)
 }
 \arguments{
 \item{tree}{A path to tree file in Newick format, or a phylogenetic tree object of class \link[ape:read.tree]{phylo}.}
 
 \item{n}{Number of distances to report (default = 5).}
 
-\item{print}{Logical of whether to print the result to screen (default = TRUE).}
+\item{verbose}{Logical of whether to print the result to screen (default = TRUE).}
 }
 \value{
 an object of class \link[tibble:tbl_df-class]{tbl_df}

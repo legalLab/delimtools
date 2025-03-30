@@ -27,7 +27,7 @@ partition names across two or more species delimitation outputs while keeping it
 }
 \examples{
 
-\dontrun{
+\donttest{
 ## run GMYC
 gmyc_res <- splits::gmyc(ape::as.phylo(geophagus_beast), method = "single")
 

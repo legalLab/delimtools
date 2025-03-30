@@ -4,13 +4,12 @@
 \alias{report_delim}
 \title{Report Unique Species Partitions}
 \usage{
-report_delim(delim, tabulate = TRUE)
+report_delim(delim, verbose = TRUE)
 }
 \arguments{
 \item{delim}{Output from any \verb{*_tbl()} (e.g. \link{gmyc_tbl}), \link{delim_join} or \link{delim_consensus}.}
 
-\item{tabulate}{Logical. If TRUE, returns a message and a tabulated summary of \code{delim}. If FALSE,
-only the message is printed on Console.}
+\item{verbose}{Logical. If TRUE, returns a message and a tabulated summary of \code{delim}.}
 }
 \value{
 an object of class \link[tibble:tbl_df-class]{tbl_df}].

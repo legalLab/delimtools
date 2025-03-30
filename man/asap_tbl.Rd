@@ -57,7 +57,7 @@ Alternatively, \code{asap_tbl()} can parse a .csv file obtained from webserver s
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 #' # get path to fasta file
 path_to_file <- system.file("extdata/geophagus.fasta", package = "delimtools")

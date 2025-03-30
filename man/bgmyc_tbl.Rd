@@ -35,10 +35,9 @@ two functions into a single one and turns these inputs into a tibble which match
 the output from \link{gmyc_tbl} and \link{locmin_tbl}.
 }
 \examples{
-\dontrun{
-
+\donttest{
 # run bGMYC
-bgmyc_res <- bGMYC::bgmyc.singlephy(geophagus_beast,
+bgmyc_res <- bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
   mcmc = 11000,
   burnin = 1000,
   thinning = 100,

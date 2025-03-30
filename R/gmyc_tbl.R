@@ -34,7 +34,6 @@
 #' on Simulated Data Sets. Systematic Biology. 62(5):707–724.
 #'
 #' @examples
-#' \dontrun{
 #' 
 #' # run GMYC
 #' gmyc_res <- splits::gmyc(ape::as.phylo(geophagus_beast))
@@ -44,7 +43,6 @@
 #' 
 #' # check
 #' gmyc_df
-#' }
 #'
 #' @export
 gmyc_tbl <- function(gmyc_res, delimname = "gmyc"){

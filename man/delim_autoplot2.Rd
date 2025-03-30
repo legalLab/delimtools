@@ -43,6 +43,9 @@ tiplabels become truncated when plotting. Default to \code{0.1}.}
 species delimitation bars. See \link[patchwork:wrap_plots]{wrap_plots} for details.
 Defaults to \code{c(0.5, 0.2)}.}
 }
+\value{
+A \code{patchwork} object.
+}
 \description{
 \code{delim_autoplot2()} returns a phylogenetic tree plotted using \code{ggtree} alongside
 with a customized tile plot using \link[ggplot2:geom_tile]{geom_tile} combined by

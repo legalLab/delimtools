@@ -21,7 +21,7 @@
 #' @name confidence_intervals
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' # gmyc confidence intervals
 #'
@@ -29,7 +29,7 @@
 #' {
 #'   future::plan("multisession")
 #'
-#'   gmyc_res <- gmyc_ci(geophagus_beast, geophagus_posterior)
+#'   gmyc_res <- gmyc_ci(ape::as.phylo(geophagus_beast), geophagus_posterior)
 #'
 #'   # reset future parameters
 #'   future::plan("sequential")
@@ -227,7 +227,7 @@ mptp_ci <- function(infile, bootstraps, exe = NULL, outfolder = NULL,
     minbr_ls <- purrr::map(
       trees,
       ~ {
-        delimtools::min_brlen(.x, print = FALSE)
+        delimtools::min_brlen(.x, verbose = FALSE)
       } |>
         purrr::pluck("dist", 1)
     )

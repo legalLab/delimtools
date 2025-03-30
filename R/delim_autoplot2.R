@@ -14,6 +14,9 @@
 #' summarizing partitions across samples. If no consensus is reached, an "X" will be plotted instead.
 #' This function is a modified version of [delim_autoplot] which plots
 #' species partitions using a black and grey color scheme.
+#' 
+#' @return
+#' A `patchwork` object.
 #'
 #' @author
 #' Pedro S. Bittencourt, Rupert A. Collins.

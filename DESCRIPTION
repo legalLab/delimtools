@@ -33,6 +33,7 @@ Suggests:
     bGMYC (>= 1.0.2),
     forcats,
     furrr,
+    future,
     ggfun,
     ggplot2,
     gtools,

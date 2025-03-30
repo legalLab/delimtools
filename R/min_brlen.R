@@ -5,7 +5,7 @@
 #'
 #' @param tree A path to tree file in Newick format, or a phylogenetic tree object of class [phylo][ape::phylo].
 #' @param n Number of distances to report (default = 5).
-#' @param print Logical of whether to print the result to screen (default = TRUE).
+#' @param verbose Logical of whether to print the result to screen (default = TRUE).
 #'
 #' @details
 #' `min_brlen()` tabulates the smallest tip-to-tip distances in a phylogenetic tree
@@ -25,7 +25,7 @@
 #' min_brlen(ape::as.phylo(geophagus_raxml), n = 5)
 #'
 #' @export
-min_brlen <- function(tree, n = 5, print = TRUE) {
+min_brlen <- function(tree, n = 5, verbose = TRUE) {
   # checks
 
   if (methods::is(tree, "phylo")) {
@@ -56,7 +56,7 @@ min_brlen <- function(tree, n = 5, print = TRUE) {
 
   # print
 
-  if (isTRUE(print)) {
+  if(verbose == TRUE) {
     writeLines("\n")
 
     cli::cli_alert_info("Printing {n} smallest tip-to-tip distances in a tree with {length(tr$tip.label)} tips ...")

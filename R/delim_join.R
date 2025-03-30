@@ -23,7 +23,7 @@
 #'
 #' @examples
 #' 
-#' \dontrun{
+#' \donttest{
 #' ## run GMYC
 #' gmyc_res <- splits::gmyc(ape::as.phylo(geophagus_beast), method = "single")
 #'

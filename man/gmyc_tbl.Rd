@@ -39,7 +39,6 @@ species partitions. \code{gmyc_tbl()} turns these results into a tibble which ma
 the output from \link{bgmyc_tbl} and \link{locmin_tbl}.
 }
 \examples{
-\dontrun{
 
 # run GMYC
 gmyc_res <- splits::gmyc(ape::as.phylo(geophagus_beast))
@@ -49,7 +48,6 @@ gmyc_df <- gmyc_tbl(gmyc_res)
 
 # check
 gmyc_df
-}
 
 }
 \author{

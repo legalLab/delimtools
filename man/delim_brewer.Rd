@@ -17,6 +17,9 @@ or \link[viridisLite:viridis.map]{viridis} for viridisLite options.}
 
 \item{seed}{Integer. Number to initialize random number generator.}
 }
+\value{
+A \code{character} vector of hexadecimal color codes.
+}
 \description{
 \code{delim_brewer()} returns a set of colors created by interpolating or using
 color palettes from \link[RColorBrewer:ColorBrewer]{RColorBrewer},

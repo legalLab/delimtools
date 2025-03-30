@@ -30,6 +30,9 @@
 #' a consensus bar will be plotted next to the species delimitation plot,
 #' summarizing partitions across samples. If no consensus is reached, an "X" will be plotted instead.
 #'
+#' @return
+#' A `patchwork` object.
+#'
 #' @author
 #' Pedro S. Bittencourt, Rupert A. Collins.
 #'

@@ -38,14 +38,14 @@
 #' maximum likelihood and Markov chain Monte Carlo. Bioinformatics 33(11):1630-1638.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' # get path to phylogram
 #' path_to_file <- system.file("extdata/geophagus_raxml.nwk", package = "delimtools")
 #'
 #' # run mPTP in single threshold mode (PTP)
 #' ptp_df <- mptp_tbl(
-#'   infile = "inst/extdata/geophagus_raxml.nwk",
+#'   infile = path_to_file,
 #'   exe = "/usr/local/bin/mptp",
 #'   method = "single",
 #'   minbrlen = 0.0001,
@@ -59,7 +59,7 @@
 #' # run mPTP in multi threshold mode (mPTP)
 #'
 #' mptp_df <- mptp_tbl(
-#'   infile = "inst/extdata/geophagus_raxml.nwk",
+#'   infile = path_to_file,
 #'   exe = "/usr/local/bin/mptp",
 #'   method = "single",
 #'   minbrlen = 0.0001,
@@ -157,7 +157,7 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
     mptp.df <- do.call(rbind, lapply(names(mptp.ls), function(x) tibble::tibble(labels = mptp.ls[[x]], !!dname := as.integer(unlist(x)))))
   }
 
-  minbrlen.tab <- delimtools::min_brlen(tree = infile, print = FALSE)
+  minbrlen.tab <- delimtools::min_brlen(tree = infile, verbose = FALSE)
 
   minbrlen.est <- minbrlen.tab |>
     dplyr::pull(1) |>

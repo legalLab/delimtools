@@ -56,14 +56,14 @@ Alternatively, \code{mptp_tbl()} can parse a file obtained from webserver such a
 \url{https://mptp.h-its.org/}.
 }
 \examples{
-\dontrun{
+\donttest{
 
 # get path to phylogram
 path_to_file <- system.file("extdata/geophagus_raxml.nwk", package = "delimtools")
 
 # run mPTP in single threshold mode (PTP)
 ptp_df <- mptp_tbl(
-  infile = "inst/extdata/geophagus_raxml.nwk",
+  infile = path_to_file,
   exe = "/usr/local/bin/mptp",
   method = "single",
   minbrlen = 0.0001,
@@ -77,7 +77,7 @@ ptp_df
 # run mPTP in multi threshold mode (mPTP)
 
 mptp_df <- mptp_tbl(
-  infile = "inst/extdata/geophagus_raxml.nwk",
+  infile = path_to_file,
   exe = "/usr/local/bin/mptp",
   method = "single",
   minbrlen = 0.0001,
