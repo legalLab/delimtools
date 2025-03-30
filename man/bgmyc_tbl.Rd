@@ -35,6 +35,7 @@ two functions into a single one and turns these inputs into a tibble which match
 the output from \link{gmyc_tbl} and \link{locmin_tbl}.
 }
 \examples{
+
 \donttest{
 # run bGMYC
 bgmyc_res <- bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),

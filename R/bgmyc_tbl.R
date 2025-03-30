@@ -29,6 +29,7 @@
 #' mixed Yule-coalescent model. BMC Evolutionary Biology 12 (196).
 #' 
 #' @examples
+#' 
 #'\donttest{
 #' # run bGMYC
 #' bgmyc_res <- bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
