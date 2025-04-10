@@ -5,8 +5,10 @@
 
 <!-- badges: start -->
 
-[![Build
-Status](https://travis-ci.org/LegalLab/delimtools.svg?branch=master)](https://app.travis-ci.com/LegalLab/delimtools)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/delimtools)](https://cran.r-project.org/package=delimtools)
+[![R-CMD-check](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 
 ## IMPORTANT
 

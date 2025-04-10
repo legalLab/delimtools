@@ -16,7 +16,9 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 # delimtools <img src="man/figures/logo.png" align="right" height="138"  />
 <!-- badges: start -->
-[![Build Status](https://travis-ci.org/LegalLab/delimtools.svg?branch=master)](https://app.travis-ci.com/LegalLab/delimtools)
+[![CRAN status](https://www.r-pkg.org/badges/version/delimtools)](https://cran.r-project.org/package=delimtools)
+[![R-CMD-check](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 
 ## IMPORTANT
 
@@ -29,7 +31,7 @@ The official GitHub repository for the R package `delimtools` (Bittencourt et al
 `delimtools` provides helper functions for the analysis of single-locus species delimitation methods such as GMYC ([Monaghan et al., 2009](https://doi.org/10.1093/sysbio/syp027)), bGMYC ([Reid & Carstens, 2012](https://doi.org/10.1186/1471-2148-12-196)), mPTP ([Kapli et al., 2017](https://doi.org/10.1093/bioinformatics/btx025)) and ASAP ([Puillandre et al., 2020](https://doi.org/10.1111/1755-0998.13281)). These software run multiple different platforms (e.g. R, Unix, webservers), and also do not output their results in a consistent format to allow easy comparison. To address these shortcomings we have developed a suite of functions to standardise and simplify generating single-locus species delimitations.
 
 ## Dependencies
-Delimtools maily depends on the [tidyverse](https://www.tidyverse.org/) and 
+Delimtools mainly depends on the [tidyverse](https://www.tidyverse.org/) and 
 [ggtree](https://github.com/YuLab-SMU/ggtree) packages. To install these, run 
 the command lines below:
 

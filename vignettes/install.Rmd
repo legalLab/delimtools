@@ -71,7 +71,7 @@ you can try to use a C compiler to create executable files for these software bu
 work as intended. Alternativelly, you may use the currently available Web servers of these software to generate 
 results and import them using its respective `*_tbl()` functions.
 
-## ABGD
+### ABGD
 
 To install `ABGD`, download latest release, decompress and compile. Optionally, you may add the
 folder to your PATH environment variable or move it to `/usr/local/bin`.
@@ -86,7 +86,7 @@ cd ..
 
 ```
 
-## ASAP
+### ASAP
 To install `ASAP`, download latest release, decompress and compile. Optionally, you may add the
 folder to your PATH environment variable or move it to `/usr/local/bin`.
 ```{bash, eval= FALSE, engine= "sh"}
@@ -100,7 +100,7 @@ cd ..
 
 ```
 
-## mPTP
+### mPTP
 To install `mPTP`, you can check [mPTP repository](https://github.com/Pas-Kapli/mptp) and follow their
 instructions.
 
