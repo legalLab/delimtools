@@ -39,7 +39,7 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
-          extra-repositories: url::https://download.r-forge.r-project.org/src/contrib/splits_1.0-20.tar.gz https://pedrosenna.github.io/drat/
+          extra-repositories: https://download.r-forge.r-project.org/src/contrib/splits_1.0-20.tar.gz https://pedrosenna.github.io/drat/
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
