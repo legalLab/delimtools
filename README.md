@@ -7,6 +7,7 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/delimtools)](https://cran.r-project.org/package=delimtools)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/delimtools)](https://cran.r-project.org/package=delimtools)
 [![R-CMD-check](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -47,7 +48,7 @@ single-locus species delimitations.
 
 ## Dependencies
 
-Delimtools maily depends on the [tidyverse](https://www.tidyverse.org/)
+Delimtools mainly depends on the [tidyverse](https://www.tidyverse.org/)
 and [ggtree](https://github.com/YuLab-SMU/ggtree) packages. To install
 these, run the command lines below:
 

@@ -17,6 +17,7 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 # delimtools <img src="man/figures/logo.png" align="right" height="138"  />
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/delimtools)](https://cran.r-project.org/package=delimtools)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/delimtools)](https://cran.r-project.org/package=delimtools)
 [![R-CMD-check](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 

@@ -1,2 +1,7 @@
 *.html
 *.R
+*.svg
+*.csv
+*.txt
+*.spart
+*.xml

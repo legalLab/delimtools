@@ -13,10 +13,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
+##
 The main purpose of `delimtools` is to provide helper functions for analyzing single locus species delimitation outputs. To generate this type of data, it is necessary to install third-party software and use the appropriate `*_tbl()` functions to parse these results in a tabular format.
-
-<br>
 
 ```{r, echo= FALSE}
 
