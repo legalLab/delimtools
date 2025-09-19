@@ -76,6 +76,12 @@ abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, ou
       dplyr::mutate(labels = stringr::str_replace_all(labels, "id: ", "")) |>
       tidyr::separate_longer_delim(cols = labels, delim = " ") |>
       dplyr::relocate(labels, .before = !!dname)
+    
+    if(!is.null(haps)){
+      
+      delim <- delim |>
+        dplyr::filter(labels %in% haps)
+    }
 
     return(delim)
   }
