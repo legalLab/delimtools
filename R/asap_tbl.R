@@ -68,6 +68,12 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
     
     delim <- readr::read_csv(webserver, col_names = c("labels", delimname), col_types = "c")
     
+    if(!is.null(haps)){
+      
+      delim <- delim |>
+        dplyr::filter(labels %in% haps)
+    }
+    
     return(delim)
     
   }
