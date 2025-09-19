@@ -45,49 +45,40 @@ get_delim_cols <- function(p, delimname= NULL, hap_tbl= NULL){
   p_build <- ggplot2::ggplot_build(p)
   
   # extract and bind labels and cols
-  if(rlang::is_empty(purrr::pluck(p_build, 1, 2))) {
+  if(rlang::is_empty(purrr::pluck(p_build, "data", 2))) {
     
-    # get labels
-    p_data <- p_build |> 
-      purrr::pluck(3, 2, 1)
+    # get data
+    p_data <- p@data
     
-    # get colors
-    p_cols <- p_build |>
-      purrr::pluck(1, 1)
+    # get geom_tile colors
+    p_colors <- p_build |> purrr::pluck("data", 1)
     
     # bind cols and select
-    p_bind <- dplyr::bind_cols(p_data, p_cols) |>
+    p_bind <- dplyr::bind_cols(p_data, p_colors) |>
       dplyr::select(tidyselect::all_of(c("labels", "method", "spp", "fill", "colour")))
     
   } else {
     
-    # get labels for complete rows
-    p_data <- p_build |>
-      purrr::pluck(3, 2, 1) |>
-      tidyr::drop_na("spp")
+    # get data for complete rows
+    p_data <- p@data |> tidyr::drop_na("spp")
     
-    # get labels for rows with NAs
-    p_data_NA <- p_build |>
-      purrr::pluck(3, 2, 1) |>
-      dplyr::filter(is.na(.data$spp))
+    p_data_NA <- p@data |> dplyr::filter(is.na(.data$spp))
     
-    # get colors for complete rows
-    p_cols <- p_build |>
-      purrr::pluck(1, 1)
+    # get geom_tile colors for complete rows
+    p_colors <- p_build |> purrr::pluck("data", 1)
     
-    # get colors for rows with NAs
-    p_cols_NA <- p_build |>
-      purrr::pluck(1, 2)
+    p_colors_NA <- p_build |> purrr::pluck("data", 2)
     
-    # bind complete labels with complete colors
-    p_complete <- dplyr::bind_cols(p_data, p_cols)
+    # bind_cols of complete data with colors
+    p_complete <- dplyr::bind_cols(p_data, p_colors)
     
-    # bind labels with NAs with colors with NAs
-    p_missing <- dplyr::bind_cols(p_data_NA, p_cols_NA)
+    # bind_cols of missing data with colors
+    p_missing <- dplyr::bind_cols(p_data_NA, p_colors_NA)
     
-    # bind everything
+    # bind_rows of complete and missing cases and arrange labels
     p_bind <- dplyr::bind_rows(p_complete, p_missing) |>
-      dplyr::select(tidyselect::all_of(c("labels", "method", "spp", "fill", "colour")))
+      dplyr::select(tidyselect::all_of(c("labels", "method", "spp", "fill", "colour"))) |>
+      dplyr::arrange(match(.data$labels, ggtree::get_taxa_name(p[[1]])))
     
   }
   
