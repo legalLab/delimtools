@@ -26,8 +26,8 @@ these analyses. There are also difficulties with installing R required
 package dependancies to run `gmyc_tbl()` and `bgmyc_tbl()` because these
 are no longer under development and available on CRAN, and must be
 installed from archived sources. Please refer to
-[github.com/boopsboops/delimtools-testing](https://github.com/boopsboops/delimtools-testing/blob/main/scripts/install.md)
-for instructions on how to install.
+<https://legallab.github.io/delimtools/articles/install.html> for
+instructions on how to install.
 
 ## Overview
 
@@ -130,6 +130,36 @@ delim_autoplot(delim = geophagus_delims,
                col_vec = cols,
                hexpand = 0.7,
                widths = c(0.5, 0.5))
+#> Warning: `aes_()` was deprecated in ggplot2 3.0.0.
+#> ℹ Please use tidy evaluation idioms with `aes()`
+#> ℹ The deprecated feature was likely used in the ggtree package.
+#>   Please report the issue at <https://github.com/YuLab-SMU/ggtree/issues>.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
+#> Warning in fortify(data, ...): Arguments in `...` must be used.
+#> ✖ Problematic arguments:
+#> • as.Date = as.Date
+#> • yscale_mapping = yscale_mapping
+#> • hang = hang
+#> • color = "grey50"
+#> • size = 1
+#> ℹ Did you misspell an argument name?
+#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `linewidth` instead.
+#> ℹ The deprecated feature was likely used in the ggtree package.
+#>   Please report the issue at <https://github.com/YuLab-SMU/ggtree/issues>.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
+#> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+#> ℹ Please use tidy evaluation idioms with `aes()`.
+#> ℹ See also `vignette("ggplot2-in-packages")` for more information.
+#> ℹ The deprecated feature was likely used in the ggtree package.
+#>   Please report the issue at <https://github.com/YuLab-SMU/ggtree/issues>.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 ```
 
 ![](man/figures/README-example-1.png)<!-- -->
