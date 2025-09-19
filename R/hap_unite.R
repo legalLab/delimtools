@@ -41,7 +41,7 @@ hap_unite <- function(hap_tbl, delim){
   
   collapsed_df <- hap_tbl |>
     dplyr::select(tidyselect::all_of(c("labels", "collapsed"))) |>
-    dplyr::mutate(collapsed= stringr::str_split("collapsed", pattern= ", ")) |>
+    dplyr::mutate(collapsed= stringr::str_split(.data$collapsed, pattern= ", ")) |>
     tidyr::unnest(cols= c("collapsed")) |>
     dplyr::left_join(delim, by= "labels") |>
     tidyr::drop_na("collapsed") |>
