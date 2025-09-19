@@ -48,7 +48,7 @@ The `splits` package can be installed using R-Forge repository. Set `dependencie
 package. 
 
 ```{r, eval= FALSE}
-install.packages("splits", repos = "http://R-Forge.R-project.org", dependencies = TRUE)
+install.packages("splits", repos = "https://r-forge.r-project.org/", dependencies = TRUE)
 
 ```
 
