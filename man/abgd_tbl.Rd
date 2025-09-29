@@ -47,7 +47,7 @@ an object of class \code{\link[tibble:tbl_df-class]{tbl_df}}
 }
 \description{
 \code{abgd_tbl()} returns species partition hypothesis estimated by ABGD software
-\url{https://bioinfo.mnhn.fr/abi/public/abgd/}.
+(https://bioinfo.mnhn.fr/abi/public/abgd/).
 }
 \details{
 \code{abgd_tbl()} relies on \link[base:system]{system} to invoke ABGD software through
@@ -56,7 +56,7 @@ your system in order to use this function properly.
 \code{abgd_tbl()} saves all output files in \code{outfolder} and imports the first recursive partition
 file generated to \code{Environment}.
 Alternatively, \code{abgd_tbl()} can parse a .txt file obtained from a webserver such as
-\url{https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html}.
+(https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html).
 }
 \examples{
 \donttest{

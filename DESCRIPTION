@@ -2,7 +2,7 @@ Type: Package
 Package: delimtools
 Title: Helper Functions for Species Delimitation Analysis
 Version: 0.2.1
-Date: 2025-08-23
+Date: 2025-09-29
 Authors@R: c(
     person("Pedro", "Bittencourt", , "pedro.sennabittencourt@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-4074-3541")),

@@ -44,7 +44,7 @@ an object of class \link[tibble:tbl_df-class]{tbl_df}
 }
 \description{
 \code{asap_tbl()} returns species partition hypothesis estimated by ASAP software
-\url{https://bioinfo.mnhn.fr/abi/public/asap/}.
+(https://bioinfo.mnhn.fr/abi/public/asap/).
 }
 \details{
 \code{asap_tbl()} relies on \link[base:system]{system} to invoke ASAP software through
@@ -53,7 +53,7 @@ your system in order to use this function properly.
 \code{asap_tbl()} saves all output files in \code{outfolder} and imports the first partition
 file generated to \code{Environment}.
 Alternatively, \code{asap_tbl()} can parse a .csv file obtained from webserver such as
-\url{https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html}.
+(https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html).
 }
 \examples{
 

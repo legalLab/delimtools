@@ -2,7 +2,7 @@
 #'
 #' @description
 #' `abgd_tbl()` returns species partition hypothesis estimated by ABGD software
-#' <https://bioinfo.mnhn.fr/abi/public/abgd/>.
+#' (https://bioinfo.mnhn.fr/abi/public/abgd/).
 #'
 #' @param infile Path to fasta file.
 #' @param exe Path to an ABGD executable.
@@ -26,7 +26,7 @@
 #' `abgd_tbl()` saves all output files in `outfolder` and imports the first recursive partition
 #' file generated to `Environment`.
 #' Alternatively, `abgd_tbl()` can parse a .txt file obtained from a webserver such as
-#' <https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html>.
+#' (https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html).
 #'
 #' @return
 #' an object of class [`tbl_df`][tibble::tbl_df]
