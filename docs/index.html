@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">delimtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,7 @@
 <div class="section level2">
 <h2 id="important">IMPORTANT<a class="anchor" aria-label="anchor" href="#important"></a>
 </h2>
-<p>This software is under active development, and as such cannot be assumed to be free of bugs or poor functionality. Always inspect results carefully. If you find a problem, please report it with as much detail as possible in <a href="https://github.com/LegalLab/delimtools/issues" class="external-link">Issues</a>. Unfortunately in it’s current form, some of the functions (<code><a href="reference/abgd_tbl.html">abgd_tbl()</a></code>, <code><a href="reference/asap_tbl.html">asap_tbl()</a></code> and <code><a href="reference/mptp_tbl.html">mptp_tbl()</a></code>) will not work on Windows operating systems, only on Unix (MacOS, Linux). This is because third party binaries (executable programs) are required. We are working to implement importing results from the webservers that are commonly used to run these analyses. There are also difficulties with installing R required package dependancies to run <code><a href="reference/gmyc_tbl.html">gmyc_tbl()</a></code> and <code><a href="reference/bgmyc_tbl.html">bgmyc_tbl()</a></code> because these are no longer under development and available on CRAN, and must be installed from archived sources. Please refer to <a href="https://github.com/boopsboops/delimtools-testing/blob/main/scripts/install.md" class="external-link">github.com/boopsboops/delimtools-testing</a> for instructions on how to install.</p>
+<p>This software is under active development, and as such cannot be assumed to be free of bugs or poor functionality. Always inspect results carefully. If you find a problem, please report it with as much detail as possible in <a href="https://github.com/LegalLab/delimtools/issues" class="external-link">Issues</a>. Unfortunately in it’s current form, some of the functions (<code><a href="reference/abgd_tbl.html">abgd_tbl()</a></code>, <code><a href="reference/asap_tbl.html">asap_tbl()</a></code> and <code><a href="reference/mptp_tbl.html">mptp_tbl()</a></code>) will not work on Windows operating systems, only on Unix (MacOS, Linux). This is because third party binaries (executable programs) are required. We are working to implement importing results from the webservers that are commonly used to run these analyses. There are also difficulties with installing R required package dependancies to run <code><a href="reference/gmyc_tbl.html">gmyc_tbl()</a></code> and <code><a href="reference/bgmyc_tbl.html">bgmyc_tbl()</a></code> because these are no longer under development and available on CRAN, and must be installed from archived sources. Please refer to <a href="https://legallab.github.io/delimtools/articles/install.html" class="external-link uri">https://legallab.github.io/delimtools/articles/install.html</a> for instructions on how to install.</p>
 </div>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -133,7 +133,37 @@ Redhead Eartheater <em>Geophagus pyrocephalus</em>
 <span>               tbl_labs <span class="op">=</span> <span class="va">tip.tab</span>, </span>
 <span>               col_vec <span class="op">=</span> <span class="va">cols</span>,</span>
 <span>               hexpand <span class="op">=</span> <span class="fl">0.7</span>,</span>
-<span>               widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>               widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `aes_()` was deprecated in ggplot2 3.0.0.</span></span>
+<span><span class="co">#&gt; ℹ Please use tidy evaluation idioms with `aes()`</span></span>
+<span><span class="co">#&gt; ℹ The deprecated feature was likely used in the ggtree package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at &lt;https://github.com/YuLab-SMU/ggtree/issues&gt;.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co">#&gt; generated.</span></span>
+<span><span class="co">#&gt; Warning in fortify(data, ...): Arguments in `...` must be used.</span></span>
+<span><span class="co">#&gt; ✖ Problematic arguments:</span></span>
+<span><span class="co">#&gt; • as.Date = as.Date</span></span>
+<span><span class="co">#&gt; • yscale_mapping = yscale_mapping</span></span>
+<span><span class="co">#&gt; • hang = hang</span></span>
+<span><span class="co">#&gt; • color = "grey50"</span></span>
+<span><span class="co">#&gt; • size = 1</span></span>
+<span><span class="co">#&gt; ℹ Did you misspell an argument name?</span></span>
+<span><span class="co">#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
+<span><span class="co">#&gt; ℹ Please use `linewidth` instead.</span></span>
+<span><span class="co">#&gt; ℹ The deprecated feature was likely used in the ggtree package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at &lt;https://github.com/YuLab-SMU/ggtree/issues&gt;.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co">#&gt; generated.</span></span>
+<span><span class="co">#&gt; Warning: `aes_string()` was deprecated in ggplot2 3.0.0.</span></span>
+<span><span class="co">#&gt; ℹ Please use tidy evaluation idioms with `aes()`.</span></span>
+<span><span class="co">#&gt; ℹ See also `vignette("ggplot2-in-packages")` for more information.</span></span>
+<span><span class="co">#&gt; ℹ The deprecated feature was likely used in the ggtree package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at &lt;https://github.com/YuLab-SMU/ggtree/issues&gt;.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co">#&gt; generated.</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-1.png"><!-- --></p>
 </div>
 <div class="section level2">

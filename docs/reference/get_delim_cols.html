@@ -9,7 +9,7 @@ extracted and processed data from delim_autoplot."><meta property="og:image" con
 
     <a class="navbar-brand me-2" href="../index.html">delimtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,6 +90,14 @@ for map plotting.</p>
 <span class="r-in"><span><span class="co"># plot using autoplot</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="delim_autoplot.html">delim_autoplot</a></span><span class="op">(</span><span class="va">geophagus_delims</span>, <span class="va">geophagus_beast</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span><span style="color: #BBBB00;">⚠</span> Argument `tbl_labs` not provided. Using tiplabels instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Arguments in `...` must be used.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Problematic arguments:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> as.Date = as.Date</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> yscale_mapping = yscale_mapping</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> hang = hang</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> color = "grey50"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> size = 1</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Did you misspell an argument name?</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span><span style="color: #BBBB00;">⚠</span> Argument `delim_order` not provided. Using default order from</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> `geophagus_delims`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span><span style="color: #BBBB00;">⚠</span> Argument `col_vec` not provided. Customizing one using `delim_brewer()`.</span>
@@ -114,16 +122,16 @@ for map plotting.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 354 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    labels     method    spp   fill    colour  status   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> MZ504432.1 consensus sp3   #54A552 #54A552 haplotype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> MZ504431.1 consensus sp3   #54A552 #54A552 haplotype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> MZ504433.1 consensus sp3   #54A552 #54A552 haplotype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> MZ504415.1 consensus sp3   #54A552 #54A552 haplotype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> MZ504442.1 consensus sp3   #54A552 #54A552 haplotype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> MZ504420.1 consensus sp3   #54A552 #54A552 haplotype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> MZ504424.1 consensus sp3   #54A552 #54A552 haplotype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> MZ504400.1 consensus sp3   #54A552 #54A552 haplotype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> MZ504414.1 consensus sp3   #54A552 #54A552 haplotype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> MZ504394.1 consensus sp3   #54A552 #54A552 haplotype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> MZ504432.1 consensus sp3   #BF862B #BF862B haplotype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> MZ504431.1 consensus sp3   #BF862B #BF862B haplotype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> MZ504433.1 consensus sp3   #BF862B #BF862B haplotype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> MZ504415.1 consensus sp3   #BF862B #BF862B haplotype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> MZ504442.1 consensus sp3   #BF862B #BF862B haplotype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> MZ504420.1 consensus sp3   #BF862B #BF862B haplotype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> MZ504424.1 consensus sp3   #BF862B #BF862B haplotype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> MZ504400.1 consensus sp3   #BF862B #BF862B haplotype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> MZ504414.1 consensus sp3   #BF862B #BF862B haplotype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> MZ504394.1 consensus sp3   #BF862B #BF862B haplotype</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 344 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>

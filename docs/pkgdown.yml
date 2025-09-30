@@ -1,7 +1,7 @@
-pandoc: '3.2'
+pandoc: 3.6.3
 pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
-  delimtools: delimtools.html
+  articles/delimtools: delimtools.html
   install: install.html
-last_built: 2025-08-24T02:26Z
+last_built: 2025-09-30T12:33Z
