@@ -23,14 +23,16 @@ operating systems, only on Unix (MacOS, Linux). This is because third
 party binaries (executable programs) are required. We have implemented a
 Windows solution by importing results from the webservers that are
 commonly used to run these analyses,
-e.g. <https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html>,
-<https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html>, and
-<https://mptp.h-its.org/>. There are also difficulties with installing R
-required package dependancies to run `gmyc_tbl()` and `bgmyc_tbl()`
-because these are no longer under development and available on CRAN, and
-must be installed from archived sources. Please refer to
-<https://legallab.github.io/delimtools/articles/install.html> for
-instructions on how to install.
+e.g. [ABGD](https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html),
+[ASAP](https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html), and
+[mPTP](https://mptp.h-its.org/). There are also difficulties with
+installing R required package dependancies to run `gmyc_tbl()` and
+`bgmyc_tbl()` because these are no longer under development and
+available on CRAN, and must be installed from archived sources. Please
+refer to <https://legallab.github.io/delimtools/articles/install.html>
+for instructions on how to install. A tutorial vignette running through
+all major package functionality is found at
+<https://legallab.github.io/delimtools/articles/delimtools.html>.
 
 ## Overview
 
@@ -95,12 +97,12 @@ renv::install("LegalLab/delimtools@v0.1.0")
 
 ## Examples
 
-Here, we will demonstrate a single-locus species delimitation analysis
-on a *Geophagus* eartheater cichlid dataset ([Ximenes et
+Here, we will demonstrate plotting a single-locus species delimitation
+analysis of a *Geophagus* eartheater cichlid dataset ([Ximenes et
 al., 2021](https://doi.org/10.7717/peerj.12443)) using a variety of
-methods. For full details please see the GitHub repository accompanying
-this R package at
-[github.com/boopsboops/delimtools-testing](https://github.com/boopsboops/delimtools-testing).
+methods. A tutorial vignette running through all major package
+functionality is found at
+<https://legallab.github.io/delimtools/articles/delimtools.html>.
 
 ![Redhead Eartheater *Geophagus
 pyrocephalus*](https://raw.githubusercontent.com/boopsboops/delimtools-testing/79d6257c9ae4b7da1047e5ffa9ef1a04b4139dae/assets/geophagus_redhead_tapajos.jpg)
@@ -128,6 +130,7 @@ delim_autoplot(delim = geophagus_delims,
                col_vec = cols,
                hexpand = 0.7,
                widths = c(0.5, 0.5))
+
 ```
 
 ![](man/figures/README-example-1.png)<!-- -->
