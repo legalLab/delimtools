@@ -59,6 +59,16 @@
 #'
 #' @export
 abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, outfolder = NULL, webserver = NULL, delimname = "abgd") {
+  
+  # check if FASTA file is aligned, otherwise exit gracefully
+  dna <- ape::read.dna(infile, format = "fasta")
+  seq_lengths <- sapply(dna, length)
+  same_length <- length(unique(seq_lengths)) == 1
+  if (!same_length) {
+    cli::cli_alert_info("FASTA input not aligned. Not running ABGD. No ABGD table returned.")
+    return(invisible(NULL))
+  }
+  
   dname <- rlang::sym(delimname)
   
   # check if `readr` is installed
