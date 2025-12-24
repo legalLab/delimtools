@@ -106,11 +106,21 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
   # ASAP has weird issues when full path for infile is not provided.
   string_asap <- glue::glue("{exe} -d {model} -a -o {outfolder} {tools::file_path_as_absolute(infile)}")
   
-  res <- system(command=string_asap, intern = TRUE)
+  # suppress warning message that ASAP gives when it crashes due to finding only one partition
+  suppressWarnings(res <- system(command=string_asap, intern = TRUE))
   
   fpath <- glue::glue('{outfolder}/{basename(infile)}.Partition_1.csv')
-  
-  delim <- readr::read_csv(fpath, col_names = c("labels", delimname), col_types = "ci")
+
+  if (file.exists(fpath)) {
+    delim <- readr::read_csv(fpath, col_names = c("labels", delimname), col_types = "ci")
+  }
+  else {
+    # make delim for only 1 partition
+    dna <- ape::read.dna(infile, format = "fasta")
+    ids <- rownames(dna)
+    delim <- tibble::tibble(labels = ids, asap = 1) |>
+      dplyr::mutate(asap = as.integer(asap))
+  }
   
   if(!is.null(haps)){
     
