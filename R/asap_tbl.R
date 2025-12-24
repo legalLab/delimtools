@@ -55,6 +55,15 @@
 #' @export
 asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL, webserver = NULL, delimname = "asap") {
   
+  # check if FASTA file is aligned, otherwise exit gracefully
+  dna <- ape::read.dna(infile, format = "fasta")
+  seq_lengths <- sapply(dna, length)
+  same_length <- length(unique(seq_lengths)) == 1
+  if (!same_length) {
+    cli::cli_alert_info("FASTA input not aligned. Not running ASAP. No ASAP table returned.")
+    return(invisible(NULL))
+  }
+  
   # check if `readr` is installed
   rlang::check_installed("readr", reason= "to execute `ASAP` properly.")
   
