@@ -133,6 +133,10 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
     mptp_ls <- lapply(mptp_ls, function(x) x[-1])
 
     if (grepl("single", header)) {
+      # change default delimname to 'ptp'
+      if (delimname == "mptp") {
+        dname <- rlang::sym("ptp")
+      }
       mptp_df <- do.call(rbind, lapply(names(mptp_ls), function(x) tibble::tibble(labels = mptp_ls[[x]], !!dname := as.integer(unlist(x)))))
     }
 
@@ -175,6 +179,10 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
   }
 
   if (method == "single") {
+    # change default delimname to 'ptp'
+    if (delimname == "mptp") {
+      dname <- rlang::sym("ptp")
+    }
     string_mptp <- glue::glue("{exe} --tree_file {infile} --output_file {outfolder}/{basename(infile)}.mptp.{method} --ml --{method} --minbr {minbrlen}")
     res <- system(command = string_mptp, intern = TRUE)
     writeLines(res)
