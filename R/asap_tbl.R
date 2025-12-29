@@ -1,3 +1,4 @@
+#' Turns an aligned FASTA into a tibble of ASAP partitions
 #' A Command-Line Interface for ASAP - Assemble Species by Automatic Partitioning
 #'
 #' @description
@@ -25,17 +26,19 @@
 #' `asap_tbl()` saves all output files in `outfolder` and imports the first partition
 #' file generated to `Environment`.
 #' Alternatively, `asap_tbl()` can parse a .csv file obtained from webserver such as 
-#' (https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html).
+#' (https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html). 
+#' `asap_tbl()` turns these results into a tibble that matches the output of all other [xxx_tbl] functions.
 #'
 #' @return
 #' an object of class [tbl_df][tibble::tbl_df]
 #'
 #' @author
-#' Nicolas Puillandre, Sophie Brouillet, Guillaume Achaz.
+#' Pedro S. Bittencourt, Tomas Hrbek
 #' 
 #' @source
 #' Puillandre N., Brouillet S., Achaz G. 2021. ASAP: assemble species by automatic 
 #' partitioning. Molecular Ecology Resources 21:609–620.
+#' DOI: 10.1111/1755-0998.13281
 #'
 #' @examples
 #' 
@@ -45,7 +48,11 @@
 #' path_to_file <- system.file("extdata/geophagus.fasta", package = "delimtools")
 #' 
 #' # run ASAP
-#' asap_df <- asap_tbl(infile = path_to_file, exe= "/usr/local/bin/asap", model= 3)
+#' asap_df <- asap_tbl(
+#'   infile = path_to_file, 
+#'   exe= "/usr/local/bin/asap", 
+#'   model= 3
+#' )
 #' 
 #' # check
 #' asap_df
@@ -59,57 +66,42 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
   dna <- ape::read.dna(infile, format = "fasta")
   seq_lengths <- sapply(dna, length)
   same_length <- length(unique(seq_lengths)) == 1
+  
   if (!same_length) {
-    cli::cli_alert_info("FASTA input not aligned. Not running ASAP. No ASAP table returned.")
-    return(invisible(NULL))
+    cli::cli_abort("FASTA input not aligned.")
   }
   
   # check if `readr` is installed
   rlang::check_installed("readr", reason= "to execute `ASAP` properly.")
   
   if(!is.null(webserver) && !file.exists(webserver)) {
-    
-    cli::cli_abort("Error: Please provide a valid path to an ASAP results file.")
-    
+    cli::cli_abort("Please provide a valid path to an ASAP results file.")
   }
   
   if(!is.null(webserver) && file.exists(webserver)) {
-    
     delim <- readr::read_csv(webserver, col_names = c("labels", delimname), col_types = "c")
     
     if(!is.null(haps)){
-      
       delim <- delim |>
         dplyr::filter(labels %in% haps)
     }
-    
     return(delim)
-    
   }
-  
   if(!file.exists(exe)){
-    
-    cli::cli_abort("Error: Please provide a valid path to the ASAP executable file.")
-    
+    cli::cli_abort("Please provide a valid path to the ASAP executable file.")
   }
   
   if(missing(model)){
-    
     model <- 1
-    
     cli::cli_warn("{cli::col_yellow({cli::symbol$warning})} Evolutionary model not specified. Using p-distance as default model.")
   }
   
   if(is.null(outfolder)){
-    
     outfolder <- tempdir()
-    
   }
   
   if(!dir.exists(outfolder)){
-    
-    cli::cli_abort("Error: Please provide a valid results directory.")
-    
+    cli::cli_abort("Please provide a valid results directory.")
   }
   
   # ASAP has weird issues when full path for infile is not provided.
@@ -132,13 +124,11 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
   }
   
   if(!is.null(haps)){
-    
     delim <- delim |>
       dplyr::filter(labels %in% haps)
   }
   
   # clean up rogue files
-  
   rogue1 <- tools::file_path_as_absolute(glue::glue("{basename(infile)}.res.cvs"))
   rogue2 <- tools::file_path_as_absolute(glue::glue("{basename(infile)}_distmat.txt"))
   
