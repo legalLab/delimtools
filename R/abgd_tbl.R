@@ -1,3 +1,4 @@
+#' Turns an aligned FASTA file into a tibble of ABGD partitions
 #' A Command-Line Interface for ABGD - Automatic Barcode Gap Discovery
 #'
 #' @description
@@ -26,17 +27,19 @@
 #' `abgd_tbl()` saves all output files in `outfolder` and imports the first recursive partition
 #' file generated to `Environment`.
 #' Alternatively, `abgd_tbl()` can parse a .txt file obtained from a webserver such as
-#' (https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html).
+#' (https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html). 
+#' `abgd_tbl()` turns these results into a tibble that matches the output of all other [xxx_tbl] functions.
 #'
 #' @return
 #' an object of class [`tbl_df`][tibble::tbl_df]
 #'
 #' @author
-#' N. Puillandre,  A. Lambert,  S. Brouillet,  G. Achaz
+#' Pedro S. Bittencourt, Tomas Hrbek
 #'
 #' @source
 #' Puillandre N., Lambert A., Brouillet S., Achaz G. 2012. ABGD, Automatic Barcode 
 #' Gap Discovery for primary species delimitation. Molecular Ecology 21(8):1864-77.
+#' DOI: 10.1111/j.1365-294X.2011.05239.x
 #' 
 #' @examples
 #' \donttest{
@@ -64,9 +67,9 @@ abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, ou
   dna <- ape::read.dna(infile, format = "fasta")
   seq_lengths <- sapply(dna, length)
   same_length <- length(unique(seq_lengths)) == 1
+  
   if (!same_length) {
-    cli::cli_alert_info("FASTA input not aligned. Not running ABGD. No ABGD table returned.")
-    return(invisible(NULL))
+    cli::cli_abort("FASTA input not aligned.")
   }
   
   dname <- rlang::sym(delimname)
@@ -75,7 +78,7 @@ abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, ou
   rlang::check_installed("readr", reason= "to execute `ABGD` properly.")
 
   if (!is.null(webserver) && !file.exists(webserver)) {
-    cli::cli_abort("Error: Please provide a valid path to an ABGD results file.")
+    cli::cli_abort("Please provide a valid path to an ABGD results file.")
   }
 
   if (!is.null(webserver) && file.exists(webserver)) {
@@ -88,16 +91,14 @@ abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, ou
       dplyr::relocate(labels, .before = !!dname)
     
     if(!is.null(haps)){
-      
       delim <- delim |>
         dplyr::filter(labels %in% haps)
     }
-
     return(delim)
   }
 
   if (!file.exists(exe)) {
-    cli::cli_abort("Error: Please provide a valid path to the ABGD executable file.")
+    cli::cli_abort("Please provide a valid path to the ABGD executable file.")
   }
 
   if (missing(model)) {
@@ -111,7 +112,7 @@ abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, ou
   }
 
   if (!dir.exists(outfolder)) {
-    cli::cli_abort("Error: Please provide a valid results directory.")
+    cli::cli_abort("Please provide a valid results directory.")
   }
 
   string_abgd <- glue::glue("{exe} -d {model} -X {slope} -o {outfolder} {infile}")
