@@ -155,11 +155,6 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
     cli::cli_abort("Please provide a valid results directory.")
   }
 
-  if (missing(method)) {
-    cli::cli_abort(c("Please provide a valid option for {.arg method}.",
-                     "i" = "Available options are {.val multi} or {.val single}."))
-  }
-  
   if (method != "single" && method != "multi") {
     cli::cli_abort(c("Please provide a valid option for {.arg method}.",
       "i" = "Available options are {.val multi} or {.val single}."))
