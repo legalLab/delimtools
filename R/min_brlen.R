@@ -17,54 +17,66 @@
 #' an object of class [tbl_df][tibble::tbl_df]
 #'
 #' @author
-#' Rupert A. Collins
+#' Rupert A. Collins, Tomas Hrbek
 #'
 #' @examples
-#'
-#' # estimate minimum branch length from raxml tree
+#' # estimate minimum branch length from Newick or Nexus tree
+#' # also accepts trees in 'phylo' or 'tidytree' formats
 #' min_brlen(ape::as.phylo(geophagus_raxml), n = 5)
+#' min_brlen(geophagus_raxml, n = 5)
+#' min_brlen("geophagus_raxml.nwk", n = 5)
+#' min_brlen(ape::as.phylo(geophagus_beast), n = 5)
+#' min_brlen(geophagus_beast, n = 5)
+#' min_brlen("geophagus_beast.nex", n = 5)
 #'
 #' @export
-min_brlen <- function(tree, n = 5, verbose = TRUE) {
+min_brlen <- function(infile, n = 5, verbose = TRUE) {
+  
   # checks
-
-  if (methods::is(tree, "phylo")) {
-    tr <- tree
-  } else if (file.exists(tree)) {
-    tr <- ape::read.tree(tree)
+  if (methods::is(infile, "phylo")) {
+    tr <- infile
+  } else if (methods::is(infile, "treedata")) {
+    tr <- ape::as.phylo(infile)
+  } else if (file.exists(infile)) {
+    lines <- readLines(infile, warn = FALSE)
+    lines <- trimws(lines)
+    lines <- lines[lines != ""]
+    lines <- lines[!grepl("^\\[.*\\]$", lines)]  # drop pure NEXUS comments
+    if (length(lines) == 0) {
+      cli::cli_abort("Phylogenetic tree file is empty or contains only comments.")
+    }
+    if (grepl("^#NEXUS", toupper(lines[1])) && grepl("^END;$", toupper(lines[length(lines)]))) {
+      tr <- ape::read.nexus(infile)
+    } else if (grepl("^\\(", lines[1]) && grepl(";$", lines[length(lines)])) {
+      tr <- ape::read.tree(infile)
+    } else {
+      cli::cli_abort("Infile is improperly formatted Newick or Nexus tree file.")
+    }
   } else {
-    writeLines("\n")
-
-    cli::cli_abort("Error. Please provide a phylogenetic tree object or a path to a Newick file that can be read by `ape`.")
-
-    writeLines("\n")
+    cli::cli_abort("Please provide a phylogenetic tree object or a path to a Newick/Nexus tree file that can be read by `ape`.")
   }
 
   # fun
+  tr_dist <- ape::cophenetic.phylo(tr)
 
-  tr.dist <- ape::cophenetic.phylo(tr)
-
-  pairs.tab <- tr.dist |>
+  pairs_tab <- tr_dist |>
     tibble::as_tibble(rownames = "tip1") |>
     tidyr::pivot_longer(-1, names_to = "tip2", values_to = "dist") |>
-    dplyr::filter(.data$tip1 != .data$tip2)
+    dplyr::filter(tip1 != tip2)
 
-  pairs.tab.cut <- pairs.tab |>
-    dplyr::arrange(.data$dist) |>
-    dplyr::count(.data$dist) |>
+  pairs_tab_cut <- pairs_tab |>
+    dplyr::arrange(dist) |>
+    dplyr::count(dist) |>
     dplyr::slice_head(n = n)
 
   # print
-
   if(verbose == TRUE) {
-    writeLines("\n")
-
     cli::cli_alert_info("Printing {n} smallest tip-to-tip distances in a tree with {length(tr$tip.label)} tips ...")
 
-    pairs.tab.cut |>
+    pairs_tab_cut |>
       knitr::kable(align = "lr") |>
       print()
   }
 
-  invisible(pairs.tab.cut)
+  return(invisible(pairs_tab_cut))
 }
