@@ -19,8 +19,11 @@
 #' A `patchwork` object.
 #'
 #' @author
-#' Pedro S. Bittencourt, Rupert A. Collins.
-#'
+#' Pedro S. Bittencourt, Rupert A. Collins
+#' 
+#' @contributor
+#' Tomas Hrbek
+#' 
 #' @examples
 #' # create labels
 #' labs <- geophagus_info |> dplyr::select(gbAccession, scientificName)
@@ -32,6 +35,13 @@
 #'   species = "scientificName"
 #' )
 #' p
+#' # or
+#' p <- delim_autoplot2(geophagus_delims,
+#'   "geophagus_beast.nex",
+#'   tbl_labs = labs,
+#'   species = "scientificName"
+#' )
+#' p
 #'
 #' # view partitions using a phylogram
 #' p1 <- delim_autoplot2(geophagus_delims,
@@ -39,29 +49,54 @@
 #'   tbl_labs = labs,
 #'   species = "scientificName"
 #' )
+#' p1
+#' # or
+#' p1 <- delim_autoplot2(geophagus_delims,
+#'   "geophagus_raxml.nwk",
+#'   tbl_labs = labs,
+#'   species = "scientificName"
+#' )
+#' p1
 #'
 #' @export
-#'
-delim_autoplot2 <- function(delim, tr, consensus = TRUE, n_match = NULL,
+delim_autoplot2 <- function(delim, infile, consensus = TRUE, n_match = NULL,
                             delim_order = NULL, tbl_labs, species,
                             hexpand = 0.1, widths = c(0.5, 0.2)) {
+
+  # checks
+  if (methods::is(infile, "treedata")) {
+    tr <- infile
+  } else if (file.exists(infile)) {
+    lines <- readLines(infile, warn = FALSE)
+    lines <- trimws(lines)
+    lines <- lines[lines != ""]
+    lines <- lines[!grepl("^\\[.*\\]$", lines)]  # drop pure NEXUS comments
+    if (length(lines) == 0) {
+      cli::cli_abort("Phylogenetic tree file is empty or contains only comments.")
+    }
+    if (grepl("^#NEXUS", toupper(lines[1])) && grepl("^END;$", toupper(lines[length(lines)]))) {
+      tr <- treeio::read.beast(infile)
+    } else if (grepl("^\\(", lines[1]) && grepl(";$", lines[length(lines)])) {
+      # tree must have bootstrap support
+      tr <- treeio::read.newick(infile, node.label="support")
+    } else {
+      cli::cli_abort("Infile is improperly formatted Newick or Nexus tree file.")
+    }
+  } else {
+    cli::cli_abort("Please provide a phylogenetic tree object or a path to a Newick/Nexus tree file that can be read by `ape`.")
+  }
   
   # check if `patchwork` is installed
   rlang::check_installed("patchwork", reason = "to run `delim_autoplot` properly.")
   
-  if (!methods::is(tr, "treedata")) {
-    cli::cli_abort(c("Tree file must be from class {.cls treedata}.",
-      "i" = "You've supplied a tree file of class {.cls {class(tr)}}",
-      "i" = "You may convert your tree file by using {.fun tidytree::as.treedata}"
-    ))
-  }
-
   if (is.null(tbl_labs)) {
-    cli::cli_abort("Argument {.arg tbl_labs} not provided. Please provide one or use {.fn delim_autoplot} instead.")
+    cli::cli_alert_info("Argument {.arg tbl_labs} not provided. Please provide one or use {.fn delim_autoplot} instead.")
+    return(invisible(NULL))
   }
 
   if (is.null(species)) {
-    cli::cli_abort("Argument {.arg species} not provided. Please provide one or use {.fn delim_autoplot} instead.")
+    cli::cli_alert_info("Argument {.arg species} not provided. Please provide one or use {.fn delim_autoplot} instead.")
+    return(invisible(NULL))
   }
 
   if (ape::is.ultrametric(tr@phylo)) {
@@ -124,10 +159,14 @@ delim_autoplot2 <- function(delim, tr, consensus = TRUE, n_match = NULL,
         cols_vary = "fastest"
       ) |>
       dplyr::mutate(
-        method = as.factor(.data$method) |> forcats::fct_inorder(),
-        spp = as.factor(.data$spp) |> forcats::fct_inorder(),
+        method = as.factor(.data$method) |> 
+          forcats::fct_inorder(),
+        spp = as.factor(.data$spp) |> 
+          forcats::fct_inorder(),
         label = labels,
-        labels = as.factor(.data$labels) |> forcats::fct_inorder() |> forcats::fct_rev()
+        labels = as.factor(.data$labels) |> 
+          forcats::fct_inorder() |> 
+          forcats::fct_rev()
       ) |>
       dplyr::group_by(.data$spp) |>
       dplyr::mutate(interaction = interaction(.data$method, .data$species, .data$spp)) |>
@@ -173,10 +212,14 @@ delim_autoplot2 <- function(delim, tr, consensus = TRUE, n_match = NULL,
         cols_vary = "fastest"
       ) |>
       dplyr::mutate(
-        method = as.factor(.data$method) |> forcats::fct_inorder(),
-        spp = as.factor(.data$spp) |> forcats::fct_inorder(),
+        method = as.factor(.data$method) |> 
+          forcats::fct_inorder(),
+        spp = as.factor(.data$spp) |> 
+          forcats::fct_inorder(),
         label = labels,
-        labels = as.factor(.data$labels) |> forcats::fct_inorder() |> forcats::fct_rev()
+        labels = as.factor(.data$labels) |> 
+          forcats::fct_inorder() |> 
+          forcats::fct_rev()
       ) |>
       dplyr::group_by(.data$spp) |>
       dplyr::mutate(interaction = interaction(.data$method, .data$spp)) |>
