@@ -73,6 +73,8 @@ delim_join <- function(delim) {
       # reduce list to wide format
       delim <- delim |>
         purrr::reduce(dplyr::full_join, by = "labels")
+      # get input order of delimitations
+      delim_ordr <- colnames(delim)
     }
   }
 
@@ -94,16 +96,17 @@ delim_join <- function(delim) {
       values_to = "delims"
     ) |>
     tidyr::unite("delims", "method":"delims", sep = "") |>
-    dplyr::group_by(.data$delims)
+    dplyr::group_by(delims)
 
   # get group names
-  group_names <- dplyr::group_keys(dlong) |> dplyr::pull()
+  group_names <- dplyr::group_keys(dlong) |> 
+    dplyr::pull()
 
   # turn into a list
   dlist <- dlong |>
     dplyr::group_split() |>
     purrr::set_names(group_names) |>
-    purrr::map(dplyr::select, -.data$delims) |>
+    purrr::map(dplyr::select, -delims) |>
     purrr::map(unlist, use.names = FALSE)
 
   # loop 1
@@ -131,7 +134,8 @@ delim_join <- function(delim) {
   ) |>
     dplyr::mutate(method = stringr::str_remove(.data$gr, "-sp[0-9]+")) |>
     tidyr::pivot_wider(id_cols = "labels", names_from = "method", values_from = "gr") |>
-    dplyr::mutate(dplyr::across(.cols = -labels, .fns = ~ stringr::str_split_fixed(., "-", n = 2)[, 2]))
+    dplyr::mutate(dplyr::across(.cols = -labels, .fns = ~ stringr::str_split_fixed(., "-", n = 2)[, 2])) |>
+    dplyr::select(any_of(delim_ordr), everything())
 
   return(delim_df)
 }
