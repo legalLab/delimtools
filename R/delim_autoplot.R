@@ -7,7 +7,9 @@
 #'
 #' @param delim Output from [delim_join].
 #' @param tr A [treedata][tidytree::treedata-class] object. Both phylogram and
-#' ultrametric trees are supported.
+#' ultrametric trees are supported. Also supports and converts to 
+#' [treedata][tidytree::treedata-class] object a (RAxML) Newick format phylogram 
+#' with bootstrap support values, and a BEAST2 Nexus format ultrametric tree.
 #' @param consensus Logical. Should the majority-vote consensus to be estimated?
 #' @param n_match An Integer. If `consensus = TRUE`, threshold for majority-vote
 #' calculations. See [delim_consensus] for details.
@@ -34,31 +36,57 @@
 #' A `patchwork` object.
 #'
 #' @author
-#' Pedro S. Bittencourt, Rupert A. Collins.
+#' Pedro S. Bittencourt, Rupert A. Collins
+#' 
+#' @contributor
+#' Tomas Hrbek
 #'
 #' @examples
 #' # view partitions using an ultrametric tree
 #' p <- delim_autoplot(geophagus_delims, geophagus_beast)
 #' p
+#' # or
+#' p <- delim_autoplot(geophagus_delims, "geophagus_beast.nex")
+#' p
 #'
 #' # view partitions using a phylogram
 #' p1 <- delim_autoplot(geophagus_delims, geophagus_raxml)
+#' p1
+#' # or
+#' p1 <- delim_autoplot(geophagus_delims, "geophagus_raxml.nwk")
+#' p1
 #'
 #' @export
-delim_autoplot <- function(delim, tr, consensus = TRUE, n_match = NULL,
+delim_autoplot <- function(delim, infile, consensus = TRUE, n_match = NULL,
                            delim_order = NULL, tbl_labs = NULL, col_vec = NULL,
                            hexpand = 0.1, widths = c(0.5, 0.2)) {
   
+  # checks
+  if (methods::is(infile, "treedata")) {
+    tr <- infile
+  } else if (file.exists(infile)) {
+    lines <- readLines(infile, warn = FALSE)
+    lines <- trimws(lines)
+    lines <- lines[lines != ""]
+    lines <- lines[!grepl("^\\[.*\\]$", lines)]  # drop pure NEXUS comments
+    if (length(lines) == 0) {
+      cli::cli_abort("Phylogenetic tree file is empty or contains only comments.")
+    }
+    if (grepl("^#NEXUS", toupper(lines[1])) && grepl("^END;$", toupper(lines[length(lines)]))) {
+      tr <- treeio::read.beast(infile)
+    } else if (grepl("^\\(", lines[1]) && grepl(";$", lines[length(lines)])) {
+      # tree must have bootstrap support
+      tr <- treeio::read.newick(infile, node.label="support")
+    } else {
+      cli::cli_abort("Infile is improperly formatted Newick or Nexus tree file.")
+    }
+  } else {
+    cli::cli_abort("Please provide a phylogenetic tree object or a path to a Newick/Nexus tree file that can be read by `ape`.")
+  }
+
   # check if `patchwork` is installed
   rlang::check_installed("patchwork", reason = "to run `delim_autoplot` properly.")
   
-  if (!methods::is(tr, "treedata")) {
-    cli::cli_abort(c("Tree file must be from class {.cls treedata}.",
-      "i" = "You've supplied a tree file of class {.cls {class(tr)}}",
-      "i" = "You may convert your tree file by using {.fun tidytree::as.treedata}"
-    ))
-  }
-
   if (is.null(tbl_labs)) {
     tbl_labs <- tibble::tibble(
       label = tidytree::tip.label(tr),
@@ -113,10 +141,14 @@ delim_autoplot <- function(delim, tr, consensus = TRUE, n_match = NULL,
         cols_vary = "fastest"
       ) |>
       dplyr::mutate(
-        method = as.factor(.data$method) |> forcats::fct_inorder(),
-        spp = as.factor(.data$spp) |> forcats::fct_inorder(),
+        method = as.factor(.data$method) |> 
+          forcats::fct_inorder(),
+        spp = as.factor(.data$spp) |> 
+          forcats::fct_inorder(),
         label = labels,
-        labels = as.factor(.data$labels) |> forcats::fct_inorder() |> forcats::fct_rev()
+        labels = as.factor(.data$labels) |> 
+          forcats::fct_inorder() |> 
+          forcats::fct_rev()
       )
 
     delim_tile <- ggplot2::ggplot(delim_long, ggplot2::aes(x = .data$method, y = .data$labels, color = .data$spp, fill = .data$spp)) +
@@ -151,10 +183,14 @@ delim_autoplot <- function(delim, tr, consensus = TRUE, n_match = NULL,
         cols_vary = "fastest"
       ) |>
       dplyr::mutate(
-        method = as.factor(.data$method) |> forcats::fct_inorder(),
-        spp = as.factor(.data$spp) |> forcats::fct_inorder(),
+        method = as.factor(.data$method) |> 
+          forcats::fct_inorder(),
+        spp = as.factor(.data$spp) |> 
+          forcats::fct_inorder(),
         label = labels,
-        labels = as.factor(.data$labels) |> forcats::fct_inorder() |> forcats::fct_rev()
+        labels = as.factor(.data$labels) |> 
+          forcats::fct_inorder() |> 
+          forcats::fct_rev()
       )
 
     delim_tile <- ggplot2::ggplot(delim_long, ggplot2::aes(x = .data$method, y = .data$labels, color = .data$spp, fill = .data$spp)) +
