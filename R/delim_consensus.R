@@ -47,17 +47,28 @@ delim_consensus <- function(delim, n_match=NULL){
     
   } 
   
-  if(n_match >= 1 & n_match <= ncol(delim[, -1])){
+  if (n_match >= 1 & n_match <= ncol(delim[, -1])) {
     
     cons_delim <- delim |> 
       dplyr::rowwise() |> 
       dplyr::mutate(consensus= list(vctrs::vec_count(dplyr::c_across(2:ncol(delim))))) |> 
-      tidyr::unnest("consensus") |> 
-      dplyr::mutate(count= dplyr::if_else(.data$count >= {{ n_match }}, .data$key, NA)) |> 
+      tidyr::unnest(consensus) |> 
+      dplyr::ungroup() |> 
+      dplyr::group_by(labels) |> 
+      dplyr::arrange(dplyr::desc(count), .by_group = TRUE) |> 
+      dplyr::mutate(
+        keeper = dplyr::case_when(
+          # if top two counts are equal → all NA
+          dplyr::n() > 1 & count[1] == count[2] ~ NA_character_,
+          # otherwise keep only the first AND meeting n_match
+          dplyr::row_number() == 1 & count >= n_match ~ key,
+          TRUE ~ NA_character_
+        )
+      ) |> 
+      dplyr::ungroup() |> 
       dplyr::distinct(labels, .keep_all = TRUE) |> 
-      dplyr::select(-.data$key) |> 
-      dplyr::rename(consensus= "count")
-    
+      dplyr::select(-key, -count) |> 
+      dplyr::rename(consensus = keeper)
   }
   
   return(cons_delim)
