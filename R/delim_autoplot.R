@@ -131,8 +131,8 @@ delim_autoplot <- function(delim, infile, consensus = TRUE, n_match = NULL,
   if (consensus == TRUE) {
     # reorder and turn into long format
     delim_long <- delim |>
-      dplyr::arrange(match(labels, ggtree::get_taxa_name(pp))) |>
       delimtools::delim_consensus(n_match = n_match) |>
+      dplyr::arrange(match(labels, ggtree::get_taxa_name(pp))) |>
       dplyr::relocate(tidyselect::all_of(delim_order), .after = labels) |>
       tidyr::pivot_longer(
         cols = -labels,
