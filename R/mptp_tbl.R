@@ -90,7 +90,8 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
       tr <- ape::read.nexus(infile)
       # check if tree is unrooted; should never happen, but ...
       if (!ape::is.rooted(tr)) {
-        cli::cli_abort("Phylogenetic tree is not rooted.")
+        cli::cli_alert_info("Phylogenetic tree is not rooted.
+                            mPTP will root automatically on the longest branch")
       }
       # check if tree is ultrametric
       if (ape::is.ultrametric(tr)) {
@@ -100,7 +101,8 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
       tr <- ape::read.tree(infile)
       # check if tree is unrooted; should never happen, but ...
       if (!ape::is.rooted(tr)) {
-        cli::cli_abort("Phylogenetic tree is not rooted.")
+        cli::cli_alert_info("Phylogenetic tree is not rooted.
+                            mPTP will root automatically on the longest branch")
       }
       # check if tree is ultrametric
       if (ape::is.ultrametric(tr)) {
@@ -169,7 +171,8 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
     res <- system(command = string_mptp, intern = TRUE)
     writeLines(res)
 
-    lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |> sub(":", "", x = _)
+    lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |> 
+      sub(":", "", x = _)
 
     mptp_ls <- split_vec(lines)
 
@@ -187,7 +190,8 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
     res <- system(command = string_mptp, intern = TRUE)
     writeLines(res)
 
-    lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |> sub(":", "", x = _)
+    lines <- readLines(glue::glue("{outfolder}/{basename(infile)}.mptp.{method}.txt"))[-c(1:8)] |> 
+      sub(":", "", x = _)
 
     mptp_ls <- split_vec(lines)
     
@@ -204,10 +208,8 @@ mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "
     format(scientific = FALSE)
 
   if (minbrlen_est < format(minbrlen, scientific = FALSE)) {
-    cli::cli_alert_info(
-      "Warning: there are tip-to-tip distances smaller than the specified minimum branch length ({format(minbrlen, scientific=FALSE)}).
-      Consider using `delimtools::min_brlen()` to explore branch lengths in your tree."
-    )
+    cli::cli_alert_warning("Warning: there are tip-to-tip distances smaller than the specified minimum branch length ({format(minbrlen, scientific=FALSE)}). 
+                           Consider using `delimtools::min_brlen()` to explore branch lengths in your tree.")
   }
 
   cli::cli_alert_info("mPTP files are located in '{outfolder}'.")
