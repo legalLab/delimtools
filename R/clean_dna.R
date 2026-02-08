@@ -38,7 +38,7 @@ clean_dna <- function(dna, verbose = TRUE) {
   if (length(errs >= 1) & verbose == TRUE) {
     cli::cli_warn(c("{cli::col_yellow({cli::symbol$warning})} You have missing data {.val ('N','-' '?')}
     or ambiguity inside your sequence, i.e. not padding the ends, and this may have unintended consequences later, as they have now been removed!",
-      "i" = "The names of the samples are bellow.",
+      "i" = "The names of the samples are below.",
       stringr::str_flatten_comma(errs)
     ))
   }
