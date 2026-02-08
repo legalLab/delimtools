@@ -51,7 +51,7 @@ match_ratio <- function(delim) {
           order_y = vctrs::vec_group_id(dplyr::pick(3))
         ) |>
         dplyr::mutate(union = dplyr::cur_group_id(), .by = c(2, 3)) |>
-        dplyr::mutate(n_match = dplyr::if_else(dplyr::pick(2) == dplyr::pick(3), union, 0)) |>
+        dplyr::mutate(n_match = dplyr::if_else(c(dplyr::pick(2) == dplyr::pick(3), union, 0))) |>
         dplyr::summarise(
           pairs = stringr::str_c(.x[1], .x[2], sep = "-"),
           delim_1 = dplyr::n_distinct(pick(2)),
