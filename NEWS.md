@@ -1,3 +1,7 @@
+# delimtools 0.2.2
+
+* Fixed an issue caused by an update in `dplyr::if_else` conditions
+
 # delimtools 0.2.1
 
 * `Get started` vignette added;

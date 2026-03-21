@@ -128,7 +128,7 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
     dna <- ape::read.dna(infile, format = "fasta")
     ids <- rownames(dna)
     delim <- tibble::tibble(labels = ids, asap = 1) |>
-      dplyr::mutate(asap = as.integer(asap))
+      dplyr::mutate(asap = as.integer(.data$asap))
   }
   
   if(!is.null(haps)){

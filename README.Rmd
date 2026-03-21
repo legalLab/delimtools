@@ -18,12 +18,11 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/delimtools)](https://cran.r-project.org/package=delimtools)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/delimtools)](https://cran.r-project.org/package=delimtools)
-[![R-CMD-check](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## IMPORTANT
 
-This software is under active development, and as such cannot be assumed to be free of bugs or poor functionality. Always inspect results carefully. If you find a problem, please report it with as much detail as possible in [Issues](https://github.com/LegalLab/delimtools/issues). Unfortunately in its current form, some of the functions (`abgd_tbl()`, `asap_tbl()` and `mptp_tbl()`) will not work natively on Windows operating systems, only on Unix (MacOS, Linux). This is because third party binaries (executable programs) are required. We have implemented a Windows solution by importing results from the webservers that are commonly used to run these analyses, e.g. [ABGD](https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html), [ASAP](https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html), and [mPTP](https://mptp.h-its.org/). There are also difficulties with installing R required package dependancies to run `gmyc_tbl()` and `bgmyc_tbl()` because these are no longer under development and available on CRAN, and must be installed from archived sources. Please refer to [https://legallab.github.io/delimtools/articles/install.html](https://legallab.github.io/delimtools/articles/install.html) for instructions on how to install. A tutorial vignette running through all major package functionality is found at [https://legallab.github.io/delimtools/articles/delimtools.html](https://legallab.github.io/delimtools/articles/delimtools.html).
+This software is under active development, and as such cannot be assumed to be free of bugs or poor functionality. Always inspect results carefully. If you find a problem, please report it with as much detail as possible in [Issues](https://github.com/LegalLab/delimtools/issues). Unfortunately in its current form, some of the functions (`abgd_tbl()`, `asap_tbl()` and `mptp_tbl()`) will not work natively on Windows operating systems, only on Unix (MacOS, Linux). This is because third party binaries (executable programs) are required. We have implemented a Windows solution by importing results from the webservers that are commonly used to run these analyses, e.g. ABGD, ASAP, and [mPTP](https://mptp.h-its.org/). There are also difficulties with installing R required package dependancies to run `gmyc_tbl()` and `bgmyc_tbl()` because these are no longer under development and available on CRAN, and must be installed from archived sources. Please refer to [https://legallab.github.io/delimtools/articles/install.html](https://legallab.github.io/delimtools/articles/install.html) for instructions on how to install. A tutorial vignette running through all major package functionality is found at [https://legallab.github.io/delimtools/articles/delimtools.html](https://legallab.github.io/delimtools/articles/delimtools.html).
 
 ## Overview
 
@@ -32,7 +31,7 @@ The official GitHub repository for the R package `delimtools` (Bittencourt et al
 `delimtools` provides helper functions for the analysis of single-locus species delimitation methods such as GMYC ([Monaghan et al., 2009](https://doi.org/10.1093/sysbio/syp027)), bGMYC ([Reid & Carstens, 2012](https://doi.org/10.1186/1471-2148-12-196)), mPTP ([Kapli et al., 2017](https://doi.org/10.1093/bioinformatics/btx025)) and ASAP ([Puillandre et al., 2020](https://doi.org/10.1111/1755-0998.13281)). These software run multiple different platforms (e.g. R, Unix, webservers), and also do not output their results in a consistent format to allow easy comparison. To address these shortcomings we have developed a suite of functions to standardise and simplify generating single-locus species delimitations.
 
 ## Dependencies
-Delimtools mainly depends on the [tidyverse](https://www.tidyverse.org/) and 
+Delimtools mainly depends on the [tidyverse](https://tidyverse.org/) and 
 [ggtree](https://github.com/YuLab-SMU/ggtree) packages. To install these, run 
 the command lines below:
 

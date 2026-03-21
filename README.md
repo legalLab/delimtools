@@ -8,7 +8,6 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/delimtools)](https://cran.r-project.org/package=delimtools)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/delimtools)](https://cran.r-project.org/package=delimtools)
-[![R-CMD-check](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## IMPORTANT
@@ -22,9 +21,7 @@ Unfortunately in its current form, some of the functions (`abgd_tbl()`,
 operating systems, only on Unix (MacOS, Linux). This is because third
 party binaries (executable programs) are required. We have implemented a
 Windows solution by importing results from the webservers that are
-commonly used to run these analyses,
-e.g. [ABGD](https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html),
-[ASAP](https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html), and
+commonly used to run these analyses, e.g. ABGD, ASAP, and
 [mPTP](https://mptp.h-its.org/). There are also difficulties with
 installing R required package dependancies to run `gmyc_tbl()` and
 `bgmyc_tbl()` because these are no longer under development and
@@ -40,10 +37,10 @@ The official GitHub repository for the R package `delimtools`
 (Bittencourt et al., in prep.).
 
 `delimtools` provides helper functions for the analysis of single-locus
-species delimitation methods such as GMYC ([Monaghan et
-al., 2009](https://doi.org/10.1093/sysbio/syp027)), bGMYC ([Reid &
-Carstens, 2012](https://doi.org/10.1186/1471-2148-12-196)), mPTP ([Kapli
-et al., 2017](https://doi.org/10.1093/bioinformatics/btx025)) and ASAP
+species delimitation methods such as GMYC ([Monaghan et al.,
+2009](https://doi.org/10.1093/sysbio/syp027)), bGMYC ([Reid & Carstens,
+2012](https://doi.org/10.1186/1471-2148-12-196)), mPTP ([Kapli et al.,
+2017](https://doi.org/10.1093/bioinformatics/btx025)) and ASAP
 ([Puillandre et al., 2020](https://doi.org/10.1111/1755-0998.13281)).
 These software run multiple different platforms (e.g. R, Unix,
 webservers), and also do not output their results in a consistent format
@@ -53,8 +50,8 @@ single-locus species delimitations.
 
 ## Dependencies
 
-Delimtools mainly depends on the [tidyverse](https://www.tidyverse.org/)
-and [ggtree](https://github.com/YuLab-SMU/ggtree) packages. To install
+Delimtools mainly depends on the [tidyverse](https://tidyverse.org/) and
+[ggtree](https://github.com/YuLab-SMU/ggtree) packages. To install
 these, run the command lines below:
 
 Install `tidyverse`:
@@ -98,14 +95,19 @@ renv::install("LegalLab/delimtools@v0.1.0")
 ## Examples
 
 Here, we will demonstrate plotting a single-locus species delimitation
-analysis of a *Geophagus* eartheater cichlid dataset ([Ximenes et
-al., 2021](https://doi.org/10.7717/peerj.12443)) using a variety of
-methods. A tutorial vignette running through all major package
-functionality is found at
+analysis of a *Geophagus* eartheater cichlid dataset ([Ximenes et al.,
+2021](https://doi.org/10.7717/peerj.12443)) using a variety of methods.
+A tutorial vignette running through all major package functionality is
+found at
 <https://legallab.github.io/delimtools/articles/delimtools.html>.
 
-![Redhead Eartheater *Geophagus
-pyrocephalus*](https://raw.githubusercontent.com/boopsboops/delimtools-testing/79d6257c9ae4b7da1047e5ffa9ef1a04b4139dae/assets/geophagus_redhead_tapajos.jpg)
+<figure>
+<img
+src="https://raw.githubusercontent.com/boopsboops/delimtools-testing/79d6257c9ae4b7da1047e5ffa9ef1a04b4139dae/assets/geophagus_redhead_tapajos.jpg"
+alt="Redhead Eartheater Geophagus pyrocephalus" />
+<figcaption aria-hidden="true">Redhead Eartheater <em>Geophagus
+pyrocephalus</em></figcaption>
+</figure>
 
 ``` r
 library(delimtools)
@@ -130,21 +132,27 @@ delim_autoplot(delim = geophagus_delims,
                col_vec = cols,
                hexpand = 0.7,
                widths = c(0.5, 0.5))
-
+#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `linewidth` instead.
+#> ℹ The deprecated feature was likely used in the ggtree package.
+#>   Please report the issue at <https://github.com/YuLab-SMU/ggtree/issues>.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 ```
 
 ![](man/figures/README-example-1.png)<!-- -->
 
 ## Current contributors
 
-  - [Pedro S. Bittencourt](https://github.com/pedrosenna)
-  - [Rupert A. Collins](https://github.com/boopsboops)
-  - [Tomas Hrbek](https://github.com/killidude)
+- [Pedro S. Bittencourt](https://github.com/pedrosenna)
+- [Rupert A. Collins](https://github.com/boopsboops)
+- [Tomas Hrbek](https://github.com/killidude)
 
 ## Meta
 
-  - Please [report here any issues or bugs or
-    suggestions](https://github.com/legalLab/delimtools/issues).
-  - License: MIT.
-  - Get citation information for `delimtools` in R by running
-    `citation(package='delimtools')`.
+- Please [report here any issues or bugs or
+  suggestions](https://github.com/legalLab/delimtools/issues).
+- License: MIT.
+- Get citation information for `delimtools` in R by running
+  `citation(package='delimtools')`.
