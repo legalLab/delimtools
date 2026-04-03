@@ -19,7 +19,7 @@
 #' an object of class [tbl_df][tibble::tbl_df].
 #'
 #' @author
-#' Pedro S. Bittencourt, Rupert A. Collins.
+#' Pedro S. Bittencourt, Rupert A. Collins, Tomas Hrbek.
 #'
 #' @examples
 #' 
@@ -66,30 +66,72 @@
 #' }
 #'
 #' @export
-delim_join <- function(delim) {
+delim_join <- function(delim, return = c("both", "df", "removed")) {
+  
+  # detect if user explicitly supplied `return`
+  return_supplied <- "return" %in% names(match.call())
+  
+  # specify default behavior if return not specified
+  if (!return_supplied) {
+    return <- "df"
+  } else {
+    return <- match.arg(return)
+  }
+
+  removed_tbl <- tibble::tibble(sample = character(), delimitation = character())
+  
+  # delim is a list
   if (methods::is(delim, "list")) {
-    # check delimitations
-    if (isTRUE(delimtools::check_delim(delim))) {
-      # reduce list to wide format
-      delim <- delim |>
-        purrr::reduce(dplyr::full_join, by = "labels")
-      # get input order of delimitations
-      delim_ordr <- colnames(delim)
+    # convert to wide format
+    delim_wide <- delim |>
+      purrr::reduce(dplyr::full_join, by = "labels")
+    delim_ordr <- colnames(delim_wide)
+    
+    if (!isTRUE(delimtools::check_delim(delim))) {
+      # build removal log
+      for (col in colnames(delim_wide)[-1]) {
+        missing_ids <- delim_wide$labels[is.na(delim_wide[[col]])]
+        if (length(missing_ids) > 0) {
+          removed_tbl <- dplyr::bind_rows(removed_tbl, tibble::tibble(sample = missing_ids, delimitation = col))
+        }
+      }
+      
+      # warning
+      cli::cli_alert_info("Removing individuals with missing delimitations: {removed_tbl$sample} in {removed_tbl$delimitation}")
+      
+      # drop incomplete rows
+      delim <- delim_wide |>
+        tidyr::drop_na()
+    } else {
+      delim <- delim_wide
     }
   }
-
+  
+  # delim is data.frame
   if (methods::is(delim, "data.frame")) {
-    # check for NA values
+    delim_ordr <- colnames(delim)
     if (anyNA(delim)) {
-      cli::cli_abort(c("Missing values found across columns.",
-        "x" = "You've supplied an input with missing values.",
-        "i" = "Please provide a numeric value or remove rows with NAs"
-      ))
+      na_mat <- is.na(delim)
+      
+      # build removal log
+      for (col in colnames(delim)[-1]) {
+        missing_ids <- delim$labels[is.na(delim[[col]])]
+        if (length(missing_ids) > 0) {
+          removed_tbl <- dplyr::bind_rows(removed_tbl, tibble::tibble(sample = missing_ids, delimitation = col))
+        }
+      }
+      
+      # warning
+      cli::cli_alert_info("Removing individuals with missing data: {removed_tbl$sample} in {removed_tbl$delimitation}")
+
+      # drop rows with NA
+      delim <- delim |>
+        tidyr::drop_na()
     }
   }
-
-  # reduce from wide to long format
-  dlong <- delim |>
+  
+  # transform from wide to long format
+  delim_long <- delim |>
     tidyr::pivot_longer(
       cols = -labels,
       names_to = "method",
@@ -99,11 +141,11 @@ delim_join <- function(delim) {
     dplyr::group_by(delims)
 
   # get group names
-  group_names <- dplyr::group_keys(dlong) |> 
+  group_names <- dplyr::group_keys(delim_long) |> 
     dplyr::pull()
 
   # turn into a list
-  dlist <- dlong |>
+  dlist <- delim_long |>
     dplyr::group_split() |>
     purrr::set_names(group_names) |>
     purrr::map(dplyr::select, -delims) |>
@@ -137,5 +179,9 @@ delim_join <- function(delim) {
     dplyr::mutate(dplyr::across(.cols = -labels, .fns = ~ stringr::str_split_fixed(., "-", n = 2)[, 2])) |>
     dplyr::select(any_of(delim_ordr), everything())
 
-  return(delim_df)
+  # return zeallot compatible using a switch
+  switch(return,
+         both = list(delim_df = delim_df, removed = removed_tbl),
+         df = delim_df,
+         removed = removed_tbl)
 }
