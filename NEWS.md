@@ -1,6 +1,8 @@
 # delimtools 0.2.2
 
-* Fixed an issue caused by an update in `dplyr::if_else` conditions
+* Fixed an issue caused by an update in `dplyr::if_else` conditions;
+
+* Added `try` in examples to avoid any CRAN checking errors;
 
 # delimtools 0.2.1
 
