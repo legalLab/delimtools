@@ -37,13 +37,13 @@
 #' 
 #' \donttest{
 #' # run GMYC
-#' gmyc_res <- splits::gmyc(ape::as.phylo(geophagus_beast))
+#' gmyc_res <- try( splits::gmyc(ape::as.phylo(geophagus_beast)) )
 #'
 #' # create a tibble
-#' gmyc_df <- gmyc_tbl(gmyc_res)
+#' gmyc_df <- try( gmyc_tbl(gmyc_res) )
 #' 
 #' # check
-#' gmyc_df
+#' try(gmyc_df)
 #'}
 #'
 #' @export

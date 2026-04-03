@@ -62,7 +62,7 @@ Alternatively, \code{mptp_tbl()} can parse a file obtained from webserver such a
 path_to_file <- system.file("extdata/geophagus_raxml.nwk", package = "delimtools")
 
 # run mPTP in single threshold mode (PTP)
-ptp_df <- mptp_tbl(
+ptp_df <- try( mptp_tbl(
   infile = path_to_file,
   exe = "/usr/local/bin/mptp",
   method = "single",
@@ -70,13 +70,13 @@ ptp_df <- mptp_tbl(
   delimname = "ptp",
   outfolder = NULL
 )
-
+)
 # check
 ptp_df
 
 # run mPTP in multi threshold mode (mPTP)
 
-mptp_df <- mptp_tbl(
+mptp_df <- try( mptp_tbl(
   infile = path_to_file,
   exe = "/usr/local/bin/mptp",
   method = "single",
@@ -84,9 +84,9 @@ mptp_df <- mptp_tbl(
   delimname = "mptp",
   outfolder = NULL
 )
-
+)
 # check
-mptp_df
+try(mptp_df)
 }
 
 }

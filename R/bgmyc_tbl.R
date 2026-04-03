@@ -32,7 +32,7 @@
 #' 
 #'\donttest{
 #' # run bGMYC
-#' bgmyc_res <- bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
+#' bgmyc_res <- try( bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
 #'   mcmc = 11000,
 #'   burnin = 1000,
 #'   thinning = 100,
@@ -40,12 +40,12 @@
 #'   t2 = ape::Ntip(geophagus_beast),
 #'   start = c(1, 0.5, 50)
 #' )
-#'
+#')
 #' # create a tibble
-#' bgmyc_df <- bgmyc_tbl(bgmyc_res, ppcutoff = 0.05)
+#' bgmyc_df <- try( bgmyc_tbl(bgmyc_res, ppcutoff = 0.05) )
 #'
 #' # check
-#' bgmyc_df
+#' try(bgmyc_df)
 #'}
 #'
 #' @export

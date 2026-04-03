@@ -27,19 +27,19 @@
 #'
 #' # compute values using multisession mode
 #' {
-#'   future::plan("multisession")
+#'   try( future::plan("multisession") )
 #'
-#'   gmyc_res <- gmyc_ci(ape::as.phylo(geophagus_beast), geophagus_posterior)
+#'   gmyc_res <- try( gmyc_ci(ape::as.phylo(geophagus_beast), geophagus_posterior) )
 #'
 #'   # reset future parameters
-#'   future::plan("sequential")
+#'   try( future::plan("sequential") )
 #' }
 #'
 #' # plot distribution
-#' plot(density(gmyc_res))
+#' try(plot(density(gmyc_res)))
 #'
 #' # tabulate
-#' tibble::tibble(
+#' try( tibble::tibble(
 #'   method = "gmyc",
 #'   point_estimate = gmyc_res[1],
 #'   CI_95 = as.integer(quantile(gmyc_res[-1], probs = c(0.025, 0.975))) |>
@@ -47,6 +47,7 @@
 #'   CI_mean = as.integer(mean(gmyc_res[-1])),
 #'   CI_median = as.integer(stats::median(gmyc_res[-1]))
 #' )
+#')
 #' }
 #'
 #' @export

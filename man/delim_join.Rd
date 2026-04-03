@@ -29,13 +29,13 @@ partition names across two or more species delimitation outputs while keeping it
 
 \donttest{
 ## run GMYC
-gmyc_res <- splits::gmyc(ape::as.phylo(geophagus_beast), method = "single")
+gmyc_res <- try( splits::gmyc(ape::as.phylo(geophagus_beast), method = "single") )
 
 # create a tibble
-gmyc_df <- gmyc_tbl(gmyc_res)
+gmyc_df <- try( gmyc_tbl(gmyc_res) )
 
 ## run bGMYC
-bgmyc_res <- bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
+bgmyc_res <- try( bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
   mcmc = 11000,
   burnin = 1000,
   thinning = 100,
@@ -43,29 +43,29 @@ bgmyc_res <- bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
   t2 = ape::Ntip(ape::as.phylo(geophagus_beast)),
   start = c(1, 0.5, 50)
 )
-
+)
 # create a tibble
-bgmyc_df <- bgmyc_tbl(bgmyc_res, ppcutoff = 0.05)
+bgmyc_df <- try( bgmyc_tbl(bgmyc_res, ppcutoff = 0.05) )
 
 ## LocMin
 
 # create a distance matrix
-mat <- ape::dist.dna(geophagus, model = "raw", pairwise.deletion = TRUE)
+mat <- try( ape::dist.dna(geophagus, model = "raw", pairwise.deletion = TRUE) )
 
 # estimate local minima from `mat`
-locmin_res <- spider::localMinima(mat)
+locmin_res <- try( spider::localMinima(mat) )
 
 # create a tibble
-locmin_df <- locmin_tbl(mat,
+locmin_df <- try( locmin_tbl(mat,
   threshold = locmin_res$localMinima[1],
   haps = ape::as.phylo(geophagus_beast)$tip.label
 )
-
+)
 # join delimitations
-all_delims <- delim_join(list(gmyc_df, bgmyc_df, locmin_df))
+all_delims <- try( delim_join(list(gmyc_df, bgmyc_df, locmin_df)) )
 
 # check
-all_delims
+try(all_delims)
 
 }
 

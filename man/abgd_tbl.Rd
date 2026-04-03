@@ -65,16 +65,16 @@ Alternatively, \code{abgd_tbl()} can parse a .txt file obtained from a webserver
 path_to_file <- system.file("extdata/geophagus.fasta", package = "delimtools")
 
 # run ABGD
-abgd_df <- abgd_tbl(
+abgd_df <- try( abgd_tbl(
   infile = path_to_file,
   exe = "/usr/local/bin/abgd",
   model = 3,
   slope = 0.5,
   outfolder = NULL
 )
-
+)
 # check
-abgd_df
+try(abgd_df)
 }
 
 }

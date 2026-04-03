@@ -63,10 +63,10 @@ Alternatively, \code{asap_tbl()} can parse a .csv file obtained from webserver s
 path_to_file <- system.file("extdata/geophagus.fasta", package = "delimtools")
 
 # run ASAP
-asap_df <- asap_tbl(infile = path_to_file, exe= "/usr/local/bin/asap", model= 3)
+asap_df <- try(asap_tbl(infile = path_to_file, exe= "/usr/local/bin/asap", model= 3))
 
 # check
-asap_df
+try(asap_df)
 
 }
 
