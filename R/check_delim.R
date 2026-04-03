@@ -131,10 +131,13 @@ check_delim <- function(list) {
   for (i in seq(2, length(list))) {
     cli::cli_progress_message("Checking table 1 against table {i}...")
     Sys.sleep(0.5)
-    check_delim.default(list[[1]], list[[i]])
+    res <- check_delim.default(list[[1]], list[[i]])
     cli::cli_progress_update()
+    if (!isTRUE(res)) {
+      return(FALSE)
+    }
+    cli::cli_alert_success("Checking complete!")
+    
+    return(TRUE)
   }
-  cli::cli_alert_success("Checking complete!")
-  
-  return(TRUE)
 }
