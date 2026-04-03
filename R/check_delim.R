@@ -50,13 +50,12 @@ check_delim <- function(list) {
     cli::cli_abort(c("Please provide two or more species delimitation outputs to compare."))
   }
 
-
   check_delim.default <- function(delim_1, delim_2) {
     # check dimensions
     check_dim <- dim(delim_1) == dim(delim_2)
 
     if (!isTRUE(all(check_dim))) {
-      cli::cli_abort(c("Dimensions are not the same across tables.",
+      cli::cli_warn(c("Dimensions are not the same across tables.",
         "x" = "You've supplied inputs with different dimensions.",
         "i" = "{.arg delim 1} has {dim(delim_1)[1]} rows and {dim(delim_1)[2]} columns",
         "i" = "{.arg delim 2} has {dim(delim_2)[1]} rows and {dim(delim_2)[2]} columns"
@@ -83,24 +82,19 @@ check_delim <- function(list) {
           "Labels absent or mistyped in {.arg delim_2}"
         )
 
-        cli::cli_abort(c("Labels must be identical across tables.",
+        cli::cli_warn(c("Labels should be identical across tables.",
           "x" = "The labels below are either absent or mistyped.",
-          "i" = "labels absent or mistyped in {.arg delim_1}:",
-          stringr::str_flatten_comma(diff[[1]]),
-          "i" = "labels absent or mistyped in {.arg delim_2}:",
-          stringr::str_flatten_comma(diff[[2]])
+          "i" = "labels absent or mistyped in {.arg delim_1}: {stringr::str_flatten_comma(diff[[1]])}",
+          "i" = "labels absent or mistyped in {.arg delim_2}: {stringr::str_flatten_comma(diff[[2]])}"
         ))
-        invisible(diff)
         return(FALSE)
       }
 
       if (any(duplicated(id1) | duplicated(id2))) {
         cli::cli_abort(c("Duplicate labels found.",
           "x" = "You've supplied inputs with duplicated labels.",
-          "i" = "Duplicated labels in {.arg delim_1}:",
-          stringr::str_flatten(id1[vctrs::vec_duplicate_detect(id1)]),
-          "i" = "Duplicated labels in {.arg delim_2}:",
-          stringr::str_flatten(id2[vctrs::vec_duplicate_detect(id2)])
+          "i" = "Duplicated labels in {.arg delim_1}: {stringr::str_flatten(id1[vctrs::vec_duplicate_detect(id1)])}",
+          "i" = "Duplicated labels in {.arg delim_2}: {stringr::str_flatten(id2[vctrs::vec_duplicate_detect(id2)])}"
         ))
         return(FALSE)
       }
@@ -112,7 +106,7 @@ check_delim <- function(list) {
 
     # check values
     if (anyNA(c(values1, values2))) {
-      cli::cli_abort(c("Missing values found across tables.",
+      cli::cli_warn(c("Missing values found across tables.",
         "x" = "You've supplied inputs with missing values.",
         "i" = "{.arg Delim 1} has {sum(vctrs::vec_detect_missing(values1))} missing values",
         "i" = "{.arg Delim 2} has {sum(vctrs::vec_detect_missing(values2))} missing values"
@@ -141,6 +135,6 @@ check_delim <- function(list) {
     cli::cli_progress_update()
   }
   cli::cli_alert_success("Checking complete!")
-
+  
   return(TRUE)
 }
