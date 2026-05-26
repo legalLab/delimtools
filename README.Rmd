@@ -24,9 +24,29 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 This software is under active development, and as such cannot be assumed to be free of bugs or poor functionality. Always inspect results carefully. If you find a problem, please report it with as much detail as possible in [Issues](https://github.com/LegalLab/delimtools/issues). Unfortunately in its current form, some of the functions (`abgd_tbl()`, `asap_tbl()` and `mptp_tbl()`) will not work natively on Windows operating systems, only on Unix (MacOS, Linux). This is because third party binaries (executable programs) are required. We have implemented a Windows solution by importing results from the webservers that are commonly used to run these analyses, e.g. ABGD, ASAP, and [mPTP](https://mptp.h-its.org/). There are also difficulties with installing R required package dependancies to run `gmyc_tbl()` and `bgmyc_tbl()` because these are no longer under development and available on CRAN, and must be installed from archived sources. Please refer to [https://legallab.github.io/delimtools/articles/install.html](https://legallab.github.io/delimtools/articles/install.html) for instructions on how to install. A tutorial vignette running through all major package functionality is found at [https://legallab.github.io/delimtools/articles/delimtools.html](https://legallab.github.io/delimtools/articles/delimtools.html).
 
+## delimtools v0.3.0 - Announcement
+
+The next major release of delimtools (v0.3.0) will provide native R ports for all 
+species delimitation software currently supported by this package. This means that 
+ABGD, ASAP, bGMYC, GMYC and mPTP, previously dependent on external binaries or third-party 
+R packages, will run **entirely** within the R environment, with performance-critical 
+likelihood computations handled by embedded C code.
+
+These R ports were developed with the assistance of Claude (Anthropic), under continuous 
+human supervision. This porting process prioritezed **fidelity to the original source code**: 
+algorithms, likelihood functions, and core logic were preserved as closely as possible, 
+with changes limited to what was strictly necessary for integration into the R/C ecosystem.
+
+This change removes the Unix-only restriction that affected several functions in earlier 
+versions, making the full delimtools pipeline **available on all platforms**, including **Windows**. 
+Users will no longer need to install or configure standalone executables to run any of the 
+supported methods. All currently implemented wrappers (*_tbl() functions) will continue to 
+be available for comparative purposes for some time, but will eventually be deprecated in the 
+next updates.
+
 ## Overview
 
-The official GitHub repository for the R package `delimtools` (Bittencourt et al., in prep.).
+The official GitHub repository for the R package `delimtools` ([Bittencourt, Collins & Hrbek, 2026](https://doi.org/10.1139/gen-2025-0119)).
 
 `delimtools` provides helper functions for the analysis of single-locus species delimitation methods such as GMYC ([Monaghan et al., 2009](https://doi.org/10.1093/sysbio/syp027)), bGMYC ([Reid & Carstens, 2012](https://doi.org/10.1186/1471-2148-12-196)), mPTP ([Kapli et al., 2017](https://doi.org/10.1093/bioinformatics/btx025)) and ASAP ([Puillandre et al., 2020](https://doi.org/10.1111/1755-0998.13281)). These software run multiple different platforms (e.g. R, Unix, webservers), and also do not output their results in a consistent format to allow easy comparison. To address these shortcomings we have developed a suite of functions to standardise and simplify generating single-locus species delimitations.
 

@@ -31,10 +31,35 @@ for instructions on how to install. A tutorial vignette running through
 all major package functionality is found at
 <https://legallab.github.io/delimtools/articles/delimtools.html>.
 
+## delimtools v0.3.0 - Announcement
+
+The next major release of delimtools (v0.3.0) will provide native R
+ports for all species delimitation software currently supported by this
+package. This means that ABGD, ASAP, bGMYC, GMYC and mPTP, previously
+dependent on external binaries or third-party R packages, will run
+**entirely** within the R environment, with performance-critical
+likelihood computations handled by embedded C code.
+
+These R ports were developed with the assistance of Claude (Anthropic),
+under continuous human supervision. This porting process prioritezed
+**fidelity to the original source code**: algorithms, likelihood
+functions, and core logic were preserved as closely as possible, with
+changes limited to what was strictly necessary for integration into the
+R/C ecosystem.
+
+This change removes the Unix-only restriction that affected several
+functions in earlier versions, making the full delimtools pipeline
+**available on all platforms**, including **Windows**. Users will no
+longer need to install or configure standalone executables to run any of
+the supported methods. All currently implemented wrappers (\*\_tbl()
+functions) will continue to be available for comparative purposes for
+some time, but will eventually be deprecated in the next updates.
+
 ## Overview
 
 The official GitHub repository for the R package `delimtools`
-(Bittencourt et al., in prep.).
+([Bittencourt, Collins & Hrbek,
+2026](https://doi.org/10.1139/gen-2025-0119)).
 
 `delimtools` provides helper functions for the analysis of single-locus
 species delimitation methods such as GMYC ([Monaghan et al.,
