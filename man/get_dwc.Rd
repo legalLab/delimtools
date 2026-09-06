@@ -23,7 +23,7 @@ Maintenance Interest Group \url{https://dwc.tdwg.org/}.
 \details{
 \code{get_dwc()} reads Darwin Core distribution documents and terms from Github repository
 \url{https://github.com/tdwg/dwc} directly into \code{Environment}. This function will return a list
-containing the most recent accepted terms as a vector and a \link[tibble:tbl_df-class]{tbl_df} containing
+containing the most recent accepted terms as a vector and a \link[tibble:tbl_df]{tbl_df} containing
 terms, definitions, examples and details about each one of them.
 }
 \examples{

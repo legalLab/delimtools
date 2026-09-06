@@ -31,7 +31,8 @@
 #' 
 #'
 #' @export
-delim_consensus <- function(delim, n_match=NULL){
+delim_consensus <- function(delim, n_match= NULL){
+ 
   if(is.null(n_match)){
     
     n_match <- ceiling(ncol(delim[, -1])/2)
@@ -47,17 +48,23 @@ delim_consensus <- function(delim, n_match=NULL){
     
   } 
   
-  if(n_match >= 1 & n_match <= ncol(delim[, -1])){
+  if (n_match >= 1 & n_match <= ncol(delim[, -1])) {
     
     cons_delim <- delim |> 
       dplyr::rowwise() |> 
       dplyr::mutate(consensus= list(vctrs::vec_count(dplyr::c_across(2:ncol(delim))))) |> 
       tidyr::unnest("consensus") |> 
-      dplyr::mutate(count= dplyr::if_else(.data$count >= {{ n_match }}, .data$key, NA)) |> 
+      dplyr::ungroup() |> 
+      dplyr::group_by(.data$labels) |> 
+      dplyr::mutate( consensus = dplyr::case_when(
+          sum(.data$count == max(.data$count)) > 1 ~ NA_character_,
+          max(.data$count) < {{ n_match }} ~ NA_character_,
+          .default = .data$key[which.max(.data$count)]
+        )
+      ) |>
+      dplyr::ungroup() |> 
       dplyr::distinct(labels, .keep_all = TRUE) |> 
-      dplyr::select(-.data$key) |> 
-      dplyr::rename(consensus= "count")
-    
+      dplyr::select(-.data$key, -.data$count)
   }
   
   return(cons_delim)

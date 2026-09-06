@@ -26,7 +26,7 @@ gmyc_tbl(gmyc_res, delimname = "gmyc")
 \item{delimname}{Character. String to rename the delimitation method in the table. Default to 'gmyc'.}
 }
 \value{
-An object of class \link[tibble:tbl_df-class]{tbl_df}.
+An object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
 \code{gmyc_tbl()} processes output from \link[splits:gmyc]{gmyc} into an
@@ -34,7 +34,7 @@ object of class \code{\link[tibble]{tbl_df}}.
 }
 \details{
 \code{splits} package uses \link[splits:gmyc]{gmyc} to optimize
-genetic clusters and \link[splits:gmyc]{spec.list} to cluster samples into
+genetic clusters and \link[splits:spec.list]{spec.list} to cluster samples into
 species partitions. \code{gmyc_tbl()} turns these results into a tibble which matches
 the output from \link{bgmyc_tbl} and \link{locmin_tbl}.
 }

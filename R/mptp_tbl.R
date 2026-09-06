@@ -4,7 +4,10 @@
 #' `mptp_tbl()` returns species partition hypothesis estimated by mPTP software
 #' <https://github.com/Pas-Kapli/mptp>.
 #'
-#' @param infile Path to tree file in Newick format. Should be dichotomous and rooted.
+#' @param infile Path to tree file in Newick format, or an object of class
+#'   \code{"mptp_ml"} or \code{"mptp_mcmc"} returned by \code{\link{mptp}}
+#'   or \code{\link{mptp_mcmc}}. When an \code{mptp_ml} object is supplied the
+#'   remaining arguments are ignored and the assignments are returned directly.
 #' @param exe Path to an mPTP executable.
 #' @param outfolder Path to output folder. Default to NULL. If not specified, a temporary location is used.
 #' @param method Which algorithm for Maximum Likelihood point-estimate to be used. Available options are:
@@ -74,6 +77,9 @@
 #' @export
 mptp_tbl <- function(infile, exe = NULL, outfolder = NULL, method = c("multi", "single"), minbrlen = 0.0001, webserver = NULL, delimname = "mptp") {
   dname <- rlang::sym(delimname)
+
+  if (inherits(infile, "mptp_ml"))
+    return(tibble::as_tibble(infile$assignments))
 
   split_vec <- function(vec, sep = "") {
     is.sep <- vec == sep

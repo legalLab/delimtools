@@ -4,22 +4,25 @@
 \alias{delim_join}
 \title{Join Multiple Species Delimitation Methods Outputs}
 \usage{
-delim_join(delim)
+delim_join(delim, return = c("both", "df", "removed"))
 }
 \arguments{
 \item{delim}{A \link[base:list]{list} or \link[base:data.frame]{data.frame} of multiple
 species delimitation methods outputs.}
+
+\item{return}{Which type of output to be returned if there are missing values
+within any of the species partitions used as input for analysis. Default to "df".}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}.
+an object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
-\code{delim_join()} returns a \link[tibble:tbl_df-class]{tbl_df} of species delimitation
+\code{delim_join()} returns a \link[tibble:tbl_df]{tbl_df} of species delimitation
 outputs whose partitions are consistent across different methods.
 }
 \details{
 \code{delim_join()} is a helper function to join multiple lists or columns of species
-delimitation outputs into a single \link[tibble:tbl_df-class]{tbl_df} while keeping consistent
+delimitation outputs into a single \link[tibble:tbl_df]{tbl_df} while keeping consistent
 identifications across multiple methods. Species delimitation outputs are in general a
 list or data frame of sample labels and its species partitions (Species 1, Species 2, etc.). These
 partition names may be or not the same across two or more methods. \code{delim_join()} standardizes

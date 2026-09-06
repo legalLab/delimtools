@@ -3,10 +3,6 @@
 \name{abgd_tbl}
 \alias{abgd_tbl}
 \title{A Command-Line Interface for ABGD - Automatic Barcode Gap Discovery}
-\source{
-Puillandre N., Lambert A., Brouillet S., Achaz G. 2012. ABGD, Automatic Barcode
-Gap Discovery for primary species delimitation. Molecular Ecology 21(8):1864-77.
-}
 \usage{
 abgd_tbl(
   infile,
@@ -16,15 +12,19 @@ abgd_tbl(
   model = 3,
   outfolder = NULL,
   webserver = NULL,
-  delimname = "abgd"
+  delimname = "abgd",
+  type = c("recursive", "initial")
 )
 }
 \arguments{
-\item{infile}{Path to fasta file.}
+\item{infile}{Path to a FASTA file, or an object of class \code{"abgd"} returned
+by \code{\link[=abgd]{abgd()}}.  When an \code{"abgd"} object is supplied, the CLI path is skipped
+and \code{best_partition()} is called directly.}
 
-\item{exe}{Path to an ABGD executable.}
+\item{exe}{Path to an ABGD executable.  Ignored when \code{infile} is an \code{"abgd"}
+object.}
 
-\item{haps}{Optional. A vector of haplotypes to keep into the \code{\link[tibble:tbl_df-class]{tbl_df}}.}
+\item{haps}{Optional. A vector of haplotypes to keep into the \code{\link[tibble:tbl_df]{tbl_df}}.}
 
 \item{slope}{Numeric. Relative gap width (slope). Default to 1.5.}
 
@@ -32,7 +32,7 @@ abgd_tbl(
 \itemize{
 \item 0: Kimura-2P
 \item 1: Jukes-Cantor (default)
-\item 2: Tamura-Nei
+\item 2: Tamura-Nei (\emph{not implemented})
 \item 3: simple distance (p-distance)
 }}
 
@@ -41,9 +41,13 @@ abgd_tbl(
 \item{webserver}{A .txt file containing ABGD results obtained from a webserver. Default to NULL.}
 
 \item{delimname}{Character. String to rename the delimitation method in the table. Default to 'abgd'.}
+
+\item{type}{Which ABGD pass to use when \code{infile} is an \code{"abgd"} object:
+\code{"recursive"} (default) or \code{"initial"}.  Ignored for CLI and webserver
+paths.}
 }
 \value{
-an object of class \code{\link[tibble:tbl_df-class]{tbl_df}}
+an object of class \code{\link[tibble:tbl_df]{tbl_df}}
 }
 \description{
 \code{abgd_tbl()} returns species partition hypothesis estimated by ABGD software
@@ -78,6 +82,11 @@ try(abgd_df)
 }
 
 }
+\references{
+Puillandre N., Lambert A., Brouillet S., Achaz G. 2012. ABGD, Automatic Barcode
+Gap Discovery for primary species delimitation. \emph{Molecular Ecology} 21(8):1864-77.
+\doi{10.1111/j.1365-294X.2011.05239.x}
+}
 \author{
-N. Puillandre,  A. Lambert,  S. Brouillet,  G. Achaz
+Pedro S. Bittencourt, Tomas Hrbek
 }

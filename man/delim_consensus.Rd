@@ -13,7 +13,7 @@ delim_consensus(delim, n_match = NULL)
 returns a warning and the threshold will be defined as \code{ceiling(ncol(delim[, -1])/2)}.}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}.
+an object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
 \code{delim_consensus()} estimates a majority-vote consensus over the output of

@@ -7,7 +7,7 @@
 collapse_others(data, hap_tbl, labels, cols)
 }
 \arguments{
-\item{data}{An object of class \link[tibble:tbl_df-class]{tbl_df} containing sequence metadata.}
+\item{data}{An object of class \link[tibble:tbl_df]{tbl_df} containing sequence metadata.}
 
 \item{hap_tbl}{Output from \link{haplotype_tbl}.}
 
@@ -16,10 +16,10 @@ collapse_others(data, hap_tbl, labels, cols)
 \item{cols}{A character vector of variables to collapse.}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}.
+an object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
-\code{collapse_others()} returns a \link[tibble:tbl_df-class]{tbl_df} summarising
+\code{collapse_others()} returns a \link[tibble:tbl_df]{tbl_df} summarising
 all unique haplotype frequencies, duplicates and selected metadata into a single row.
 }
 \details{

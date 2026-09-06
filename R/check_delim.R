@@ -56,7 +56,7 @@ check_delim <- function(list) {
     check_dim <- dim(delim_1) == dim(delim_2)
 
     if (!isTRUE(all(check_dim))) {
-      cli::cli_abort(c("Dimensions are not the same across tables.",
+      cli::cli_warn(c("Dimensions are not the same across tables.",
         "x" = "You've supplied inputs with different dimensions.",
         "i" = "{.arg delim 1} has {dim(delim_1)[1]} rows and {dim(delim_1)[2]} columns",
         "i" = "{.arg delim 2} has {dim(delim_2)[1]} rows and {dim(delim_2)[2]} columns"

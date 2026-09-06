@@ -4,9 +4,15 @@
 #' `asap_tbl()` returns species partition hypothesis estimated by ASAP software
 #' (https://bioinfo.mnhn.fr/abi/public/asap/).
 #'
-#' @param infile Path to fasta file.
-#' @param exe Path to an ASAP executable.
+#' @param infile Path to a FASTA file, or an object of class `"asap"` returned
+#'   by [asap()].  When an `"asap"` object is supplied, the CLI path is skipped
+#'   and `best_partition()` is called directly.
+#' @param exe Path to an ASAP executable.  Ignored when `infile` is an `"asap"`
+#'   object.
 #' @param haps Optional. A vector of haplotypes to keep into the [tbl_df][tibble::tbl_df].
+#' @param rank Integer. Which ranked partition to return when `infile` is an
+#'   `"asap"` object (default `NULL` selects rank 1 / best ASAP score).
+#'   Ignored for CLI and webserver paths.
 #' @param model An integer specifying evolutionary model to be used. Available options are:
 #' \itemize{
 #'   \item 0: Kimura-2P
@@ -31,11 +37,12 @@
 #' an object of class [tbl_df][tibble::tbl_df]
 #'
 #' @author
-#' Nicolas Puillandre, Sophie Brouillet, Guillaume Achaz.
+#' Pedro S. Bittencourt, Tomas Hrbek
 #' 
-#' @source
+#' @references
 #' Puillandre N., Brouillet S., Achaz G. 2021. ASAP: assemble species by automatic 
-#' partitioning. Molecular Ecology Resources 21:609–620.
+#' partitioning. \emph{Molecular Ecology Resources} 21:609–620.
+#' \doi{10.1111/1755-0998.13281}
 #'
 #' @examples
 #' 
@@ -53,14 +60,23 @@
 #' }
 #'
 #' @export
-asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL, webserver = NULL, delimname = "asap") {
-  
+asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NULL, webserver = NULL, delimname = "asap", rank = NULL) {
+
+  dname <- rlang::sym(delimname)
+
+  if (inherits(infile, "asap")) {
+    bp    <- best_partition(infile, rank = rank)
+    delim <- tibble::tibble(labels = names(bp$partition), !!dname := bp$partition)
+    if (!is.null(haps)) delim <- dplyr::filter(delim, labels %in% haps)
+    return(delim)
+  }
+
   # check if FASTA file is aligned, otherwise exit gracefully
   dna <- ape::read.dna(infile, format = "fasta")
   seq_lengths <- sapply(dna, length)
   same_length <- length(unique(seq_lengths)) == 1
   if (!same_length) {
-    cli::cli_alert_info("FASTA input not aligned. Not running ASAP. No ASAP table returned.")
+    cli::cli_abort("FASTA input not aligned.")
     return(invisible(NULL))
   }
   
@@ -69,7 +85,7 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
   
   if(!is.null(webserver) && !file.exists(webserver)) {
     
-    cli::cli_abort("Error: Please provide a valid path to an ASAP results file.")
+    cli::cli_abort("Please provide a valid path to an ASAP results file.")
     
   }
   
@@ -89,7 +105,7 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
   
   if(!file.exists(exe)){
     
-    cli::cli_abort("Error: Please provide a valid path to the ASAP executable file.")
+    cli::cli_abort("Please provide a valid path to the ASAP executable file.")
     
   }
   

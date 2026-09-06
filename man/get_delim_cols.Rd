@@ -16,15 +16,15 @@ If provided, the function filters the data to only include rows matching such te
 If provided, the function will annotate color and fill data for collapsed haplotypes. Default to NULL.}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}.
+an object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
-\code{get_delim_cols()} returns a \link[tibble:tbl_df-class]{tbl_df} format containing
+\code{get_delim_cols()} returns a \link[tibble:tbl_df]{tbl_df} format containing
 extracted and processed data from \link{delim_autoplot}.
 }
 \details{
 \code{get_delim_cols()} is a convenience function to extract labels, species partitions,
-color and fill data from the output of \link{delim_autoplot} in a \link[tibble:tbl_df-class]{tbl_df}
+color and fill data from the output of \link{delim_autoplot} in a \link[tibble:tbl_df]{tbl_df}
 format. It is best used when combined with haplotype information from
 \link{haplotype_tbl} or when combined with other metadata, such as GPS coordinates
 for map plotting.

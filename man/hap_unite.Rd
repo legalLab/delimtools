@@ -12,10 +12,10 @@ hap_unite(hap_tbl, delim)
 \item{delim}{output from \link{delim_join} or \link{delim_consensus}.}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}.
+an object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
-\code{hap_unite()} returns a single \link[tibble:tbl_df-class]{tbl_df} combining all
+\code{hap_unite()} returns a single \link[tibble:tbl_df]{tbl_df} combining all
 results from \link{haplotype_tbl} or \link{collapse_others} with results from \link{delim_join}
 or \link{delim_consensus}.
 }

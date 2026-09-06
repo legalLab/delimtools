@@ -30,7 +30,7 @@ calculations. See \link{delim_consensus} for details.}
 \item{delim_order}{A character vector of species delimitation names ordered by user.
 Default to NULL.}
 
-\item{tbl_labs}{A \link[tibble:tbl_df-class]{tbl_df} of customized labels for tree plotting. The
+\item{tbl_labs}{A \link[tibble:tbl_df]{tbl_df} of customized labels for tree plotting. The
 first column must match tip labels of the \code{tr} object, while the second column
 should have customized labels.}
 

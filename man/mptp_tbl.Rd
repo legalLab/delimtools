@@ -20,7 +20,10 @@ mptp_tbl(
 )
 }
 \arguments{
-\item{infile}{Path to tree file in Newick format. Should be dichotomous and rooted.}
+\item{infile}{Path to tree file in Newick format, or an object of class
+\code{"mptp_ml"} or \code{"mptp_mcmc"} returned by \code{\link{mptp}}
+or \code{\link{mptp_mcmc}}. When an \code{mptp_ml} object is supplied the
+remaining arguments are ignored and the assignments are returned directly.}
 
 \item{exe}{Path to an mPTP executable.}
 
@@ -40,7 +43,7 @@ are ignored from computations. Default to 0.0001. Use \link{min_brlen}for fine t
 \item{delimname}{Character. String to rename the delimitation method in the table. Default to 'mptp'.}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}
+an object of class \link[tibble:tbl_df]{tbl_df}
 }
 \description{
 \code{mptp_tbl()} returns species partition hypothesis estimated by mPTP software

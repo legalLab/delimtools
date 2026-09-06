@@ -5,16 +5,19 @@
 \title{Compute Agreement Between Alternative Species Delimitation Partitions}
 \source{
 Ahrens D., Fujisawa T., Krammer H. J., Eberle J., Fabrizi S., Vogler A. P. 2016. Rarity and
-Incomplete Sampling in DNA-Based Species Delimitation. Systematic Biology 65 (3): 478-494.
+Incomplete Sampling in DNA-Based Species Delimitation. \emph{Systematic Biology} 65 (3): 478-494.
+\doi{10.1093/sysbio/syw002}
 }
 \usage{
-match_ratio(delim)
+match_ratio(delim, sorted = TRUE)
 }
 \arguments{
 \item{delim}{Output from \link{delim_join}.}
+
+\item{sorted}{If output should be sorted by match ratio values. Default to TRUE.}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}.
+an object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
 \code{match_ratio()} uses the Match Ratio statistic of Ahrens et al. (2014) to
@@ -23,7 +26,7 @@ compute agreement between all pairs of species delimitation partitions in
 }
 \details{
 \code{match_ratio()} iterates between all species delimitation partitions in
-\link{delim_join} output and returns a \link[tibble:tbl_df-class]{tbl_df}
+\link{delim_join} output and returns a \link[tibble:tbl_df]{tbl_df}
 containing the following columns:
 \itemize{
 \item \code{pairs} pairs of species delimitation methods analyzed.

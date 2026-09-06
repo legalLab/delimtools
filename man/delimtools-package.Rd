@@ -6,7 +6,7 @@
 \alias{delimtools-package}
 \title{Helper Functions for Species Delimitation Analysis}
 \description{
-\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+\if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
 
 Helpers functions to process, analyse, and visualize the output of single locus species delimitation methods. For full functionality, please install suggested software at \url{https://legallab.github.io/delimtools/articles/install.html}.
 }
@@ -24,8 +24,16 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Pedro Bittencourt \email{pedro.sennabittencourt@gmail.com} (\href{https://orcid.org/0000-0002-4074-3541}{ORCID}) [copyright holder]
   \item Rupert Collins \email{rupertcollins@gmail.com} (\href{https://orcid.org/0000-0002-9135-1169}{ORCID}) [contributor, copyright holder]
   \item Tomas Hrbek \email{hrbek@evoamazon.net} (\href{https://orcid.org/0000-0003-3239-7068}{ORCID}) [contributor]
+}
+
+Other contributors:
+\itemize{
+  \item Tomas Flouri (mPTP C engine (AGPL-3)) [contributor]
+  \item Sarah Lutteropp (mPTP C engine (AGPL-3)) [contributor]
+  \item Paschalia Kapli (mPTP C engine (AGPL-3)) [contributor]
 }
 
 }

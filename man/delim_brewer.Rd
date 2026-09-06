@@ -12,7 +12,7 @@ delim_brewer(delim, package = NULL, palette = NULL, seed = NULL)
 \item{package}{Package which contains color palettes. Available options are
 "RColorBrewer", "viridisLite" or "randomcoloR".}
 
-\item{palette}{A palette name. \link[RColorBrewer:ColorBrewer]{brewer.pal} for RColorBrewer
+\item{palette}{A palette name. \link[RColorBrewer:brewer.pal]{brewer.pal} for RColorBrewer
 or \link[viridisLite:viridis.map]{viridis} for viridisLite options.}
 
 \item{seed}{Integer. Number to initialize random number generator.}
@@ -22,7 +22,7 @@ A \code{character} vector of hexadecimal color codes.
 }
 \description{
 \code{delim_brewer()} returns a set of colors created by interpolating or using
-color palettes from \link[RColorBrewer:ColorBrewer]{RColorBrewer},
+color palettes from \link[RColorBrewer:brewer.pal]{RColorBrewer},
 \link[viridisLite:viridis.map]{viridisLite} or \link[randomcoloR:distinctColorPalette]{randomcoloR}.
 }
 \details{

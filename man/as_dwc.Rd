@@ -9,15 +9,15 @@ as_dwc(dwc, data, terms)
 \arguments{
 \item{dwc}{a list of standard terms and definitions created using \code{\link[=get_dwc]{get_dwc()}}.}
 
-\item{data}{a \link[tibble:tbl_df-class]{tbl_df}.}
+\item{data}{a \link[tibble:tbl_df]{tbl_df}.}
 
 \item{terms}{a vector or list of terms to be used as replacement.}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}.
+an object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
-\code{as_dwc()} rename columns in a \link[tibble:tbl_df-class]{tbl_df} using a vector of terms defined by
+\code{as_dwc()} rename columns in a \link[tibble:tbl_df]{tbl_df} using a vector of terms defined by
 Darwin Core Standard.
 }
 \details{

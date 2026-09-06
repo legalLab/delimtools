@@ -14,7 +14,7 @@ morph_tbl(labels, sppVector, delimname = "morph")
 \item{delimname}{Character. String to rename the delimitation method in the table. Default to 'morph'.}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}.
+an object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
 \code{morph_tbl()} returns species partition hypothesis estimated from a prior taxonomic identifications supplied by the user.

@@ -6,6 +6,9 @@
 #'
 #' @param delim A [list][base::list] or [data.frame][base::data.frame] of multiple
 #' species delimitation methods outputs.
+#' 
+#' @param return Which type of output to be returned if there are missing values 
+#' within any of the species partitions used as input for analysis. Default to "df".
 #'
 #' @details
 #' `delim_join()` is a helper function to join multiple lists or columns of species
@@ -66,28 +69,72 @@
 #' }
 #'
 #' @export
-delim_join <- function(delim) {
+delim_join <- function(delim, return = c("both", "df", "removed")) {
+  
+  # detect if user explicitly supplied `return`
+  return_supplied <- "return" %in% names(match.call())
+  
+  # specify default behavior if return not specified
+  if (!return_supplied) {
+    return <- "df"
+  } else {
+    return <- match.arg(return)
+  }
+  
+  removed_tbl <- tibble::tibble(sample = character(), delimitation = character())
+  
+  # delim is a list
   if (methods::is(delim, "list")) {
-    # check delimitations
-    if (isTRUE(delimtools::check_delim(delim))) {
-      # reduce list to wide format
-      delim <- delim |>
-        purrr::reduce(dplyr::full_join, by = "labels")
+    # convert to wide format
+    delim_wide <- delim |>
+      purrr::reduce(dplyr::full_join, by = "labels")
+    delim_ordr <- colnames(delim_wide)
+    
+    if (!isTRUE(delimtools::check_delim(delim))) {
+      # build removal log
+      for (col in colnames(delim_wide)[-1]) {
+        missing_ids <- delim_wide$labels[is.na(delim_wide[[col]])]
+        if (length(missing_ids) > 0) {
+          removed_tbl <- dplyr::bind_rows(removed_tbl, tibble::tibble(sample = missing_ids, delimitation = col))
+        }
+      }
+      
+      # warning
+      cli::cli_alert_info("Removing individuals with missing delimitations: {removed_tbl$sample} in {removed_tbl$delimitation}")
+      
+      # drop incomplete rows
+      delim <- delim_wide |>
+        tidyr::drop_na()
+    } else {
+      delim <- delim_wide
     }
   }
-
+  
+  # delim is data.frame
   if (methods::is(delim, "data.frame")) {
-    # check for NA values
+    delim_ordr <- colnames(delim)
     if (anyNA(delim)) {
-      cli::cli_abort(c("Missing values found across columns.",
-        "x" = "You've supplied an input with missing values.",
-        "i" = "Please provide a numeric value or remove rows with NAs"
-      ))
+      na_mat <- is.na(delim)
+      
+      # build removal log
+      for (col in colnames(delim)[-1]) {
+        missing_ids <- delim$labels[is.na(delim[[col]])]
+        if (length(missing_ids) > 0) {
+          removed_tbl <- dplyr::bind_rows(removed_tbl, tibble::tibble(sample = missing_ids, delimitation = col))
+        }
+      }
+      
+      # warning
+      cli::cli_alert_info("Removing individuals with missing data: {removed_tbl$sample} in {removed_tbl$delimitation}")
+      
+      # drop rows with NA
+      delim <- delim |>
+        tidyr::drop_na()
     }
   }
-
-  # reduce from wide to long format
-  dlong <- delim |>
+  
+  # transform from wide to long format
+  delim_long <- delim |>
     tidyr::pivot_longer(
       cols = -labels,
       names_to = "method",
@@ -95,17 +142,18 @@ delim_join <- function(delim) {
     ) |>
     tidyr::unite("delims", "method":"delims", sep = "") |>
     dplyr::group_by(.data$delims)
-
+  
   # get group names
-  group_names <- dplyr::group_keys(dlong) |> dplyr::pull()
-
+  group_names <- dplyr::group_keys(delim_long) |> 
+    dplyr::pull()
+  
   # turn into a list
-  dlist <- dlong |>
+  dlist <- delim_long |>
     dplyr::group_split() |>
     purrr::set_names(group_names) |>
     purrr::map(dplyr::select, -.data$delims) |>
     purrr::map(unlist, use.names = FALSE)
-
+  
   # loop 1
   ff <- list()
   for (i in seq_along(dlist)) { #
@@ -113,17 +161,17 @@ delim_join <- function(delim) {
   } #
   sff <- lapply(ff, sort)
   dff <- sff[!duplicated(sff)]
-
+  
   # loop 2
   new.labs <- paste0("sp", rep(1:length(dff)))
   dd <- vector(mode = "character", length = length(dlist))
   for (i in 1:length(dff)) { #
     dd[dff[[i]]] <- new.labs[i] #
   } #
-
+  
   # names
   names(dlist) <- paste(gsub("[0-9]+", "", names(dlist)), dd, sep = "-")
-
+  
   # join
   delim_df <- tibble::tibble(
     gr = rep(names(dlist), sapply(dlist, length)),
@@ -131,7 +179,13 @@ delim_join <- function(delim) {
   ) |>
     dplyr::mutate(method = stringr::str_remove(.data$gr, "-sp[0-9]+")) |>
     tidyr::pivot_wider(id_cols = "labels", names_from = "method", values_from = "gr") |>
-    dplyr::mutate(dplyr::across(.cols = -labels, .fns = ~ stringr::str_split_fixed(., "-", n = 2)[, 2]))
-
-  return(delim_df)
+    dplyr::mutate(dplyr::across(.cols = -labels, .fns = ~ stringr::str_split_fixed(., "-", n = 2)[, 2])) |>
+    dplyr::select(tidyselect::any_of(delim_ordr), tidyselect::everything())
+  
+  # return zeallot compatible using a switch
+  switch(return,
+         both = list(delim_df = delim_df, removed = removed_tbl),
+         df = delim_df,
+         removed = removed_tbl)
+ 
 }

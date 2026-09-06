@@ -7,7 +7,7 @@
 check_identifiers(data, identifier, dna)
 }
 \arguments{
-\item{data}{an object of class \link[tibble:tbl_df-class]{tbl_df} containing sequence metadata.}
+\item{data}{an object of class \link[tibble:tbl_df]{tbl_df} containing sequence metadata.}
 
 \item{identifier}{column in \code{data} which contains sequence identifiers.}
 

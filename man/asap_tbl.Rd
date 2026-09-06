@@ -3,10 +3,6 @@
 \name{asap_tbl}
 \alias{asap_tbl}
 \title{A Command-Line Interface for ASAP - Assemble Species by Automatic Partitioning}
-\source{
-Puillandre N., Brouillet S., Achaz G. 2021. ASAP: assemble species by automatic
-partitioning. Molecular Ecology Resources 21:609–620.
-}
 \usage{
 asap_tbl(
   infile,
@@ -15,15 +11,19 @@ asap_tbl(
   model = 3,
   outfolder = NULL,
   webserver = NULL,
-  delimname = "asap"
+  delimname = "asap",
+  rank = NULL
 )
 }
 \arguments{
-\item{infile}{Path to fasta file.}
+\item{infile}{Path to a FASTA file, or an object of class \code{"asap"} returned
+by \code{\link[=asap]{asap()}}.  When an \code{"asap"} object is supplied, the CLI path is skipped
+and \code{best_partition()} is called directly.}
 
-\item{exe}{Path to an ASAP executable.}
+\item{exe}{Path to an ASAP executable.  Ignored when \code{infile} is an \code{"asap"}
+object.}
 
-\item{haps}{Optional. A vector of haplotypes to keep into the \link[tibble:tbl_df-class]{tbl_df}.}
+\item{haps}{Optional. A vector of haplotypes to keep into the \link[tibble:tbl_df]{tbl_df}.}
 
 \item{model}{An integer specifying evolutionary model to be used. Available options are:
 \itemize{
@@ -38,9 +38,13 @@ asap_tbl(
 \item{webserver}{A .csv file containing ASAP results obtained from a webserver. Default to NULL.}
 
 \item{delimname}{Character. String to rename the delimitation method in the table. Default to 'asap'.}
+
+\item{rank}{Integer. Which ranked partition to return when \code{infile} is an
+\code{"asap"} object (default \code{NULL} selects rank 1 / best ASAP score).
+Ignored for CLI and webserver paths.}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}
+an object of class \link[tibble:tbl_df]{tbl_df}
 }
 \description{
 \code{asap_tbl()} returns species partition hypothesis estimated by ASAP software
@@ -71,6 +75,11 @@ try(asap_df)
 }
 
 }
+\references{
+Puillandre N., Brouillet S., Achaz G. 2021. ASAP: assemble species by automatic
+partitioning. \emph{Molecular Ecology Resources} 21:609–620.
+\doi{10.1111/1755-0998.13281}
+}
 \author{
-Nicolas Puillandre, Sophie Brouillet, Guillaume Achaz.
+Pedro S. Bittencourt, Tomas Hrbek
 }

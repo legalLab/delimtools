@@ -17,10 +17,10 @@ haplotype_tbl(dna, clean = TRUE, collapseSubstrings = TRUE, verbose = TRUE)
 See \link{clean_dna} for details.}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}.
+an object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
-\code{haplotype_tbl()} returns a \link[tibble:tbl_df-class]{tbl_df} summarising
+\code{haplotype_tbl()} returns a \link[tibble:tbl_df]{tbl_df} summarising
 all unique haplotype frequencies and duplicates into a single row.
 }
 \details{

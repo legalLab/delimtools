@@ -4,15 +4,21 @@
 #' `abgd_tbl()` returns species partition hypothesis estimated by ABGD software
 #' (https://bioinfo.mnhn.fr/abi/public/abgd/).
 #'
-#' @param infile Path to fasta file.
-#' @param exe Path to an ABGD executable.
+#' @param infile Path to a FASTA file, or an object of class `"abgd"` returned
+#'   by [abgd()].  When an `"abgd"` object is supplied, the CLI path is skipped
+#'   and `best_partition()` is called directly.
+#' @param exe Path to an ABGD executable.  Ignored when `infile` is an `"abgd"`
+#'   object.
 #' @param haps Optional. A vector of haplotypes to keep into the [`tbl_df`][tibble::tbl_df].
+#' @param type Which ABGD pass to use when `infile` is an `"abgd"` object:
+#'   `"recursive"` (default) or `"initial"`.  Ignored for CLI and webserver
+#'   paths.
 #' @param slope Numeric. Relative gap width (slope). Default to 1.5.
 #' @param model An integer specifying evolutionary model to be used. Available options are:
 #' \itemize{
 #'   \item 0: Kimura-2P
 #'   \item 1: Jukes-Cantor (default)
-#'   \item 2: Tamura-Nei
+#'   \item 2: Tamura-Nei (*not implemented*)
 #'   \item 3: simple distance (p-distance)
 #' }
 #' @param outfolder Path to output folder. Default to NULL. If not specified, a temporary location is used.
@@ -30,13 +36,14 @@
 #'
 #' @return
 #' an object of class [`tbl_df`][tibble::tbl_df]
-#'
+#' 
 #' @author
-#' N. Puillandre,  A. Lambert,  S. Brouillet,  G. Achaz
+#' Pedro S. Bittencourt, Tomas Hrbek
 #'
-#' @source
+#' @references
 #' Puillandre N., Lambert A., Brouillet S., Achaz G. 2012. ABGD, Automatic Barcode 
-#' Gap Discovery for primary species delimitation. Molecular Ecology 21(8):1864-77.
+#' Gap Discovery for primary species delimitation. \emph{Molecular Ecology} 21(8):1864-77. 
+#' \doi{10.1111/j.1365-294X.2011.05239.x}
 #' 
 #' @examples
 #' \donttest{
@@ -58,24 +65,32 @@
 #' }
 #'
 #' @export
-abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, outfolder = NULL, webserver = NULL, delimname = "abgd") {
-  
+abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, outfolder = NULL, webserver = NULL, delimname = "abgd", type = c("recursive", "initial")) {
+
+  dname <- rlang::sym(delimname)
+
+  if (inherits(infile, "abgd")) {
+    type <- match.arg(type)
+    bp   <- best_partition(infile, pass = type)
+    delim <- tibble::tibble(labels = names(bp$partition), !!dname := bp$partition)
+    if (!is.null(haps)) delim <- dplyr::filter(delim, labels %in% haps)
+    return(delim)
+  }
+
   # check if FASTA file is aligned, otherwise exit gracefully
   dna <- ape::read.dna(infile, format = "fasta")
   seq_lengths <- sapply(dna, length)
   same_length <- length(unique(seq_lengths)) == 1
   if (!same_length) {
-    cli::cli_alert_info("FASTA input not aligned. Not running ABGD. No ABGD table returned.")
-    return(invisible(NULL))
+    cli::cli_abort("FASTA input not aligned.")
+    
   }
-  
-  dname <- rlang::sym(delimname)
   
   # check if `readr` is installed
   rlang::check_installed("readr", reason= "to execute `ABGD` properly.")
 
   if (!is.null(webserver) && !file.exists(webserver)) {
-    cli::cli_abort("Error: Please provide a valid path to an ABGD results file.")
+    cli::cli_abort("Please provide a valid path to an ABGD results file.")
   }
 
   if (!is.null(webserver) && file.exists(webserver)) {
@@ -97,7 +112,7 @@ abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, ou
   }
 
   if (!file.exists(exe)) {
-    cli::cli_abort("Error: Please provide a valid path to the ABGD executable file.")
+    cli::cli_abort("Please provide a valid path to the ABGD executable file.")
   }
 
   if (missing(model)) {
@@ -111,7 +126,7 @@ abgd_tbl <- function(infile, exe = NULL, haps = NULL, slope = 1.5, model = 3, ou
   }
 
   if (!dir.exists(outfolder)) {
-    cli::cli_abort("Error: Please provide a valid results directory.")
+    cli::cli_abort("Please provide a valid results directory.")
   }
 
   string_abgd <- glue::glue("{exe} -d {model} -X {slope} -o {outfolder} {infile}")

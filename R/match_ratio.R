@@ -6,6 +6,7 @@
 #' [delim_join] output.
 #'
 #' @param delim Output from [delim_join].
+#' @param sorted If output should be sorted by match ratio values. Default to TRUE.
 #'
 #' @details
 #' `match_ratio()` iterates between all species delimitation partitions in
@@ -28,7 +29,8 @@
 #' 
 #' @source
 #' Ahrens D., Fujisawa T., Krammer H. J., Eberle J., Fabrizi S., Vogler A. P. 2016. Rarity and 
-#' Incomplete Sampling in DNA-Based Species Delimitation. Systematic Biology 65 (3): 478-494.
+#' Incomplete Sampling in DNA-Based Species Delimitation. \emph{Systematic Biology} 65 (3): 478-494. 
+#' \doi{10.1093/sysbio/syw002}
 #'
 #' @examples
 #'
@@ -36,7 +38,7 @@
 #' match_ratio(geophagus_delims)
 #'
 #' @export
-match_ratio <- function(delim) {
+match_ratio <- function(delim, sorted = TRUE) {
   n_cols <- colnames(delim[, -1])
 
   pairs <- utils::combn(n_cols, 2, paste, simplify = FALSE)
@@ -66,6 +68,10 @@ match_ratio <- function(delim) {
     dplyr::group_by(pairs) |>
     dplyr::arrange(dplyr::desc(pairs), .by_group = TRUE) |>
     dplyr::ungroup()
+  
+  if(sorted) {
+    match_ratio <- dplyr::arrange(match_ratio, dplyr::desc(.data$match_ratio))
+  }
 
   return(match_ratio)
 }

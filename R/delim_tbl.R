@@ -21,7 +21,7 @@
 #' # create a tibble
 #' delim_df <- delim_tbl(
 #'   labels = geophagus_info$gbAccession,
-#'   sppVector = geophagus_info$scientificName
+#'   sppVector = geophagus_info$scientificName,
 #'   delimname = "SNAPPER"
 #' )
 #'

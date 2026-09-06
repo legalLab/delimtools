@@ -1,0 +1,36 @@
+# -I. lets headers in subdirs include each other without path prefixes
+PKG_CPPFLAGS = -I.
+
+PKG_LIBS = -lm
+
+# R only auto-compiles *.c at the top level of src/; list subdir objects explicitly.
+OBJECTS = delimtools_init.o \
+    abgd/abgdCore.o abgd/main_abgd.o abgd/abgd_r.o \
+    asap/asap_core.o asap/asap_common.o asap/asap_wrapper.o asap/r_compat.o \
+    gmyc/gmyc_core.o gmyc/gmyc_r.o \
+    mptp/aic.o mptp/dp.o mptp/hash.o \
+    mptp/lex_rtree.o mptp/lex_utree.o \
+    mptp/likelihood.o mptp/list.o mptp/multirun.o \
+    mptp/parse_rtree.tab.o mptp/parse_utree.tab.o \
+    mptp/random.o mptp/rmptp_globals.o mptp/rmptp_wrap.o \
+    mptp/rtree.o mptp/util.o mptp/utree.o
+
+# Generic pattern rule for subdirectory .c → .o (GNU make, Linux + macOS)
+%.o: %.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
+
+# abgd, asap, and mPTP need r_compat.h to redirect printf/exit/rand through R wrappers
+abgd/%.o: abgd/%.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -include asap/r_compat.h -c $< -o $@
+
+asap/%.o: asap/%.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -include asap/r_compat.h -c $< -o $@
+
+# mptp: R_PACKAGE guards fatal() in util.c; YY_FATAL_ERROR redirects lex errors;
+# r_compat.h (mesmo do ASAP) redireciona printf/putchar/stdout/stderr
+mptp/%.o: mptp/%.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) \
+	  -DHAVE_CONFIG_H -DR_PACKAGE \
+	  "-DYY_FATAL_ERROR(msg)=rmptp_lex_fatal_error(msg)" \
+	  -include asap/r_compat.h \
+	  -c $< -o $@

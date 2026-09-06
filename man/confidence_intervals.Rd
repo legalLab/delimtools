@@ -104,11 +104,14 @@ a vector of starting parameters in the same order as the scale parameters, py, p
 \item{threshold}{Distance cutoff for clustering. Default of 0.01. See
 \link[spider:localMinima]{localMinima} for details.}
 
-\item{haps}{Optional. A vector of haplotypes to keep into the \link[tibble:tbl_df-class]{tbl_df}.}
+\item{haps}{Optional. A vector of haplotypes to keep into the \link[tibble:tbl_df]{tbl_df}.}
 
 \item{...}{Further arguments to be passed to \link[ape:dist.dna]{dist.dna}.}
 
-\item{infile}{Path to tree file in Newick format. Should be dichotomous and rooted.}
+\item{infile}{Path to tree file in Newick format, or an object of class
+\code{"mptp_ml"} or \code{"mptp_mcmc"} returned by \code{\link{mptp}}
+or \code{\link{mptp_mcmc}}. When an \code{mptp_ml} object is supplied the
+remaining arguments are ignored and the assignments are returned directly.}
 
 \item{bootstraps}{Bootstrap trees. An object of class \link[ape:multiphylo]{multiphylo}.}
 

@@ -18,16 +18,16 @@ locmin_tbl(distobj, threshold = 0.01, haps = NULL, delimname = "locmin")
 \item{threshold}{Distance cutoff for clustering. Default of 0.01. See
 \link[spider:localMinima]{localMinima} for details.}
 
-\item{haps}{Optional. A vector of haplotypes to keep into the \link[tibble:tbl_df-class]{tbl_df}.}
+\item{haps}{Optional. A vector of haplotypes to keep into the \link[tibble:tbl_df]{tbl_df}.}
 
 \item{delimname}{Character. String to rename the delimitation method in the table. Default to 'locmin'.}
 }
 \value{
-An object of class \link[tibble:tbl_df-class]{tbl_df}.
+An object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
 \code{locmin_tbl()} processes output from \link[spider:tclust]{tclust} into an object of
-class \link[tibble:tbl_df-class]{tbl_df}.
+class \link[tibble:tbl_df]{tbl_df}.
 }
 \details{
 \code{spider} package uses \link[spider:localMinima]{localMinima} to

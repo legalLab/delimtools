@@ -12,49 +12,60 @@ mixed Yule-coalescent model. BMC Evolutionary Biology 12 (196).
 bgmyc_tbl(bgmyc_res, ppcutoff = 0.05, delimname = "bgmyc")
 }
 \arguments{
-\item{bgmyc_res}{Output from \link[bGMYC:bgmyc.singlephy]{bgmyc.singlephy}.}
+\item{bgmyc_res}{Output from \code{\link[=bgmyc]{bgmyc()}} or
+\link[bGMYC:bgmyc.singlephy]{bgmyc.singlephy}.}
 
-\item{ppcutoff}{Posterior probability threshold for clustering samples into
-species partitions. See \link[bGMYC:bgmyc.point]{bgmyc.point} for details. Default to 0.05.}
+\item{ppcutoff}{Posterior co-occurrence probability threshold. Tip pairs
+with posterior probability of being conspecific \eqn{\geq} \code{ppcutoff}
+are merged into the same species. Default 0.05.}
 
-\item{delimname}{Character. String to rename the delimitation method in the table. Default to 'bgmyc'.}
+\item{delimname}{Character. Column name for the species index in the
+returned tibble. Default \code{"bgmyc"}.}
 }
 \value{
-an object of class \link[tibble:tbl_df-class]{tbl_df}.
+An object of class \link[tibble:tbl_df]{tbl_df} with columns
+\code{labels} (tip labels, in tree-tip order) and the species index named by
+\code{delimname}.
 }
 \description{
-\code{bgmyc_tbl()} processes output from \link[bGMYC:bgmyc.singlephy]{bgmyc.singlephy} into an
-object of class \link[tibble:tbl_df-class]{tbl_df}.
-}
-\details{
-\code{bGMYC} package uses \link[bGMYC:spec.probmat]{spec.probmat} to create a
-matrix of probability of conspecificity and \link[bGMYC:bgmyc.point]{bgmyc.point}
-to split samples into a list which individuals
-meets the threshold specified by \code{ppcutoff}. \code{bgmyc_tbl()} wraps up these
-two functions into a single one and turns these inputs into a tibble which matches
-the output from \link{gmyc_tbl} and \link{locmin_tbl}.
+\code{bgmyc_tbl()} processes output from \code{\link[=bgmyc]{bgmyc()}} (class \code{"bgmyc_fit"}) or
+\link[bGMYC:bgmyc.singlephy]{bgmyc.singlephy} (class \code{"singlebgmyc"}) into an
+object of class \link[tibble:tbl_df]{tbl_df}.
+
+For \code{"bgmyc_fit"} objects the partition is derived from the stored
+posterior co-occurrence matrix (\verb{$probmat}) by grouping tip pairs whose
+probability of co-occurrence exceeds \code{ppcutoff} (union-find).  This lets
+you explore different thresholds without re-running the MCMC.
+
+For legacy \code{"singlebgmyc"} objects the original \pkg{bGMYC} functions
+\link[bGMYC:spec.probmat]{spec.probmat} and \link[bGMYC:bgmyc.point]{bgmyc.point}
+are called (requires the \pkg{bGMYC} package to be installed).
 }
 \examples{
 
 \donttest{
-# run bGMYC
-bgmyc_res <- try( bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
-  mcmc = 11000,
-  burnin = 1000,
-  thinning = 100,
-  t1 = 2,
-  t2 = ape::Ntip(geophagus_beast),
-  start = c(1, 0.5, 50)
-)
-)
-# create a tibble
-bgmyc_df <- try( bgmyc_tbl(bgmyc_res, ppcutoff = 0.05) )
-
-# check
+# bgmyc (no external package required)
+result <- try( bgmyc(ape::as.phylo(geophagus_beast),
+  mcmc = 11000, burnin = 1000, thinning = 100,
+  start = c(1, 0.5, 30), quiet = TRUE
+))
+bgmyc_df <- try( bgmyc_tbl(result, ppcutoff = 0.05) )
 try(bgmyc_df)
+
+# legacy bGMYC object
+bgmyc_res <- try( bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
+  mcmc = 11000, burnin = 1000, thinning = 100,
+  t1 = 2, t2 = ape::Ntip(geophagus_beast),
+  start = c(1, 0.5, 50)
+))
+bgmyc_df2 <- try( bgmyc_tbl(bgmyc_res, ppcutoff = 0.05) )
+try(bgmyc_df2)
 }
 
+}
+\seealso{
+\code{\link[=bgmyc]{bgmyc()}}, \code{\link[=gmyc_tbl]{gmyc_tbl()}}
 }
 \author{
-Noah M. Reid.
+Noah M. Reid (original bGMYC); Pedro S. Bittencourt (delimtools wrapper).
 }
