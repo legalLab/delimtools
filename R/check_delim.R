@@ -10,14 +10,16 @@
 #' `check_delim()` will check if two or more species delimitation outputs have
 #' different dimensions (rows, columns), if labels are the same or if there are
 #' any duplicated or absent labels, and if there are any NA values or if partitions
-#' were set using non numeric values. If `TRUE` for any of the cases listed above,
-#' `check_delim()` will return an error.
+#' were set using non numeric values. Each table is compared against the first table
+#' in `list`. Any of the cases listed above triggers a `cli::cli_warn()` describing
+#' the issue, and `check_delim()` returns `FALSE`. If none of the cases are found for
+#' any pairwise comparison, `check_delim()` returns `TRUE`.
 #'
 #' @return
 #' A single logical value, `TRUE` or `FALSE`.
 #'
 #' @author
-#' Pedro S. Bittencourt, Rupert A. Collins.
+#' Pedro S. Bittencourt, Rupert A. Collins, Tomas Hrbek.
 #'
 #' @examples
 #'
@@ -68,6 +70,19 @@ check_delim <- function(list) {
     id1 <- dplyr::pull(delim_1, 1)
     id2 <- dplyr::pull(delim_2, 1)
 
+    # check duplicated labels first, regardless of whether id1 and id2 match,
+    # since a table can be internally duplicated even if both tables agree
+    if (any(duplicated(id1)) || any(duplicated(id2))) {
+      cli::cli_warn(c("Duplicate labels found.",
+        "x" = "You've supplied inputs with duplicated labels.",
+        "i" = "Duplicated labels in {.arg delim_1}:",
+        stringr::str_flatten_comma(id1[vctrs::vec_duplicate_detect(id1)]),
+        "i" = "Duplicated labels in {.arg delim_2}:",
+        stringr::str_flatten_comma(id2[vctrs::vec_duplicate_detect(id2)])
+      ))
+      return(FALSE)
+    }
+
     # check labels
     check_labels <- identical(id1, id2)
 
@@ -83,24 +98,12 @@ check_delim <- function(list) {
           "Labels absent or mistyped in {.arg delim_2}"
         )
 
-        cli::cli_abort(c("Labels must be identical across tables.",
+        cli::cli_warn(c("Labels must be identical across tables.",
           "x" = "The labels below are either absent or mistyped.",
           "i" = "labels absent or mistyped in {.arg delim_1}:",
           stringr::str_flatten_comma(diff[[1]]),
           "i" = "labels absent or mistyped in {.arg delim_2}:",
           stringr::str_flatten_comma(diff[[2]])
-        ))
-        invisible(diff)
-        return(FALSE)
-      }
-
-      if (any(duplicated(id1) | duplicated(id2))) {
-        cli::cli_abort(c("Duplicate labels found.",
-          "x" = "You've supplied inputs with duplicated labels.",
-          "i" = "Duplicated labels in {.arg delim_1}:",
-          stringr::str_flatten(id1[vctrs::vec_duplicate_detect(id1)]),
-          "i" = "Duplicated labels in {.arg delim_2}:",
-          stringr::str_flatten(id2[vctrs::vec_duplicate_detect(id2)])
         ))
         return(FALSE)
       }
@@ -112,7 +115,7 @@ check_delim <- function(list) {
 
     # check values
     if (anyNA(c(values1, values2))) {
-      cli::cli_abort(c("Missing values found across tables.",
+      cli::cli_warn(c("Missing values found across tables.",
         "x" = "You've supplied inputs with missing values.",
         "i" = "{.arg Delim 1} has {sum(vctrs::vec_detect_missing(values1))} missing values",
         "i" = "{.arg Delim 2} has {sum(vctrs::vec_detect_missing(values2))} missing values"
@@ -121,7 +124,7 @@ check_delim <- function(list) {
     }
 
     if (!is.numeric(values1) | !is.numeric(values2)) {
-      cli::cli_abort(c("Species partition values must be numeric.",
+      cli::cli_warn(c("Species partition values must be numeric.",
         "x" = "You've supplied non numeric values for species partitions.",
         "i" = "{.arg Delim 1} is {.cls {class(values1)}}",
         "i" = "{.arg Delim 2} is {.cls {class(values2)}}"
@@ -132,15 +135,20 @@ check_delim <- function(list) {
   }
 
   cli::cli_inform("Checking species delimitation tables...")
-  Sys.sleep(2)
 
+  # compare table 1 against every other table, keeping each pairwise result
+  results <- logical(length(list) - 1)
   for (i in seq(2, length(list))) {
     cli::cli_progress_message("Checking table 1 against table {i}...")
-    Sys.sleep(0.5)
-    check_delim.default(list[[1]], list[[i]])
+    results[i - 1] <- check_delim.default(list[[1]], list[[i]])
     cli::cli_progress_update()
   }
-  cli::cli_alert_success("Checking complete!")
 
-  return(TRUE)
+  if (all(results)) {
+    cli::cli_alert_success("Checking complete! All tables are consistent.")
+  } else {
+    cli::cli_alert_danger("Checking complete! One or more tables are inconsistent - see warnings above.")
+  }
+
+  return(all(results))
 }
