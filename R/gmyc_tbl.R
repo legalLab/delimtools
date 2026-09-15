@@ -17,7 +17,7 @@
 #' An object of class [tbl_df][tibble::tbl_df].
 #'
 #' @author
-#' Thomas Ezard, Tomochika Fujisawa, Tim Barraclough.
+#' Pedro S. Bittencourt, Tomas Hrbek
 #' 
 #' @source
 #' Pons J., Barraclough T. G., Gomez-Zurita J., Cardoso A., Duran D. P., Hazell S., 
@@ -49,19 +49,15 @@
 #' @export
 gmyc_tbl <- function(gmyc_res, delimname = "gmyc"){
   
-  # check if `splits` is installed
-  rlang::check_installed("splits", reason = "to run `gmyc_tbl` properly.")
-
   dname <- rlang::sym(delimname)
 
   if(methods::is(gmyc_res, "gmyc")){
 
-    gmyc_spec <- splits::spec.list(gmyc_res)
+    gmyc_spec <- delimtools::spec.list(gmyc_res)
 
     gmyc_tbl <- tibble::tibble(labels= as.character(gmyc_spec$sample_name),
                                !!dname:= as.integer(gmyc_spec$GMYC_spec))
-      
-
+    
     return(gmyc_tbl)
 
   } else {
