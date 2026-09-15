@@ -8,11 +8,10 @@
 #'
 #' @details
 #' For each column in `delim`, `report_delim()` will calculate the
-#' number of unique partitions and print them to `Console`. If `delim` is an output from `*_tbl()`,
-#' `report_delim()` will get unique species partitions using [vec_unique_count][vctrs::vec_unique_count].
-#' If `delim` is an output from [delim_join] or [delim_consensus], values are summarized by using
-#' [n_distinct][dplyr::n_distinct] with `na.rm = TRUE`. This is to prevent any columns with
-#' NA values to be interpreted as species partitions.
+#' number of unique partitions and print them to `Console`, using
+#' [n_distinct][dplyr::n_distinct] with `na.rm = TRUE` whether `delim` is a single-method
+#' output from `*_tbl()` or a multi-method output from [delim_join] or [delim_consensus].
+#' This is to prevent any columns with NA values from being interpreted as species partitions.
 #'
 #' @return
 #' an object of class [tbl_df][tibble::tbl_df]].
@@ -29,8 +28,14 @@
 report_delim <- function(delim, verbose = TRUE) {
   n_cols <- colnames(delim[, -1])
 
+  if (length(n_cols) == 0) {
+    cli::cli_abort(c("`delim` must have at least one partition column besides {.field labels}.",
+      "x" = "No columns remain after removing the first (labels) column."
+    ))
+  }
+
   if (length(n_cols) == 1) {
-    rep <- vctrs::vec_unique_count(purrr::pluck(delim, 2))
+    rep <- dplyr::n_distinct(purrr::pluck(delim, 2), na.rm = TRUE)
 
     if (verbose == TRUE) {
       cli::cli_inform(c("i" = "Delim {.arg {n_cols}} has a total of {.strong {rep}} unique species partitions:"))
