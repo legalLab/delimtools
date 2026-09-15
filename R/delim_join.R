@@ -85,12 +85,21 @@ delim_join <- function(delim, return = c("both", "df", "removed")) {
   
   # delim is a list
   if (methods::is(delim, "list")) {
+    # run consistency diagnostics across the raw inputs (dimensions, labels,
+    # duplicated labels, missing or non-numeric values). check_delim() now
+    # warns rather than aborts, so this is safe to run unconditionally and
+    # only surfaces issues - it does not gate the logic below, which relies
+    # on the actual post-join NA pattern in `delim_wide` instead.
+    if (length(delim) >= 2) {
+      delimtools::check_delim(delim)
+    }
+    
     # convert to wide format
     delim_wide <- delim |>
       purrr::reduce(dplyr::full_join, by = "labels")
     delim_ordr <- colnames(delim_wide)
     
-    if (!isTRUE(delimtools::check_delim(delim))) {
+    if (anyNA(delim_wide)) {
       # build removal log
       for (col in colnames(delim_wide)[-1]) {
         missing_ids <- delim_wide$labels[is.na(delim_wide[[col]])]
