@@ -6,15 +6,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Installing Species Delimitation Softwares • delimtools</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Installing Species Delimitation Softwares">
 </head>
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">delimtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +34,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../articles/delimtools.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
@@ -70,18 +70,19 @@
 
     
     
+<div class="section level2">
+<h2 id="section"></h2>
 <p>The main purpose of <code>delimtools</code> is to provide helper
 functions for analyzing single locus species delimitation outputs. To
 generate this type of data, it is necessary to install third-party
 software and use the appropriate <code>*_tbl()</code> functions to parse
 these results in a tabular format.</p>
-<p><br></p>
 <table class="table">
 <colgroup>
-<col width="15%">
-<col width="10%">
+<col width="16%">
 <col width="11%">
-<col width="62%">
+<col width="12%">
+<col width="58%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Function</th>
@@ -94,13 +95,13 @@ these results in a tabular format.</p>
 <td align="left">abgd_tbl()</td>
 <td align="left">ABGD</td>
 <td align="center">C</td>
-<td align="left"><a href="https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html" class="external-link uri">https://bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html</a></td>
+<td align="left">bioinfo.mnhn.fr/abi/public/abgd/abgdweb.html</td>
 </tr>
 <tr class="even">
 <td align="left">asap_tbl()</td>
 <td align="left">ASAP</td>
 <td align="center">C</td>
-<td align="left"><a href="https://bioinfo.mnhn.fr/abi/public/asap/" class="external-link uri">https://bioinfo.mnhn.fr/abi/public/asap/</a></td>
+<td align="left">bioinfo.mnhn.fr/abi/public/asap/</td>
 </tr>
 <tr class="odd">
 <td align="left">bgmyc_tbl()</td>
@@ -128,6 +129,7 @@ these results in a tabular format.</p>
 </tr>
 </tbody>
 </table>
+</div>
 <div class="section level2">
 <h2 id="install-r-packages">Install R packages<a class="anchor" aria-label="anchor" href="#install-r-packages"></a>
 </h2>
@@ -147,7 +149,7 @@ its installation is straightforward:</p>
 repository. Set <code>dependencies = TRUE</code> to install
 <code>paran</code> package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"splits"</span>, repos <span class="op">=</span> <span class="st">"http://R-Forge.R-project.org"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"splits"</span>, repos <span class="op">=</span> <span class="st">"https://r-forge.r-project.org/"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="bgmyc">bGMYC<a class="anchor" aria-label="anchor" href="#bgmyc"></a>
@@ -179,7 +181,7 @@ software to generate results and import them using its respective
 <p>To install <code>ABGD</code>, download latest release, decompress and
 compile. Optionally, you may add the folder to your PATH environment
 variable or move it to <code>/usr/local/bin</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">wget</span> https://bioinfo.mnhn.fr/abi/public/abgd/last.tgz <span class="at">-O</span> abgd.tgz</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">wget</span> https\://bioinfo.mnhn.fr/abi/public/abgd/last.tgz <span class="at">-O</span> abgd.tgz</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzvf</span> abgd.tgz</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="bu">cd</span> Abgd</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">make</span></span>
@@ -193,7 +195,7 @@ variable or move it to <code>/usr/local/bin</code>.</p>
 <p>To install <code>ASAP</code>, download latest release, decompress and
 compile. Optionally, you may add the folder to your PATH environment
 variable or move it to <code>/usr/local/bin</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">wget</span> https://bioinfo.mnhn.fr/abi/public/asap/last.tgz</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">wget</span> https\://bioinfo.mnhn.fr/abi/public/asap/last.tgz</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzvf</span> last.tgz</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="bu">cd</span> ASAP</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">make</span></span>
@@ -219,7 +221,7 @@ their instructions.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

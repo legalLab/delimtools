@@ -6,20 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Helper Functions for Species Delimitation Analysis • delimtools</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Helper Functions for Species Delimitation Analysis">
 <meta name="description" content="Helpers functions to process, analyse, and visualize the output of single locus species delimitation methods. For full functionality, please install suggested software at &lt;https://legallab.github.io/delimtools/articles/install.html&gt;.">
 <meta property="og:description" content="Helpers functions to process, analyse, and visualize the output of single locus species delimitation methods. For full functionality, please install suggested software at &lt;https://legallab.github.io/delimtools/articles/install.html&gt;.">
-<meta property="og:image" content="https://legallab.github.io/delimtools/logo.svg">
+<meta property="og:image" content="/logo.svg">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -29,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">delimtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +37,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/delimtools.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
@@ -69,18 +69,25 @@
 <div class="section level2">
 <h2 id="important">IMPORTANT<a class="anchor" aria-label="anchor" href="#important"></a>
 </h2>
-<p>This software is under active development, and as such cannot be assumed to be free of bugs or poor functionality. Always inspect results carefully. If you find a problem, please report it with as much detail as possible in <a href="https://github.com/LegalLab/delimtools/issues" class="external-link">Issues</a>. Unfortunately in it’s current form, some of the functions (<code><a href="reference/abgd_tbl.html">abgd_tbl()</a></code>, <code><a href="reference/asap_tbl.html">asap_tbl()</a></code> and <code><a href="reference/mptp_tbl.html">mptp_tbl()</a></code>) will not work on Windows operating systems, only on Unix (MacOS, Linux). This is because third party binaries (executable programs) are required. We are working to implement importing results from the webservers that are commonly used to run these analyses. There are also difficulties with installing R required package dependancies to run <code><a href="reference/gmyc_tbl.html">gmyc_tbl()</a></code> and <code><a href="reference/bgmyc_tbl.html">bgmyc_tbl()</a></code> because these are no longer under development and available on CRAN, and must be installed from archived sources. Please refer to <a href="https://github.com/boopsboops/delimtools-testing/blob/main/scripts/install.md" class="external-link">github.com/boopsboops/delimtools-testing</a> for instructions on how to install.</p>
+<p>This software is under active development, and as such cannot be assumed to be free of bugs or poor functionality. Always inspect results carefully. If you find a problem, please report it with as much detail as possible in <a href="https://github.com/LegalLab/delimtools/issues" class="external-link">Issues</a>. Unfortunately in its current form, some of the functions (<code><a href="reference/abgd_tbl.html">abgd_tbl()</a></code>, <code><a href="reference/asap_tbl.html">asap_tbl()</a></code> and <code><a href="reference/mptp_tbl.html">mptp_tbl()</a></code>) will not work natively on Windows operating systems, only on Unix (MacOS, Linux). This is because third party binaries (executable programs) are required. We have implemented a Windows solution by importing results from the webservers that are commonly used to run these analyses, e.g. ABGD, ASAP, and <a href="https://mptp.h-its.org/" class="external-link">mPTP</a>. There are also difficulties with installing R required package dependancies to run <code><a href="reference/gmyc_tbl.html">gmyc_tbl()</a></code> and <code><a href="reference/bgmyc_tbl.html">bgmyc_tbl()</a></code> because these are no longer under development and available on CRAN, and must be installed from archived sources. Please refer to <a href="https://legallab.github.io/delimtools/articles/install.html" class="external-link uri">https://legallab.github.io/delimtools/articles/install.html</a> for instructions on how to install. A tutorial vignette running through all major package functionality is found at <a href="https://legallab.github.io/delimtools/articles/delimtools.html" class="external-link uri">https://legallab.github.io/delimtools/articles/delimtools.html</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="delimtools-v030---announcement">delimtools v0.3.0 - Announcement<a class="anchor" aria-label="anchor" href="#delimtools-v030---announcement"></a>
+</h2>
+<p>The next major release of delimtools (v0.3.0) will provide native R ports for all species delimitation software currently supported by this package. This means that ABGD, ASAP, bGMYC, GMYC and mPTP, previously dependent on external binaries or third-party R packages, will run <strong>entirely</strong> within the R environment, with performance-critical likelihood computations handled by embedded C code.</p>
+<p>These R ports were developed with the assistance of Claude (Anthropic), under continuous human supervision. This porting process prioritezed <strong>fidelity to the original source code</strong>: algorithms, likelihood functions, and core logic were preserved as closely as possible, with changes limited to what was strictly necessary for integration into the R/C ecosystem.</p>
+<p>This change removes the Unix-only restriction that affected several functions in earlier versions, making the full delimtools pipeline <strong>available on all platforms</strong>, including <strong>Windows</strong>. Users will no longer need to install or configure standalone executables to run any of the supported methods. All currently implemented wrappers (*_tbl() functions) will continue to be available for comparative purposes for some time, but will eventually be deprecated in the next updates.</p>
 </div>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>The official GitHub repository for the R package <code>delimtools</code> (Bittencourt et al., in prep.).</p>
+<p>The official GitHub repository for the R package <code>delimtools</code> (<a href="https://doi.org/10.1139/gen-2025-0119" class="external-link">Bittencourt, Collins &amp; Hrbek, 2026</a>).</p>
 <p><code>delimtools</code> provides helper functions for the analysis of single-locus species delimitation methods such as GMYC (<a href="https://doi.org/10.1093/sysbio/syp027" class="external-link">Monaghan et al., 2009</a>), bGMYC (<a href="https://doi.org/10.1186/1471-2148-12-196" class="external-link">Reid &amp; Carstens, 2012</a>), mPTP (<a href="https://doi.org/10.1093/bioinformatics/btx025" class="external-link">Kapli et al., 2017</a>) and ASAP (<a href="https://doi.org/10.1111/1755-0998.13281" class="external-link">Puillandre et al., 2020</a>). These software run multiple different platforms (e.g. R, Unix, webservers), and also do not output their results in a consistent format to allow easy comparison. To address these shortcomings we have developed a suite of functions to standardise and simplify generating single-locus species delimitations.</p>
 </div>
 <div class="section level2">
 <h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
 </h2>
-<p>Delimtools maily depends on the <a href="https://www.tidyverse.org/" class="external-link">tidyverse</a> and <a href="https://github.com/YuLab-SMU/ggtree" class="external-link">ggtree</a> packages. To install these, run the command lines below:</p>
+<p>Delimtools mainly depends on the <a href="https://tidyverse.org/" class="external-link">tidyverse</a> and <a href="https://github.com/YuLab-SMU/ggtree" class="external-link">ggtree</a> packages. To install these, run the command lines below:</p>
 <p>Install <code>tidyverse</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span></code></pre></div>
@@ -108,7 +115,7 @@
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>Here, we will demonstrate a single-locus species delimitation analysis on a <em>Geophagus</em> eartheater cichlid dataset (<a href="https://doi.org/10.7717/peerj.12443" class="external-link">Ximenes et al., 2021</a>) using a variety of methods. For full details please see the GitHub repository accompanying this R package at <a href="https://github.com/boopsboops/delimtools-testing" class="external-link">github.com/boopsboops/delimtools-testing</a>.</p>
+<p>Here, we will demonstrate plotting a single-locus species delimitation analysis of a <em>Geophagus</em> eartheater cichlid dataset (<a href="https://doi.org/10.7717/peerj.12443" class="external-link">Ximenes et al., 2021</a>) using a variety of methods. A tutorial vignette running through all major package functionality is found at <a href="https://legallab.github.io/delimtools/articles/delimtools.html" class="external-link uri">https://legallab.github.io/delimtools/articles/delimtools.html</a>.</p>
 <figure><img src="https://raw.githubusercontent.com/boopsboops/delimtools-testing/79d6257c9ae4b7da1047e5ffa9ef1a04b4139dae/assets/geophagus_redhead_tapajos.jpg" alt="Redhead Eartheater Geophagus pyrocephalus"><figcaption aria-hidden="true">
 Redhead Eartheater <em>Geophagus pyrocephalus</em>
 </figcaption></figure><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -133,7 +140,14 @@ Redhead Eartheater <em>Geophagus pyrocephalus</em>
 <span>               tbl_labs <span class="op">=</span> <span class="va">tip.tab</span>, </span>
 <span>               col_vec <span class="op">=</span> <span class="va">cols</span>,</span>
 <span>               hexpand <span class="op">=</span> <span class="fl">0.7</span>,</span>
-<span>               widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>               widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
+<span><span class="co">#&gt; ℹ Please use `linewidth` instead.</span></span>
+<span><span class="co">#&gt; ℹ The deprecated feature was likely used in the ggtree package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at &lt;https://github.com/YuLab-SMU/ggtree/issues&gt;.</span></span>
+<span><span class="co">#&gt; This warning is displayed once per session.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co">#&gt; generated.</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-1.png"><!-- --></p>
 </div>
 <div class="section level2">
@@ -168,7 +182,7 @@ Redhead Eartheater <em>Geophagus pyrocephalus</em>
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://www.r-project.org/Licenses/AGPL-3" class="external-link">AGPL-3</a></small></li>
 </ul>
 </div>
 
@@ -183,9 +197,10 @@ Redhead Eartheater <em>Geophagus pyrocephalus</em>
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Pedro Bittencourt <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-4074-3541" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Rupert Collins <br><small class="roles"> Author, contributor, copyright holder </small> <a href="https://orcid.org/0000-0002-9135-1169" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Tomas Hrbek <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0003-3239-7068" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Pedro Bittencourt <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-4074-3541" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Rupert Collins <br><small class="roles"> Author, contributor, copyright holder </small> <a href="https://orcid.org/0000-0002-9135-1169" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Tomas Hrbek <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0003-3239-7068" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -193,7 +208,7 @@ Redhead Eartheater <em>Geophagus pyrocephalus</em>
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=delimtools" class="external-link"><img src="https://www.r-pkg.org/badges/version/delimtools" alt="CRAN status"></a></li>
-<li><a href="https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/legalLab/delimtools/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://cran.r-project.org/package=delimtools" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/delimtools"></a></li>
 </ul>
 </div>
 
@@ -206,7 +221,7 @@ Redhead Eartheater <em>Geophagus pyrocephalus</em>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
