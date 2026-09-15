@@ -1,0 +1,119 @@
+name: Build package binaries
+
+# delimtools has NeedsCompilation: yes, but unlike packages that link
+# against an external C/C++ library (e.g. via LinkingTo + pkg-config),
+# all of its compiled code (abgd, asap, gmyc, mptp) lives in src/ and is
+# built from Makevars with only -lm (the C math library) as a link flag.
+# That means no Homebrew/MSYS2 library install or dylib/DLL bundling is
+# needed here -- R CMD INSTALL --build only requires a working C
+# toolchain, which the r-lib/actions setup-r action already provides
+# (Xcode CLT on macOS, Rtools on Windows).
+#
+# Runs on: tag pushes (v*) and manual dispatch. Binaries are always
+# uploaded as build artifacts; on a tag push they're also attached to a
+# GitHub Release.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  # ---------------------------------------------------------------------
+  # macOS binary (.tgz)
+  # ---------------------------------------------------------------------
+  macos-binary:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+          use-public-rspm: true
+
+      - name: Set up pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install R package dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          # ape, cli, dplyr, glue, methods, purrr, rlang, stats, stringr,
+          # tidyr, tidyselect (Imports in DESCRIPTION). ggtree is a
+          # Bioconductor package -- pak (used under the hood by this
+          # action) resolves it automatically without a bioc:: prefix.
+          needs: check
+          extra-packages: any::rcmdcheck
+
+      - name: Build macOS binary package
+        run: R CMD INSTALL --build --no-multiarch .
+        shell: bash
+
+      - name: Upload macOS binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: delimtools-macOS-binary
+          path: delimtools_*.tgz
+          if-no-files-found: error
+
+  # ---------------------------------------------------------------------
+  # Windows binary (.zip)
+  # ---------------------------------------------------------------------
+  windows-binary:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up R and Rtools45
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+          rtools-version: "45"
+          use-public-rspm: true
+
+      - name: Set up pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install R package dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: check
+          extra-packages: any::rcmdcheck
+
+      - name: Build Windows binary package
+        shell: bash
+        run: R CMD INSTALL --build --no-multiarch .
+
+      - name: Upload Windows binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: delimtools-windows-binary
+          path: delimtools_*.zip
+          if-no-files-found: error
+
+  # ---------------------------------------------------------------------
+  # Attach both binaries to the GitHub Release for this tag
+  # ---------------------------------------------------------------------
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [macos-binary, windows-binary]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download binaries
+        uses: actions/download-artifact@v4
+        with:
+          path: binaries
+          merge-multiple: true
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: binaries/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
