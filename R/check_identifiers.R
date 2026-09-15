@@ -4,80 +4,88 @@
 #' `check_identifiers()` checks for differences between identifiers in metadata
 #' and DNA sequence files.
 #'
-#' @param data an object of class [tbl_df][tibble::tbl_df] containing sequence metadata.
-#' @param identifier column in `data` which contains sequence identifiers.
 #' @param dna a [DNAbin][ape::DNAbin] object.
+#' @param identifier column in `data` which contains sequence identifiers.
+#' @param data an object of class [tbl_df][tibble::tbl_df] containing sequence metadata.
 #'
 #' @details
 #' `check_identifiers()` is a helper function to check for inconsistencies
-#' between identifiers in metadata and DNA sequences files, such as absence, mistyping,
-#' duplicated entries, or differences in size lengths. If any of these problems are found,
-#' warnings will appear in `Console` and corrections should be made to prevent
-#' unintended consequences later. A list containing erroneous identifiers is returned
-#' invisibly.
+#' between identifiers in metadata and DNA sequence files. It performs three
+#' checks, in order:
+#' 1. every identifier in `dna` must be present in `data`; any missing
+#'    identifiers are reported and abort the function.
+#' 2. `dna` must not contain duplicated identifiers; any duplicates are
+#'    reported and abort the function.
+#' 3. `data` must not contain duplicated identifiers. Duplicated identifiers
+#'    that also occur in `dna` are reported and abort the function, since they
+#'    make matching sequences to metadata ambiguous. Duplicated identifiers
+#'    that do not occur in `dna` are reported as a warning only, since they
+#'    do not affect matching.
 #'
 #' @return
-#' A list containing erroneus identifiers between metadata and sequence file.
+#' Invisibly returns `TRUE` if all checks pass.
 #'
 #' @author
 #' Pedro S. Bittencourt, Rupert A. Collins.
 #'
 #' @examples
-#' check_identifiers(geophagus_info, "gbAccession", geophagus)
+#' check_identifiers(geophagus, "gbAccession", geophagus_info)
 #'
 #' @export
-check_identifiers <- function(data, identifier, dna) {
-  id1 <- dplyr::pull(data, {{ identifier }})
-  id2 <- names(dna)
+check_identifiers <- function(dna, identifier, data) {
+  id_meta <- dplyr::pull(data, {{ identifier }})
+  id_seq <- names(dna)
 
-  if (length(id1) != length(id2)) {
-    get_diff <- function(x, y) {
-      xdiff <- x[!x %in% y] |> unique()
-      ydiff <- y[!y %in% x] |> unique()
+  # 1) every identifier in dna (FASTA)_data must be present in data (metadata)
+  missing_ids <- id_seq[!id_seq %in% id_meta] |> unique()
 
-      invisible(list(ydiff, xdiff))
+  if (length(missing_ids) > 0) {
+    cli::cli_abort(c(
+      "Identifiers missing from metadata.",
+      "x" = "The following identifiers occur in sequence data {.arg {deparse(substitute(dna))}} but are absent from metadata {.arg {deparse(substitute(data))}}.",
+      "i" = "Missing identifiers:",
+      stringr::str_flatten_comma(missing_ids)
+    ))
+  }
+
+  # 2) no duplicated identifiers in dna (FASTA)
+  dup_seq <- id_seq[vctrs::vec_duplicate_detect(id_seq)] |> unique()
+
+  if (length(dup_seq) > 0) {
+    cli::cli_abort(c(
+      "Duplicate identifiers found in sequence data {.arg {deparse(substitute(dna))}}.",
+      "x" = "You've supplied a {.arg {deparse(substitute(dna))}} with duplicated identifiers.",
+      "i" = "Duplicated identifiers:",
+      stringr::str_flatten_comma(dup_seq)
+    ))
+  }
+
+  # 3) no duplicated identifiers in metadata
+  dup_meta <- id_meta[vctrs::vec_duplicate_detect(id_meta)] |> unique()
+
+  if (length(dup_meta) > 0) {
+    dup_seq_in_meta <- dup_meta[dup_meta %in% id_seq]
+    dup_seq_not_in_meta <- dup_meta[!dup_meta %in% id_seq]
+
+    if (length(dup_seq_not_in_meta) > 0) {
+      cli::cli_warn(c(
+        "Duplicate identifiers found in metadata {.arg {deparse(substitute(data))}}.",
+        "!" = "The following duplicated identifiers in {.arg {deparse(substitute(data))}} do not occur in {.arg {deparse(substitute(dna))}} and do not affect matching, but you may want to clean them up.",
+        "i" = "Duplicated identifiers:",
+        stringr::str_flatten_comma(dup_seq_not_in_meta)
+      ))
     }
 
-    gdiff <- get_diff(id1, id2)
-
-
-    cli::cli_abort(c("Identifiers are not of equal length:",
-      "x" = "You've supplied inputs with size lengths of {length(id1)} and {length(id2)}.",
-      "i" = "Identifiers absent in {.arg {deparse(substitute(data))}}:",
-      stringr::str_flatten_comma(gdiff[[1]]),
-      "i" = "Identifiers absent in {.arg {deparse(substitute(dna))}}:",
-      stringr::str_flatten_comma(gdiff[[2]])
-    ))
+    if (length(dup_seq_in_meta) > 0) {
+      cli::cli_abort(c(
+        "Duplicate identifiers found in metadata {.arg {deparse(substitute(data))}}.",
+        "x" = "The following duplicated identifiers in {.arg {deparse(substitute(data))}} also occur in {.arg {deparse(substitute(dna))}}, which makes matching sequences to metadata ambiguous.",
+        "i" = "Duplicated identifiers:",
+        stringr::str_flatten_comma(dup_seq_in_meta)
+      ))
+    }
   }
 
-  if (any(duplicated(id1) | duplicated(id2))) {
-    cli::cli_abort(c("Duplicate identifiers found.",
-      "x" = "You've supplied inputs with duplicated identifier names.",
-      "i" = "Duplicated identifiers in {.arg {deparse(substitute(data))}}:",
-      stringr::str_flatten_comma(id1[vctrs::vec_duplicate_detect(id1)]),
-      "i" = "Duplicated identifiers in {.arg {deparse(substitute(dna))}}:",
-      stringr::str_flatten_comma(id2[vctrs::vec_duplicate_detect(id2)])
-    ))
-  }
-
-  diff <- dplyr::symdiff(id1, id2)
-
-  if (rlang::is_empty(diff)) {
-    cli::cli_alert_success(c("Identifiers are the same across files."))
-  } else {
-    diff <- vctrs::vec_chop(diff, sizes = c(length(diff) / 2, length(diff) / 2))
-    names(diff) <- c(
-      "Identifiers absent or mistyped in deparse(substitute(data))}",
-      "Identifiers absent or mistyped in deparse(substitute(dna))}"
-    )
-
-    cli::cli_warn(c("Identifiers must be identical across files.",
-      "x" = "The identifiers bellow are either absent or mistyped.",
-      "i" = "Identifiers absent or mistyped in {.arg {deparse(substitute(data))}}:",
-      stringr::str_flatten_comma(diff[[1]]),
-      "i" = "Identifiers absent or mistyped in {.arg {deparse(substitute(dna))}}:",
-      stringr::str_flatten_comma(diff[[2]])
-    ))
-    invisible(diff)
-  }
+  cli::cli_alert_success("Identifiers passed all checks.")
+  invisible(TRUE)
 }
