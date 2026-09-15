@@ -26,7 +26,8 @@
 #'   `labels` (tip labels, in tree-tip order) and the species index named by
 #'   `delimname`.
 #'
-#' @author Noah M. Reid (original bGMYC); Pedro S. Bittencourt (delimtools wrapper).
+#' @author 
+#' Pedro S. Bittencourt
 #'
 #' @source
 #' Reid N.M., Carstens B.C. 2012. Phylogenetic estimation error can decrease
