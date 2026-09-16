@@ -15,9 +15,15 @@ OBJECTS = delimtools_init.o \
     mptp/random.o mptp/rmptp_globals.o mptp/rmptp_wrap.o \
     mptp/rtree.o mptp/util.o mptp/utree.o
 
-# Generic pattern rule for subdirectory .c → .o (GNU make, Linux + macOS)
-%.o: %.c
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
+# Order matters here: GNU Make treats `abgd/%.o: abgd/%.c` and the bare
+# `%.o: %.c` below as EQUALLY specific for a target like abgd/foo.o (a
+# literal directory prefix in the pattern doesn't make it more specific
+# to make's rule-selection algorithm). When two implicit pattern rules
+# tie on specificity, make uses whichever was defined FIRST in the
+# makefile -- so the subdirectory rules below must come before the
+# generic fallback, or they're silently never used (which is exactly
+# what caused util.c to compile without -DR_PACKAGE and duplicate
+# fatal() at link time).
 
 # abgd, asap, and mPTP need r_compat.h to redirect printf/exit/rand through R wrappers
 abgd/%.o: abgd/%.c
@@ -34,3 +40,9 @@ mptp/%.o: mptp/%.c
 	  "-DYY_FATAL_ERROR(msg)=rmptp_lex_fatal_error(msg)" \
 	  -include asap/r_compat.h \
 	  -c $< -o $@
+
+# Generic pattern rule for any other subdirectory .c -> .o (currently
+# just gmyc/, which needs no special flags). Must stay LAST -- see note
+# above.
+%.o: %.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
