@@ -42,9 +42,9 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           # ape, cli, dplyr, glue, methods, purrr, rlang, stats, stringr,
-          # tidyr, tidyselect (Imports in DESCRIPTION). ggtree is a
-          # Bioconductor package -- pak (used under the hood by this
-          # action) resolves it automatically without a bioc:: prefix.
+          # tidyr, tidyselect (Imports), plus Suggests (ggplot2, knitr,
+          # rmarkdown, etc.). ggtree is Bioconductor and pak resolves it
+          # without a bioc:: prefix.
           needs: check
           extra-packages: any::rcmdcheck
 
