@@ -57,7 +57,7 @@ gmyc_ci <- function(tr, posterior, method = "single", interval = c(0, 5)) {
   trees <- c(tr, posterior) |> unname()
 
   # get a quiet GMYC function
-  gmyc_quietly <- purrr::quietly(splits::gmyc)
+  gmyc_quietly <- purrr::quietly(delimtools::gmyc)
 
   # run gmyc over trees and combine results
   gmyc_res <- furrr::future_map(trees,
