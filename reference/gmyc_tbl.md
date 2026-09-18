@@ -201,7 +201,7 @@ gmyc_res <- try( splits::gmyc(ape::as.phylo(geophagus_beast)) )
 #> 135 -0.000997143 992.7881 
 #> 136 -0.0007525219 993.3164 
 #> 
-#> Fri Sep 18 04:06:29 2026
+#> Fri Sep 18 04:09:41 2026
 #> finish.
 
 # create a tibble

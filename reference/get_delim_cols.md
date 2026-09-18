@@ -79,16 +79,16 @@ get_delim_cols(p, delimname= "consensus", hap_tbl= hap_tbl)
 #> # A tibble: 354 × 6
 #>    labels     method    spp   fill    colour  status   
 #>    <chr>      <fct>     <fct> <chr>   <chr>   <chr>    
-#>  1 MZ504432.1 consensus sp3   #AA94A0 #AA94A0 haplotype
-#>  2 MZ504431.1 consensus sp3   #AA94A0 #AA94A0 haplotype
-#>  3 MZ504433.1 consensus sp3   #AA94A0 #AA94A0 haplotype
-#>  4 MZ504415.1 consensus sp3   #AA94A0 #AA94A0 haplotype
-#>  5 MZ504442.1 consensus sp3   #AA94A0 #AA94A0 haplotype
-#>  6 MZ504420.1 consensus sp3   #AA94A0 #AA94A0 haplotype
-#>  7 MZ504424.1 consensus sp3   #AA94A0 #AA94A0 haplotype
-#>  8 MZ504400.1 consensus sp3   #AA94A0 #AA94A0 haplotype
-#>  9 MZ504414.1 consensus sp3   #AA94A0 #AA94A0 haplotype
-#> 10 MZ504394.1 consensus sp3   #AA94A0 #AA94A0 haplotype
+#>  1 MZ504432.1 consensus sp3   #BC8FA7 #BC8FA7 haplotype
+#>  2 MZ504431.1 consensus sp3   #BC8FA7 #BC8FA7 haplotype
+#>  3 MZ504433.1 consensus sp3   #BC8FA7 #BC8FA7 haplotype
+#>  4 MZ504415.1 consensus sp3   #BC8FA7 #BC8FA7 haplotype
+#>  5 MZ504442.1 consensus sp3   #BC8FA7 #BC8FA7 haplotype
+#>  6 MZ504420.1 consensus sp3   #BC8FA7 #BC8FA7 haplotype
+#>  7 MZ504424.1 consensus sp3   #BC8FA7 #BC8FA7 haplotype
+#>  8 MZ504400.1 consensus sp3   #BC8FA7 #BC8FA7 haplotype
+#>  9 MZ504414.1 consensus sp3   #BC8FA7 #BC8FA7 haplotype
+#> 10 MZ504394.1 consensus sp3   #BC8FA7 #BC8FA7 haplotype
 #> # ℹ 344 more rows
 
 ```
