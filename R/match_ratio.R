@@ -56,8 +56,8 @@ match_ratio <- function(delim, sorted = TRUE) {
         dplyr::mutate(n_match = dplyr::if_else(c(dplyr::pick(2) == dplyr::pick(3)), union, 0)) |>
         dplyr::summarise(
           pairs = stringr::str_c(.x[1], .x[2], sep = "-"),
-          delim_1 = dplyr::n_distinct(pick(2)),
-          delim_2 = dplyr::n_distinct(pick(3)),
+          delim_1 = dplyr::n_distinct(dplyr::pick(2)),
+          delim_2 = dplyr::n_distinct(dplyr::pick(3)),
           n_match = dplyr::n_distinct(n_match[n_match > 0]),
           match_ratio = round(2 * n_match / (delim_1 + delim_2), digits = 2)
         )
