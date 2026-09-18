@@ -235,9 +235,6 @@ Pedro S. Bittencourt, Rupert A. Collins.
   # reset future parameters
   try( future::plan("sequential") )
 }
-#> Registered S3 method overwritten by 'splits':
-#>   method       from      
-#>   summary.gmyc delimtools
 
 # plot distribution
 try(plot(density(gmyc_res)))

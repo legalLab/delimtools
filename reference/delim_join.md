@@ -53,6 +53,9 @@ Pedro S. Bittencourt, Rupert A. Collins.
 # \donttest{
 ## run GMYC
 gmyc_res <- try( splits::gmyc(ape::as.phylo(geophagus_beast), method = "single") )
+#> Registered S3 method overwritten by 'splits':
+#>   method       from      
+#>   summary.gmyc delimtools
 #> node  T   loglik
 #> 2 -0.2503616 1000.199 
 #> 3 -0.1229369 999.5983 
@@ -190,7 +193,7 @@ gmyc_res <- try( splits::gmyc(ape::as.phylo(geophagus_beast), method = "single")
 #> 135 -0.000997143 992.7881 
 #> 136 -0.0007525219 993.3164 
 #> 
-#> Wed Sep 16 02:44:23 2026
+#> Fri Sep 18 04:06:16 2026
 #> finish.
 
 # create a tibble
