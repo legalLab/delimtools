@@ -1,7 +1,7 @@
 Type: Package
 Package: delimtools
 Title: Helper Functions for Species Delimitation Analysis
-Version: 0.3.0
+Version: 0.3.2
 Date: 2026-09-07
 Authors@R: c(
     person("Pedro", "Bittencourt", , "pedro.sennabittencourt@gmail.com", role = c("aut", "cre", "cph"),
@@ -27,13 +27,16 @@ Imports:
     dplyr,
     glue,
     ggtree,
+    grDevices,
     methods,
     purrr,
     rlang,
     stats,
     stringr,
     tidyr,
-    tidyselect
+    tidyselect,
+    tools,
+    utils
 Suggests:
     forcats,
     furrr,
@@ -47,13 +50,13 @@ Suggests:
     randomcoloR,
     readr,
     RColorBrewer,
+    rmarkdown,
     scales,
     spider,
     tibble,
     tidytree,
     vctrs,
-    withr,
-    rmarkdown
+    withr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 8.0.0
