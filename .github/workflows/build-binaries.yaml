@@ -5,9 +5,18 @@ name: Build package binaries
 # all of its compiled code (abgd, asap, gmyc, mptp) lives in src/ and is
 # built from Makevars with only -lm (the C math library) as a link flag.
 # That means no Homebrew/MSYS2 library install or dylib/DLL bundling is
-# needed here -- R CMD INSTALL --build only requires a working C
-# toolchain, which the r-lib/actions setup-r action already provides
-# (Xcode CLT on macOS, Rtools on Windows).
+# needed for delimtools' OWN code -- R CMD INSTALL --build only requires
+# a working C toolchain, which the r-lib/actions setup-r action already
+# provides (Xcode CLT on macOS, Rtools on Windows).
+#
+# One transitive dependency needs a system library on macOS, though:
+# ggtree (Imports) -> ggiraph -> gdtools, and gdtools' CRAN macOS binary
+# is linked against cairo/X11 (libXrender, libcairo, ...) under
+# /opt/X11/lib. GitHub's macos-latest runners don't ship that, so
+# without it lazy-loading delimtools fails at namespace-load time with
+# a dyld "Library not loaded: /opt/X11/lib/libXrender.1.dylib" error,
+# even though nothing in delimtools' own src/ touches X11. XQuartz
+# provides those libraries; see the "Install XQuartz" step below.
 #
 # Runs on: tag pushes (v*) and manual dispatch. Binaries are always
 # uploaded as build artifacts; on a tag push they're also attached to a
@@ -37,6 +46,15 @@ jobs:
 
       - name: Set up pandoc
         uses: r-lib/actions/setup-pandoc@v2
+
+      # gdtools (pulled in transitively via ggtree -> ggiraph -> gdtools)
+      # needs cairo/X11 libraries on macOS at both install time (it has
+      # compiled code) and lazy-load time (delimtools imports ggtree,
+      # which loads ggiraph, which loads gdtools). Must run before the
+      # dependency-install step below, or gdtools' dyn.load() will fail
+      # with "Library not loaded: /opt/X11/lib/libXrender.1.dylib".
+      - name: Install XQuartz (macOS only, needed by gdtools)
+        run: brew install --cask xquartz
 
       - name: Install R package dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
