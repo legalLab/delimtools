@@ -5,7 +5,7 @@
 \title{Automatic Barcode Gap Discovery (ABGD)}
 \usage{
 abgd(
-  file,
+  x,
   model = "simple",
   prior_min = 0.001,
   prior_max = 0.1,
@@ -15,10 +15,10 @@ abgd(
 )
 }
 \arguments{
-\item{file}{Path to an aligned FASTA file, a Phylip distance matrix, or a
-\code{DNAbin} object (ape). If a \code{DNAbin} object is provided,
-sequences are exported to a temporary file and processed by the original
-C code without intermediate conversion.}
+\item{x}{Path to an aligned FASTA file, or an aligned \code{DNAbin} (ape)
+object. Distance matrices are not accepted; distances are calculated
+internally from the sequences. A \code{DNAbin} object is exported to a
+temporary FASTA file and processed by the original C code.}
 
 \item{model}{Distance model:
 \describe{

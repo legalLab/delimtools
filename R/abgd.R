@@ -13,10 +13,10 @@
 #' All computation (distances, gap detection, partitioning and recursion) is
 #' performed by the original C code of G. Achaz via \code{.Call()}.
 #'
-#' @param file Path to an aligned FASTA file, a Phylip distance matrix, or a
-#'   \code{DNAbin} object (ape). If a \code{DNAbin} object is provided,
-#'   sequences are exported to a temporary file and processed by the original
-#'   C code without intermediate conversion.
+#' @param x Path to an aligned FASTA file, or an aligned \code{DNAbin} (ape)
+#'   object. Distance matrices are not accepted; distances are calculated
+#'   internally from the sequences. A \code{DNAbin} object is exported to a
+#'   temporary FASTA file and processed by the original C code.
 #' @param model Distance model:
 #'   \describe{
 #'     \item{\code{"simple"}}{p-distance with Laplace correction --
@@ -82,7 +82,7 @@
 #' }
 #'
 #' @export
-abgd <- function(file,
+abgd <- function(x,
                  model              = "simple",
                  prior_min          = 0.001,
                  prior_max          = 0.1,
@@ -90,18 +90,11 @@ abgd <- function(file,
                  min_slope_increase = 1.5,
                  ts_tv              = 2.0) {
 
-  # Accepts DNAbin -- writes to a temporary file and uses the original C code
-  if (inherits(file, "DNAbin")) {
-    if (!requireNamespace("ape", quietly = TRUE))
-      stop("Package 'ape' is required for DNAbin input.")
-    tmp <- tempfile(fileext = ".fasta")
-    ape::write.dna(file, tmp, format = "fasta", colsep = "")
-    on.exit(unlink(tmp), add = TRUE)
-    file <- tmp
-  }
-
-  if (!file.exists(file))
-    stop("File not found: '", file, "'")
+  # Validate input (aligned FASTA path or DNAbin); the C code reads FASTA
+  dna <- .read_aligned_dna(x)
+  file <- tempfile(fileext = ".fasta")
+  ape::write.dna(dna, file, format = "fasta", colsep = "", nbcol = -1)
+  on.exit(unlink(file), add = TRUE)
 
   method_int <- switch(model,
     "K80"    = 0L,

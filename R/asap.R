@@ -67,23 +67,58 @@
 
 
 # =============================================================================
+# .read_aligned_dna -- shared input validation for asap() and abgd()
+# Accepts a path to an aligned FASTA file or an ape::DNAbin matrix.
+# Distance matrices are deliberately rejected.
+# =============================================================================
+
+#' @keywords internal
+.read_aligned_dna <- function(x, arg = "x") {
+  if (!requireNamespace("ape", quietly = TRUE))
+    stop("Package 'ape' is required.")
+
+  if (is.character(x) && length(x) == 1L && !is.na(x)) {
+    if (!file.exists(x))
+      stop("File not found: '", x, "'")
+    x <- tryCatch(
+      ape::read.dna(x, format = "fasta"),
+      error = function(e)
+        stop("'", arg, "' could not be read as a FASTA file: ",
+             conditionMessage(e), call. = FALSE)
+    )
+  } else if (!inherits(x, "DNAbin")) {
+    stop("'", arg, "' must be a path to an aligned FASTA file or a ",
+         "DNAbin object; distance matrices are not accepted.", call. = FALSE)
+  }
+
+  if (!is.matrix(x))
+    stop("Sequences in '", arg, "' are not aligned (differing lengths).",
+         call. = FALSE)
+  if (is.null(rownames(x)))
+    rownames(x) <- paste0("seq", seq_len(nrow(x)))
+  x
+}
+
+
+# =============================================================================
 # asap() -- main function
 # =============================================================================
 
 #' ASAP -- Assemble Species by Automatic Partitions
 #'
-#' Delimits species from DNAbin sequences or a distance matrix using the
+#' Delimits species from aligned sequences using the
 #' algorithm of Puillandre, Brouillet & Achaz (2021). The original C code
 #' (asap_core.c, asap_common.c) is executed without modifications; only the
 #' Python/graphical dependencies are replaced.
 #'
-#' @param x \code{DNAbin} (ape), \code{dist}, or a numeric distance matrix.
-#' @param model Distance model when \code{x} is \code{DNAbin}.
+#' @param x Path to an aligned FASTA file, or an aligned \code{DNAbin} (ape)
+#'   object. Distance matrices are not accepted; distances are calculated
+#'   internally from the sequences.
+#' @param model Distance model.
 #'   \code{"simple"} (default) uses Simple_Dist, identical to the ASAP
 #'   original default. Any model from \code{ape::dist.dna()} is also accepted.
 #' @param len_seq Sequence length for the coalescent simulations. Inferred
-#'   automatically from \code{DNAbin}; use 600 (original default) when the
-#'   input is a distance matrix.
+#'   from the alignment length when \code{NULL} (default).
 #' @param replicates Coalescent replicates. Default: \code{1000}.
 #' @param pvalue_threshold P-value threshold. Default: \code{0.001}.
 #' @param slope_weight Slope window weight. Default: \code{0.1}.
@@ -120,6 +155,7 @@
 #' library(ape)
 #' seqs   <- read.dna("barcode.fasta", format = "fasta")
 #' result <- asap(seqs)
+#' result <- asap("barcode.fasta")   # aligned FASTA path also accepted
 #' print(result)
 #' bp <- best_partition(result)
 #' bp$n_groups   # number of species
@@ -136,26 +172,15 @@ asap <- function(x,
                  score_weight      = 0.5,
                  pairwise.deletion = TRUE) {
 
-  # --- 1. Resolve distance matrix ---
-  if (inherits(x, "DNAbin")) {
-    if (!requireNamespace("ape", quietly = TRUE))
-      stop("Package 'ape' is required for DNAbin input.")
-    if (is.null(len_seq))
-      len_seq <- ncol(as.matrix(x))
-    if (model == "simple") {
-      mat <- .dist_simple(x)
-    } else {
-      mat <- as.matrix(
-        ape::dist.dna(x, model = model,
-                      pairwise.deletion = pairwise.deletion)
-      )
-    }
-  } else if (inherits(x, "dist")) {
-    mat <- as.matrix(x)
-  } else if (is.matrix(x) && is.numeric(x)) {
-    mat <- x
+  # --- 1. Read/validate sequences and compute distance matrix ---
+  x <- .read_aligned_dna(x)
+  if (is.null(len_seq)) len_seq <- ncol(x)
+  if (model == "simple") {
+    mat <- .dist_simple(x)
   } else {
-    stop("'x' must be DNAbin, dist, or a numeric matrix.")
+    mat <- as.matrix(
+      ape::dist.dna(x, model = model, pairwise.deletion = pairwise.deletion)
+    )
   }
 
   mat[!is.finite(mat)] <- 0

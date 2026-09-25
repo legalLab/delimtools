@@ -16,15 +16,16 @@ asap(
 )
 }
 \arguments{
-\item{x}{\code{DNAbin} (ape), \code{dist}, or a numeric distance matrix.}
+\item{x}{Path to an aligned FASTA file, or an aligned \code{DNAbin} (ape)
+object. Distance matrices are not accepted; distances are calculated
+internally from the sequences.}
 
-\item{model}{Distance model when \code{x} is \code{DNAbin}.
+\item{model}{Distance model.
 \code{"simple"} (default) uses Simple_Dist, identical to the ASAP
 original default. Any model from \code{ape::dist.dna()} is also accepted.}
 
 \item{len_seq}{Sequence length for the coalescent simulations. Inferred
-automatically from \code{DNAbin}; use 600 (original default) when the
-input is a distance matrix.}
+from the alignment length when \code{NULL} (default).}
 
 \item{replicates}{Coalescent replicates. Default: \code{1000}.}
 
@@ -46,7 +47,7 @@ A list of class \code{"asap"} with:
 }
 }
 \description{
-Delimits species from DNAbin sequences or a distance matrix using the
+Delimits species from aligned sequences using the
 algorithm of Puillandre, Brouillet & Achaz (2021). The original C code
 (asap_core.c, asap_common.c) is executed without modifications; only the
 Python/graphical dependencies are replaced.
@@ -69,6 +70,7 @@ N. Puillandre,  A. Lambert,  S. Brouillet,  G. Achaz (ASAP C engine)
 library(ape)
 seqs   <- read.dna("barcode.fasta", format = "fasta")
 result <- asap(seqs)
+result <- asap("barcode.fasta")   # aligned FASTA path also accepted
 print(result)
 bp <- best_partition(result)
 bp$n_groups   # number of species
