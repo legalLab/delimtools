@@ -2,7 +2,7 @@
 #'
 #' @description
 #' `bgmyc_tbl()` processes output from [bgmyc()] (class `"bgmyc_fit"`) or
-#' [bgmyc.singlephy][bGMYC::bgmyc.singlephy] (class `"singlebgmyc"`) into an
+#' `bGMYC::bgmyc.singlephy()` (class `"singlebgmyc"`) into an
 #' object of class [tbl_df][tibble::tbl_df].
 #'
 #' For `"bgmyc_fit"` objects the partition is derived from the stored
@@ -11,11 +11,11 @@
 #' you explore different thresholds without re-running the MCMC.
 #'
 #' For legacy `"singlebgmyc"` objects the original \pkg{bGMYC} functions
-#' [spec.probmat][bGMYC::spec.probmat] and [bgmyc.point][bGMYC::bgmyc.point]
-#' are called (requires the \pkg{bGMYC} package to be installed).
+#' `spec.probmat()` and `bgmyc.point()` are reimplemented natively, so the
+#' \pkg{bGMYC} package is not required.
 #'
 #' @param bgmyc_res Output from [bgmyc()] or
-#'   [bgmyc.singlephy][bGMYC::bgmyc.singlephy].
+#'   `bGMYC::bgmyc.singlephy()`.
 #' @param ppcutoff  Posterior co-occurrence probability threshold. Tip pairs
 #'   with posterior probability of being conspecific \eqn{\geq} `ppcutoff`
 #'   are merged into the same species. Default 0.05.
@@ -77,15 +77,11 @@ bgmyc_tbl <- function(bgmyc_res, ppcutoff = 0.05, delimname = "bgmyc") {
 
   # ── singlebgmyc (legacy bGMYC package output) ───────────────────────────────
   if (inherits(bgmyc_res, "singlebgmyc")) {
-    rlang::check_installed("bGMYC", reason = "to process {.cls singlebgmyc} objects.")
+    probmat <- .bgmyc_spec_probmat(bgmyc_res)
+    df      <- .bgmyc_point(probmat, rownames(probmat), ppcutoff,
+                            colname = delimname)
 
-    bgmyc_probmat <- bGMYC::spec.probmat(bgmyc_res)
-    splist        <- bGMYC::bgmyc.point(bgmyc_probmat, ppcutoff)
-
-    return(tibble::tibble(
-      labels  = unlist(splist),
-      !!dname := rep(seq_along(splist), lengths(splist))
-    ))
+    return(tibble::as_tibble(df))
   }
 
   cli::cli_abort(c(

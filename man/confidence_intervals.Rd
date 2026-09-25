@@ -40,60 +40,38 @@ mptp_ci(
 )
 }
 \arguments{
-\item{tr}{An ultrametric, dichotomous tree object in ape format.}
-
 \item{posterior}{Trees from posterior. An object of class \link[ape:multiphylo]{multiphylo}.}
 
-\item{method}{Method of analysis, either "single" for single-threshold version or "multiple" for multiple-threshold version.}
-
-\item{interval}{Upper and lower limit of estimation of scaling parameters, e.g. c(0,10)}
+\item{method}{Which algorithm for Maximum Likelihood point-estimate to be used. Available options are:
+\itemize{
+\item single Single-rate PTP model. It assumes that every species evolved with the same rate.
+\item multi Multi-rate mPTP model. It assumes that all species have different evolutionary rates.
+}}
 
 \item{ppcutoff}{Posterior probability threshold for clustering samples into species partitions.
-See \link[bGMYC:bgmyc.point]{bgmyc.point} for details. Default to 0.05.}
+See \code{\link[=bgmyc_tbl]{bgmyc_tbl()}} for details. Default to 0.05.}
 
-\item{mcmc}{
-number of samples to take from the Markov Chain
-}
+\item{mcmc}{Integer. Total MCMC steps (default 11 000).}
 
-\item{burnin}{
-the number of samples to discard as burn-in
-}
+\item{burnin}{Integer. Steps discarded as burn-in (default 1 000).}
 
-\item{thinning}{
-the interval at which samples are retained from the Markov Chain
-}
+\item{thinning}{Integer. Thinning interval; every \code{thinning}-th
+post-burnin step is retained (default 100).}
 
-\item{py1}{
-governs the prior on the Yule (speciation) rate change parameter. using the default prior distribution, this is the lower bound of a uniform distribution. this can be the most influential prior of the three. rate change is parameterized as n^py where n is the number of lineages in a waiting interval (see Pons et al. 2006). if there are 50 sequences in an analysis and the Yule rate change parameter is 2, this allows for a potential 50-fold increase in speciation rate. this unrealistic parameter value can cause the threshold between Yule and Coalescent process to be difficult to distinguish. are more reasonable upper bound for the prior would probably be less than 1.5 (a potential 7-fold increase). Or you could modify the prior function to use a different distribution entirely. 
-}
+\item{py1, py2}{Numeric. Prior bounds for the Yule rate-change exponent
+(default 0 and 2).}
 
-\item{py2}{
-governs the prior on the Yule rate change parameter. using the default prior distribution, this is the upper bound of a uniform distribution. 
-}
+\item{pc1, pc2}{Numeric. Prior bounds for the coalescent rate-change exponent
+(default 0 and 2).}
 
-\item{pc1}{
-governs the prior on the coalescent rate change parameter. using the default prior distribution, this is the lower bound of a uniform distribution. rate change is parameterized as (n(n-1))^pc where n is the number of lineages in a waiting interval (see Pons et al. 2006). In principle pc can be interpreted as change in effective population size (pc<1 decline, pc>1 growth) but because identical haplotypes must be excluded from this analysis an accurate biological interpretation is not possible. 
-}
+\item{t1, t2}{Integer. Prior bounds for the threshold parameter (number of
+species). Defaults: \code{t1 = 2}, \code{t2 = NULL} (auto: \code{Nnode - 1}).}
 
-\item{pc2}{
-governs the prior on the coalescent rate change parameter. using the default prior distribution, this is the upper bound of a uniform distribution. 
-}
+\item{scale}{Numeric vector of length 3. Proposal scale parameters for
+\code{py}, \code{pc}, and \code{t} (default \code{c(20, 10, 5)}).}
 
-\item{t1}{
-governs the prior on the threshold parameter. the lower bound of a uniform distribution. the bounds of this uniform distribution should not be below 1 or greater than the number of unique haplotypes in the analysis.
-}
-
-\item{t2}{
-governs the prior on the threshold parameter. the upper bound of a uniform distribution
-}
-
-\item{scale}{
-a vector of scale parameters governing the proposal distributions for the markov chain. the first to are the Yule and coalescent rate change parameters. increasing them makes the proposals more conservative. the third is the threshold parameter. increasing it makes the proposals more liberal.
-}
-
-\item{start}{
-a vector of starting parameters in the same order as the scale parameters, py, pc, t. t may need to be set so that it is not impossible given the dataset. 
-}
+\item{start}{Numeric vector of length 3. Starting values for
+\code{py}, \code{pc}, and \code{t} (default \code{c(1, 0.5, 50)}).}
 
 \item{dna}{an object of class \link[ape:DNAbin]{DNAbin}.}
 

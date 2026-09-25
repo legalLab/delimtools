@@ -73,9 +73,9 @@ gmyc_ci <- function(tr, posterior, method = "single", interval = c(0, 5)) {
     purrr::list_c()
 }
 
-#' @inheritParams bGMYC::bgmyc.singlephy
+#' @inheritParams bgmyc
 #' @param ppcutoff Posterior probability threshold for clustering samples into species partitions.
-#' See [bgmyc.point][bGMYC::bgmyc.point] for details. Default to 0.05.
+#' See [bgmyc_tbl()] for details. Default to 0.05.
 
 #' @export
 #' @rdname confidence_intervals
@@ -85,13 +85,10 @@ bgmyc_ci <- function(tr, posterior, ppcutoff = 0.05, mcmc, burnin,
   # combine trees and remove names
   trees <- c(tr, posterior) |> unname()
 
-  # get a quiet bGMYC function
-  bgmyc_quietly <- purrr::quietly(bGMYC::bgmyc.singlephy)
-
   # run bGMYC over trees
   bgmyc_res <- furrr::future_map(trees,
     ~ {
-      bgmyc_quietly(.x,
+      delimtools::bgmyc(.x,
         mcmc = mcmc,
         burnin = burnin,
         thinning = thinning,
@@ -102,9 +99,10 @@ bgmyc_ci <- function(tr, posterior, ppcutoff = 0.05, mcmc, burnin,
         t1 = t1,
         t2 = t2,
         scale = scale,
-        start = start
+        start = start,
+        ppcutoff = ppcutoff,
+        quiet = TRUE
       ) |>
-        purrr::pluck("result") |>
         delimtools::bgmyc_tbl(ppcutoff = ppcutoff) |>
         dplyr::pull(2) |>
         vctrs::vec_unique_count()

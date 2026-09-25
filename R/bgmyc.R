@@ -84,6 +84,29 @@
   )
 }
 
+#' Internal: co-occurrence probability matrix from a legacy singlebgmyc object
+#'
+#' Native replacement for \code{bGMYC::spec.probmat()} for objects of class
+#' \code{"singlebgmyc"} (fields \code{par}, \code{tree}, \code{mrca}).
+#' @keywords internal
+.bgmyc_spec_probmat <- function(res) {
+  tree   <- res$tree
+  labs   <- tree$tip.label
+  n_tips <- length(labs)
+  tips_of <- ape::prop.part(tree)  # descendant tips per internal node
+  thr     <- as.integer(res$par[, 3L])
+
+  comat <- matrix(0.0, n_tips, n_tips, dimnames = list(labs, labs))
+  for (t in unique(thr)) {
+    cl <- seq_len(n_tips) + length(tips_of)  # singletons get unique ids
+    for (i in seq_along(res$mrca[[t]])) {
+      cl[tips_of[[res$mrca[[t]][i]]]] <- i
+    }
+    comat <- comat + sum(thr == t) * outer(cl, cl, "==")
+  }
+  comat / length(thr)
+}
+
 #' Public API
 
 #' Run Bayesian GMYC species delimitation

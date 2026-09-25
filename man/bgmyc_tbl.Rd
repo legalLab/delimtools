@@ -13,7 +13,7 @@ bgmyc_tbl(bgmyc_res, ppcutoff = 0.05, delimname = "bgmyc")
 }
 \arguments{
 \item{bgmyc_res}{Output from \code{\link[=bgmyc]{bgmyc()}} or
-\link[bGMYC:bgmyc.singlephy]{bgmyc.singlephy}.}
+\code{bGMYC::bgmyc.singlephy()}.}
 
 \item{ppcutoff}{Posterior co-occurrence probability threshold. Tip pairs
 with posterior probability of being conspecific \eqn{\geq} \code{ppcutoff}
@@ -29,7 +29,7 @@ An object of class \link[tibble:tbl_df]{tbl_df} with columns
 }
 \description{
 \code{bgmyc_tbl()} processes output from \code{\link[=bgmyc]{bgmyc()}} (class \code{"bgmyc_fit"}) or
-\link[bGMYC:bgmyc.singlephy]{bgmyc.singlephy} (class \code{"singlebgmyc"}) into an
+\code{bGMYC::bgmyc.singlephy()} (class \code{"singlebgmyc"}) into an
 object of class \link[tibble:tbl_df]{tbl_df}.
 
 For \code{"bgmyc_fit"} objects the partition is derived from the stored
@@ -38,8 +38,8 @@ probability of co-occurrence exceeds \code{ppcutoff} (union-find).  This lets
 you explore different thresholds without re-running the MCMC.
 
 For legacy \code{"singlebgmyc"} objects the original \pkg{bGMYC} functions
-\link[bGMYC:spec.probmat]{spec.probmat} and \link[bGMYC:bgmyc.point]{bgmyc.point}
-are called (requires the \pkg{bGMYC} package to be installed).
+\code{spec.probmat()} and \code{bgmyc.point()} are reimplemented natively, so the
+\pkg{bGMYC} package is not required.
 }
 \examples{
 
@@ -67,5 +67,5 @@ try(bgmyc_df2)
 \code{\link[=bgmyc]{bgmyc()}}, \code{\link[=gmyc_tbl]{gmyc_tbl()}}
 }
 \author{
-Noah M. Reid (original bGMYC); Pedro S. Bittencourt (delimtools wrapper).
+Pedro S. Bittencourt
 }
