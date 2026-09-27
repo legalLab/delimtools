@@ -1,4 +1,3 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # delimtools <img src="man/figures/logo.png" align="right" height="138"  />
@@ -12,33 +11,28 @@ status](https://www.r-pkg.org/badges/version/delimtools)](https://cran.r-project
 
 ## IMPORTANT
 
-This software is under active development, and as such cannot be assumed
-to be free of bugs or poor functionality. Always inspect results
-carefully. If you find a problem, please report it with as much detail
-as possible in [Issues](https://github.com/LegalLab/delimtools/issues).
-Unfortunately in its current form, some of the functions (`abgd_tbl()`,
-`asap_tbl()` and `mptp_tbl()`) will not work natively on Windows
-operating systems, only on Unix (MacOS, Linux). This is because third
-party binaries (executable programs) are required. We have implemented a
-Windows solution by importing results from the webservers that are
-commonly used to run these analyses, e.g. ABGD, ASAP, and
-[mPTP](https://mptp.h-its.org/). There are also difficulties with
-installing R required package dependancies to run `gmyc_tbl()` and
-`bgmyc_tbl()` because these are no longer under development and
-available on CRAN, and must be installed from archived sources. Please
-refer to <https://legallab.github.io/delimtools/articles/install.html>
-for instructions on how to install. A tutorial vignette running through
-all major package functionality is found at
+This software is under development, and as such cannot be assumed to be
+free of bugs or poor functionality. Always inspect results carefully. If
+you find a problem, please report it with as much detail as possible in
+[Issues](https://github.com/LegalLab/delimtools/issues). The current
+version is completely stand alone, no longer depending on third party
+binaries or R dependencies no longer available on CRAN. The affected
+functions, however, retain their legacy behavior for now and
+instructions for installing the third party binaries and R dependencies
+are provided at
+<https://legallab.github.io/delimtools/articles/install.html>. A
+tutorial vignette running through all major package functionality is
+found at
 <https://legallab.github.io/delimtools/articles/delimtools.html>.
 
-## delimtools v0.3.0 - Announcement
+## delimtools v1.0.0 - Announcement
 
-The next major release of delimtools (v0.3.0) will provide native R
-ports for all species delimitation software currently supported by this
-package. This means that ABGD, ASAP, bGMYC, GMYC and mPTP, previously
-dependent on external binaries or third-party R packages, will run
-**entirely** within the R environment, with performance-critical
-likelihood computations handled by embedded C code.
+As of v0.3.0, delimtools provides native R ports for all species
+delimitation software currently supported by this package. This means
+that ABGD, ASAP, bGMYC, GMYC and mPTP, previously dependent on external
+binaries or third-party R packages, will run **entirely** within the R
+environment, with performance-critical likelihood computations handled
+by embedded C code.
 
 These R ports were developed with the assistance of Claude (Anthropic),
 under continuous human supervision. This porting process prioritezed
@@ -57,21 +51,24 @@ some time, but will eventually be deprecated in the next updates.
 
 ## Overview
 
-The official GitHub repository for the R package `delimtools`
+This is the official GitHub repository for the R package `delimtools`
 ([Bittencourt, Collins & Hrbek,
 2026](https://doi.org/10.1139/gen-2025-0119)).
 
-`delimtools` provides helper functions for the analysis of single-locus
-species delimitation methods such as GMYC ([Monaghan et al.,
+Single-lucus species delimitation analyses have been implemented in a
+diversity of packages that use different methods to delimit species.
+These include GMYC ([Monaghan et al.,
 2009](https://doi.org/10.1093/sysbio/syp027)), bGMYC ([Reid & Carstens,
 2012](https://doi.org/10.1186/1471-2148-12-196)), mPTP ([Kapli et al.,
 2017](https://doi.org/10.1093/bioinformatics/btx025)) and ASAP
 ([Puillandre et al., 2020](https://doi.org/10.1111/1755-0998.13281)).
-These software run multiple different platforms (e.g. R, Unix,
-webservers), and also do not output their results in a consistent format
-to allow easy comparison. To address these shortcomings we have
-developed a suite of functions to standardise and simplify generating
-single-locus species delimitations.
+These software run on different platforms (e.g. R, Unix, webservers),
+and also do not output their results in a consistent format to allow
+easy comparison. To address these shortcomings we have developed a suite
+of functions in the `delimtools` package that replicate the behavior of
+these software, and then standardize and simplify the output of these
+functions. This then permits comparison of the delimitation analyses,
+and unified visualization of the delimitation results.
 
 ## Dependencies
 
@@ -108,7 +105,7 @@ install.packages("delimtools")
 Development version from GitHub:
 
 ``` r
-devtools::install_github("LegalLab/delimtools")
+pak::pak("LegalLab/delimtools")
 ```
 
 Or a specific version via renv:
@@ -121,9 +118,9 @@ renv::install("LegalLab/delimtools@v0.1.0")
 
 Here, we will demonstrate plotting a single-locus species delimitation
 analysis of a *Geophagus* eartheater cichlid dataset ([Ximenes et al.,
-2021](https://doi.org/10.7717/peerj.12443)) using a variety of methods.
-A tutorial vignette running through all major package functionality is
-found at
+2021](https://doi.org/10.7717/peerj.12443)) using a diversity of
+methods. A tutorial vignette running through all major package
+functionality is found at
 <https://legallab.github.io/delimtools/articles/delimtools.html>.
 
 <figure>
@@ -141,11 +138,11 @@ library(dplyr)
 # make tip label table
 tip.tab <- geophagus_info |> 
   filter(gbAccession %in% geophagus_beast@phylo$tip.label) |>
-  mutate(labs= glue::glue("{gbAccession} | {scientificName}")) |> 
+  mutate(labs = glue::glue("{gbAccession} | {scientificName}")) |> 
   select(gbAccession, labs, scientificName)
 
-# get cols
-cols <- delim_brewer(delim= geophagus_delims, package="randomcoloR", seed=42)
+# get columns
+cols <- delim_brewer(delim = geophagus_delims, package = "randomcoloR", seed = 42)
 
 # plot
 delim_autoplot(delim = geophagus_delims, 
@@ -162,8 +159,7 @@ delim_autoplot(delim = geophagus_delims,
 #> ℹ The deprecated feature was likely used in the ggtree package.
 #>   Please report the issue at <https://github.com/YuLab-SMU/ggtree/issues>.
 #> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 ![](man/figures/README-example-1.png)<!-- -->
