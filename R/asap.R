@@ -91,9 +91,19 @@
          "DNAbin object; distance matrices are not accepted.", call. = FALSE)
   }
 
-  if (!is.matrix(x))
-    stop("Sequences in '", arg, "' are not aligned (differing lengths).",
-         call. = FALSE)
+  if (!is.matrix(x)) {
+    # DNAbin objects can be stored in list form (e.g. from ape::read.FASTA())
+    # even when every sequence has the same length -- list-vs-matrix is a
+    # storage detail, not an alignment property. as.matrix.DNAbin() itself
+    # errors iff the sequences actually differ in length, which is the real
+    # "not aligned" condition.
+    x <- tryCatch(
+      as.matrix(x),
+      error = function(e)
+        stop("Sequences in '", arg, "' are not aligned (differing lengths).",
+             call. = FALSE)
+    )
+  }
   if (is.null(rownames(x)))
     rownames(x) <- paste0("seq", seq_len(nrow(x)))
   x
