@@ -2,7 +2,7 @@
 
 `bgmyc_tbl()` processes output from [`bgmyc()`](bgmyc.md) (class
 `"bgmyc_fit"`) or
-[bgmyc.singlephy](https://rdrr.io/pkg/bGMYC/man/bgmyc.singlephy.html)
+[`bGMYC::bgmyc.singlephy()`](https://rdrr.io/pkg/bGMYC/man/bgmyc.singlephy.html)
 (class `"singlebgmyc"`) into an object of class
 [tbl_df](https://tibble.tidyverse.org/reference/tbl_df-class.html).
 
@@ -12,9 +12,8 @@ probability of co-occurrence exceeds `ppcutoff` (union-find). This lets
 you explore different thresholds without re-running the MCMC.
 
 For legacy `"singlebgmyc"` objects the original bGMYC functions
-[spec.probmat](https://rdrr.io/pkg/bGMYC/man/spec.probmat.html) and
-[bgmyc.point](https://rdrr.io/pkg/bGMYC/man/bgmyc.point.html) are called
-(requires the bGMYC package to be installed).
+`spec.probmat()` and `bgmyc.point()` are reimplemented natively, so the
+bGMYC package is not required.
 
 ## Usage
 
@@ -34,7 +33,7 @@ of the general mixed Yule-coalescent model. BMC Evolutionary Biology 12
 - bgmyc_res:
 
   Output from [`bgmyc()`](bgmyc.md) or
-  [bgmyc.singlephy](https://rdrr.io/pkg/bGMYC/man/bgmyc.singlephy.html).
+  [`bGMYC::bgmyc.singlephy()`](https://rdrr.io/pkg/bGMYC/man/bgmyc.singlephy.html).
 
 - ppcutoff:
 
@@ -60,8 +59,7 @@ named by `delimname`.
 
 ## Author
 
-Noah M. Reid (original bGMYC); Pedro S. Bittencourt (delimtools
-wrapper).
+Pedro S. Bittencourt
 
 ## Examples
 
@@ -90,34 +88,17 @@ try(bgmyc_df)
 #> 10 MZ051706.1     2
 #> # ℹ 127 more rows
 
-# legacy bGMYC object
-bgmyc_res <- try( bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
-  mcmc = 11000, burnin = 1000, thinning = 100,
-  t1 = 2, t2 = ape::Ntip(geophagus_beast),
-  start = c(1, 0.5, 50)
-))
-#> You are running bGMYC on a single phylogenetic tree.
-#> This tree contains  137  tips.
-#> The Yule process rate change parameter has a uniform prior ranging from  0  to  2 .
-#> The coalescent process rate change parameter has a uniform prior ranging from  0  to  2 .
-#> The threshold parameter, which is equal to the number of species, has a uniform prior ranging from  2  to  137 . The upper bound of this prior should not be more than the number of tips in your trees.
-#> The MCMC will start with the Yule parameter set to  1 .
-#> The MCMC will start with the coalescent parameter set to  0.5 .
-#> The MCMC will start with the threshold parameter set to  50 . If this number is greater than the number of tips in your tree, an error will result.
-#> Given your settings for mcmc, burnin and thinning, your analysis will result in  100  samples being retained.
-#> 10 % 
-#> 20 % 
-#> 30 % 
-#> 40 % 
-#> 50 % 
-#> 60 % 
-#> 80 % 
-#> 90 % 
-#> 100 % 
-#> acceptance rates 
-#>  py pc th 
-#>  0.5471818 0.5499091 0.2346364 
-bgmyc_df2 <- try( bgmyc_tbl(bgmyc_res, ppcutoff = 0.05) )
+# legacy `singlebgmyc` object, as produced by the original bGMYC package
+# (bGMYC itself is not required to build this example): `par` holds
+# post-burnin (py, pc, t) draws, and `mrca[[t]]` lists the MRCA node
+# offsets (APE node number - Ntip) merged into one species at threshold t.
+tr <- ape::as.phylo(geophagus_beast)
+mrca_node <- ape::getMRCA(tr, tr$tip.label[1:2]) - ape::Ntip(tr)
+legacy_res <- structure(
+  list(tree = tr, par = cbind(py = 1, pc = 1, t = 1L), mrca = list(mrca_node)),
+  class = "singlebgmyc"
+)
+bgmyc_df2 <- try( bgmyc_tbl(legacy_res, ppcutoff = 0.5) )
 try(bgmyc_df2)
 #> # A tibble: 137 × 2
 #>    labels     bgmyc
@@ -126,12 +107,12 @@ try(bgmyc_df2)
 #>  2 GU701785.1     1
 #>  3 JN988869.1     1
 #>  4 MH780911.1     1
-#>  5 OR732927.1     1
-#>  6 OR732928.1     1
-#>  7 MZ050845.1     2
-#>  8 MZ051032.1     2
-#>  9 MZ051706.1     2
-#> 10 MZ051794.1     2
+#>  5 MZ050845.1     2
+#>  6 MZ051032.1     3
+#>  7 MZ051272.1     4
+#>  8 MZ051516.1     5
+#>  9 MZ051549.1     6
+#> 10 MZ051706.1     7
 #> # ℹ 127 more rows
 # }
 ```

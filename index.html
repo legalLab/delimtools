@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">delimtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,20 +69,20 @@
 <div class="section level2">
 <h2 id="important">IMPORTANT<a class="anchor" aria-label="anchor" href="#important"></a>
 </h2>
-<p>This software is under active development, and as such cannot be assumed to be free of bugs or poor functionality. Always inspect results carefully. If you find a problem, please report it with as much detail as possible in <a href="https://github.com/LegalLab/delimtools/issues" class="external-link">Issues</a>. Unfortunately in its current form, some of the functions (<code><a href="reference/abgd_tbl.html">abgd_tbl()</a></code>, <code><a href="reference/asap_tbl.html">asap_tbl()</a></code> and <code><a href="reference/mptp_tbl.html">mptp_tbl()</a></code>) will not work natively on Windows operating systems, only on Unix (MacOS, Linux). This is because third party binaries (executable programs) are required. We have implemented a Windows solution by importing results from the webservers that are commonly used to run these analyses, e.g. ABGD, ASAP, and <a href="https://mptp.h-its.org/" class="external-link">mPTP</a>. There are also difficulties with installing R required package dependancies to run <code><a href="reference/gmyc_tbl.html">gmyc_tbl()</a></code> and <code><a href="reference/bgmyc_tbl.html">bgmyc_tbl()</a></code> because these are no longer under development and available on CRAN, and must be installed from archived sources. Please refer to <a href="https://legallab.github.io/delimtools/articles/install.html" class="external-link uri">https://legallab.github.io/delimtools/articles/install.html</a> for instructions on how to install. A tutorial vignette running through all major package functionality is found at <a href="https://legallab.github.io/delimtools/articles/delimtools.html" class="external-link uri">https://legallab.github.io/delimtools/articles/delimtools.html</a>.</p>
+<p>This software is under development, and as such cannot be assumed to be free of bugs or poor functionality. Always inspect results carefully. If you find a problem, please report it with as much detail as possible in <a href="https://github.com/LegalLab/delimtools/issues" class="external-link">Issues</a>. The current version is completely stand alone, no longer depending on third party binaries or R dependencies no longer available on CRAN. The affected functions, however, retain their legacy behavior for now and instructions for installing the third party binaries and R dependencies are provided at <a href="https://legallab.github.io/delimtools/articles/install.html" class="external-link uri">https://legallab.github.io/delimtools/articles/install.html</a>. A tutorial vignette running through all major package functionality is found at <a href="https://legallab.github.io/delimtools/articles/delimtools.html" class="external-link uri">https://legallab.github.io/delimtools/articles/delimtools.html</a>.</p>
 </div>
 <div class="section level2">
-<h2 id="delimtools-v030---announcement">delimtools v0.3.0 - Announcement<a class="anchor" aria-label="anchor" href="#delimtools-v030---announcement"></a>
+<h2 id="delimtools-v03x---announcement">delimtools v0.3.x - Announcement<a class="anchor" aria-label="anchor" href="#delimtools-v03x---announcement"></a>
 </h2>
-<p>The next major release of delimtools (v0.3.0) will provide native R ports for all species delimitation software currently supported by this package. This means that ABGD, ASAP, bGMYC, GMYC and mPTP, previously dependent on external binaries or third-party R packages, will run <strong>entirely</strong> within the R environment, with performance-critical likelihood computations handled by embedded C code.</p>
-<p>These R ports were developed with the assistance of Claude (Anthropic), under continuous human supervision. This porting process prioritezed <strong>fidelity to the original source code</strong>: algorithms, likelihood functions, and core logic were preserved as closely as possible, with changes limited to what was strictly necessary for integration into the R/C ecosystem.</p>
-<p>This change removes the Unix-only restriction that affected several functions in earlier versions, making the full delimtools pipeline <strong>available on all platforms</strong>, including <strong>Windows</strong>. Users will no longer need to install or configure standalone executables to run any of the supported methods. All currently implemented wrappers (*_tbl() functions) will continue to be available for comparative purposes for some time, but will eventually be deprecated in the next updates.</p>
+<p>As of v0.3.0, <code>delimtools</code> provides native R ports for all species delimitation software currently supported by this package. This means that ABGD, ASAP, bGMYC, GMYC and mPTP—previously dependent on external binaries or third-party R packages—will run <strong>entirely</strong> within the R environment, with performance-critical likelihood computations handled by embedded C code.</p>
+<p>These R ports were developed with the assistance of Claude (Anthropic), under continuous human supervision. This porting process prioritized <strong>fidelity to the original source code</strong>: algorithms, likelihood functions, and core logic were preserved as closely as possible, with changes limited to what was strictly necessary for integration into the R/C ecosystem.</p>
+<p>This change removes the Unix-only restriction that affected several functions in earlier versions, making the full <code>delimtools</code> pipeline <strong>available on all platforms</strong>, including <strong>Windows</strong>. Users will no longer need to install or configure standalone executables to run any of the supported methods. All currently implemented wrappers (*_tbl() functions) will continue to be available for comparative purposes for some time, but will eventually be deprecated in the next updates.</p>
 </div>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>The official GitHub repository for the R package <code>delimtools</code> (<a href="https://doi.org/10.1139/gen-2025-0119" class="external-link">Bittencourt, Collins &amp; Hrbek, 2026</a>).</p>
-<p><code>delimtools</code> provides helper functions for the analysis of single-locus species delimitation methods such as GMYC (<a href="https://doi.org/10.1093/sysbio/syp027" class="external-link">Monaghan et al., 2009</a>), bGMYC (<a href="https://doi.org/10.1186/1471-2148-12-196" class="external-link">Reid &amp; Carstens, 2012</a>), mPTP (<a href="https://doi.org/10.1093/bioinformatics/btx025" class="external-link">Kapli et al., 2017</a>) and ASAP (<a href="https://doi.org/10.1111/1755-0998.13281" class="external-link">Puillandre et al., 2020</a>). These software run multiple different platforms (e.g. R, Unix, webservers), and also do not output their results in a consistent format to allow easy comparison. To address these shortcomings we have developed a suite of functions to standardise and simplify generating single-locus species delimitations.</p>
+<p>This is the official GitHub repository for the R package <code>delimtools</code> (<a href="https://doi.org/10.1139/gen-2025-0119" class="external-link">Bittencourt, Collins &amp; Hrbek, 2026</a>).</p>
+<p>Single-lucus species delimitation analyses have been implemented in a diversity of packages that use different methods to delimit species. These include GMYC (<a href="https://doi.org/10.1093/sysbio/syp027" class="external-link">Monaghan et al., 2009</a>), bGMYC (<a href="https://doi.org/10.1186/1471-2148-12-196" class="external-link">Reid &amp; Carstens, 2012</a>), mPTP (<a href="https://doi.org/10.1093/bioinformatics/btx025" class="external-link">Kapli et al., 2017</a>) and ASAP (<a href="https://doi.org/10.1111/1755-0998.13281" class="external-link">Puillandre et al., 2020</a>). These software run on different platforms (e.g. R, Unix, webservers), and also do not output their results in a consistent format to allow easy comparison. To address these shortcomings we have developed a suite of functions in the <code>delimtools</code> package that replicate the behavior of these software, and then standardize and simplify the output of these functions. This then permits comparison of the delimitation analyses, and unified visualization of the delimitation results.</p>
 </div>
 <div class="section level2">
 <h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
@@ -107,7 +107,12 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"delimtools"</span><span class="op">)</span></span></code></pre></div>
 <p>Development version from GitHub:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"LegalLab/delimtools"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"LegalLab/delimtools"</span><span class="op">)</span></span>
+<span><span class="co"># or alternately</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"LegalLab/delimtools"</span><span class="op">)</span></span>
+<span><span class="co"># Windows and macOS binaries are also provided with each release (currently release v0.3.4)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"https://github.com/legalLab/delimtools/releases/download/v0.3.4/delimtools_0.3.4.zip"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"win.binary"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"https://github.com/legalLab/delimtools/releases/download/v0.3.4/delimtools_0.3.4.tgz"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"mac.binary"</span><span class="op">)</span></span></code></pre></div>
 <p>Or a specific version via renv:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">renv</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"LegalLab/delimtools@v0.1.0"</span><span class="op">)</span></span></code></pre></div>
@@ -115,7 +120,7 @@
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>Here, we will demonstrate plotting a single-locus species delimitation analysis of a <em>Geophagus</em> eartheater cichlid dataset (<a href="https://doi.org/10.7717/peerj.12443" class="external-link">Ximenes et al., 2021</a>) using a variety of methods. A tutorial vignette running through all major package functionality is found at <a href="https://legallab.github.io/delimtools/articles/delimtools.html" class="external-link uri">https://legallab.github.io/delimtools/articles/delimtools.html</a>.</p>
+<p>Here, we will demonstrate plotting a single-locus species delimitation analysis of a <em>Geophagus</em> eartheater cichlid dataset (<a href="https://doi.org/10.7717/peerj.12443" class="external-link">Ximenes et al., 2021</a>) using a diversity of methods. A tutorial vignette running through all major package functionality is found at <a href="https://legallab.github.io/delimtools/articles/delimtools.html" class="external-link uri">https://legallab.github.io/delimtools/articles/delimtools.html</a>.</p>
 <figure><img src="https://raw.githubusercontent.com/boopsboops/delimtools-testing/79d6257c9ae4b7da1047e5ffa9ef1a04b4139dae/assets/geophagus_redhead_tapajos.jpg" alt="Redhead Eartheater Geophagus pyrocephalus"><figcaption aria-hidden="true">
 Redhead Eartheater <em>Geophagus pyrocephalus</em>
 </figcaption></figure><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -125,11 +130,11 @@ Redhead Eartheater <em>Geophagus pyrocephalus</em>
 <span><span class="co"># make tip label table</span></span>
 <span><span class="va">tip.tab</span> <span class="op">&lt;-</span> <span class="va">geophagus_info</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gbAccession</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">geophagus_beast</span><span class="op">@</span><span class="va">phylo</span><span class="op">$</span><span class="va">tip.label</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>labs<span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{gbAccession} | {scientificName}"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>labs <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{gbAccession} | {scientificName}"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">gbAccession</span>, <span class="va">labs</span>, <span class="va">scientificName</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># get cols</span></span>
-<span><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/delim_brewer.html">delim_brewer</a></span><span class="op">(</span>delim<span class="op">=</span> <span class="va">geophagus_delims</span>, package<span class="op">=</span><span class="st">"randomcoloR"</span>, seed<span class="op">=</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="co"># get columns</span></span>
+<span><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/delim_brewer.html">delim_brewer</a></span><span class="op">(</span>delim <span class="op">=</span> <span class="va">geophagus_delims</span>, package <span class="op">=</span> <span class="st">"randomcoloR"</span>, seed <span class="op">=</span> <span class="fl">42</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># plot</span></span>
 <span><span class="fu"><a href="reference/delim_autoplot.html">delim_autoplot</a></span><span class="op">(</span>delim <span class="op">=</span> <span class="va">geophagus_delims</span>, </span>
@@ -140,14 +145,7 @@ Redhead Eartheater <em>Geophagus pyrocephalus</em>
 <span>               tbl_labs <span class="op">=</span> <span class="va">tip.tab</span>, </span>
 <span>               col_vec <span class="op">=</span> <span class="va">cols</span>,</span>
 <span>               hexpand <span class="op">=</span> <span class="fl">0.7</span>,</span>
-<span>               widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
-<span><span class="co">#&gt; ℹ Please use `linewidth` instead.</span></span>
-<span><span class="co">#&gt; ℹ The deprecated feature was likely used in the ggtree package.</span></span>
-<span><span class="co">#&gt;   Please report the issue at &lt;https://github.com/YuLab-SMU/ggtree/issues&gt;.</span></span>
-<span><span class="co">#&gt; This warning is displayed once per session.</span></span>
-<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
-<span><span class="co">#&gt; generated.</span></span></code></pre></div>
+<span>               widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-1.png"><!-- --></p>
 </div>
 <div class="section level2">

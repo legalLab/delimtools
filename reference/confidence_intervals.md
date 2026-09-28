@@ -42,7 +42,7 @@ mptp_ci(
 
 - tr:
 
-  An ultrametric, dichotomous tree object in ape format.
+  A `phylo` object (ape); the maximum-likelihood (point-estimate) tree.
 
 - posterior:
 
@@ -51,95 +51,63 @@ mptp_ci(
 
 - method:
 
-  Method of analysis, either "single" for single-threshold version or
-  "multiple" for multiple-threshold version.
+  Which algorithm for Maximum Likelihood point-estimate to be used.
+  Available options are:
+
+  - single Single-rate PTP model. It assumes that every species evolved
+    with the same rate.
+
+  - multi Multi-rate mPTP model. It assumes that all species have
+    different evolutionary rates.
 
 - interval:
 
-  Upper and lower limit of estimation of scaling parameters, e.g.
-  c(0,10)
+  Optimisation interval for the null model scaling exponent; see
+  [gmyc](gmyc.md).
 
 - ppcutoff:
 
   Posterior probability threshold for clustering samples into species
-  partitions. See
-  [bgmyc.point](https://rdrr.io/pkg/bGMYC/man/bgmyc.point.html) for
-  details. Default to 0.05.
+  partitions. See [`bgmyc_tbl()`](bgmyc_tbl.md) for details. Default to
+  0.05.
 
 - mcmc:
 
-  number of samples to take from the Markov Chain
+  Integer. Total MCMC steps (default 11 000).
 
 - burnin:
 
-  the number of samples to discard as burn-in
+  Integer. Steps discarded as burn-in (default 1 000).
 
 - thinning:
 
-  the interval at which samples are retained from the Markov Chain
+  Integer. Thinning interval; every `thinning`-th post-burnin step is
+  retained (default 100).
 
-- py1:
+- py1, py2:
 
-  governs the prior on the Yule (speciation) rate change parameter.
-  using the default prior distribution, this is the lower bound of a
-  uniform distribution. this can be the most influential prior of the
-  three. rate change is parameterized as n^py where n is the number of
-  lineages in a waiting interval (see Pons et al. 2006). if there are 50
-  sequences in an analysis and the Yule rate change parameter is 2, this
-  allows for a potential 50-fold increase in speciation rate. this
-  unrealistic parameter value can cause the threshold between Yule and
-  Coalescent process to be difficult to distinguish. are more reasonable
-  upper bound for the prior would probably be less than 1.5 (a potential
-  7-fold increase). Or you could modify the prior function to use a
-  different distribution entirely.
+  Numeric. Prior bounds for the Yule rate-change exponent (default 0 and
+  2).
 
-- py2:
+- pc1, pc2:
 
-  governs the prior on the Yule rate change parameter. using the default
-  prior distribution, this is the upper bound of a uniform distribution.
+  Numeric. Prior bounds for the coalescent rate-change exponent (default
+  0 and 2).
 
-- pc1:
+- t1, t2:
 
-  governs the prior on the coalescent rate change parameter. using the
-  default prior distribution, this is the lower bound of a uniform
-  distribution. rate change is parameterized as (n(n-1))^pc where n is
-  the number of lineages in a waiting interval (see Pons et al. 2006).
-  In principle pc can be interpreted as change in effective population
-  size (pc\<1 decline, pc\>1 growth) but because identical haplotypes
-  must be excluded from this analysis an accurate biological
-  interpretation is not possible.
-
-- pc2:
-
-  governs the prior on the coalescent rate change parameter. using the
-  default prior distribution, this is the upper bound of a uniform
-  distribution.
-
-- t1:
-
-  governs the prior on the threshold parameter. the lower bound of a
-  uniform distribution. the bounds of this uniform distribution should
-  not be below 1 or greater than the number of unique haplotypes in the
-  analysis.
-
-- t2:
-
-  governs the prior on the threshold parameter. the upper bound of a
-  uniform distribution
+  Integer. Prior bounds for the threshold parameter (number of species).
+  Defaults: `t1 = 2`, `t2 = NULL` (auto: `Nnode - 1`).
 
 - scale:
 
-  a vector of scale parameters governing the proposal distributions for
-  the markov chain. the first to are the Yule and coalescent rate change
-  parameters. increasing them makes the proposals more conservative. the
-  third is the threshold parameter. increasing it makes the proposals
-  more liberal.
+  Numeric vector of length 3. Proposal scale parameters for `py`, `pc`,
+  and `t` (default `c(20, 10, 5)`).
 
 - start:
 
-  a vector of starting parameters in the same order as the scale
-  parameters, py, pc, t. t may need to be set so that it is not
-  impossible given the dataset.
+  Numeric vector of length 3. Starting values for `py`, `pc`, and `t`
+  (default `c(1, 0.5, 50)`).
 
 - dna:
 

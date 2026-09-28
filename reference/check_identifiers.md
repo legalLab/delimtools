@@ -6,10 +6,18 @@ metadata and DNA sequence files.
 ## Usage
 
 ``` r
-check_identifiers(data, identifier, dna)
+check_identifiers(dna, identifier, data)
 ```
 
 ## Arguments
+
+- dna:
+
+  a [DNAbin](https://rdrr.io/pkg/ape/man/DNAbin.html) object.
+
+- identifier:
+
+  column in `data` which contains sequence identifiers.
 
 - data:
 
@@ -17,27 +25,27 @@ check_identifiers(data, identifier, dna)
   [tbl_df](https://tibble.tidyverse.org/reference/tbl_df-class.html)
   containing sequence metadata.
 
-- identifier:
-
-  column in `data` which contains sequence identifiers.
-
-- dna:
-
-  a [DNAbin](https://rdrr.io/pkg/ape/man/DNAbin.html) object.
-
 ## Value
 
-A list containing erroneus identifiers between metadata and sequence
-file.
+Invisibly returns `TRUE` if all checks pass.
 
 ## Details
 
 `check_identifiers()` is a helper function to check for inconsistencies
-between identifiers in metadata and DNA sequences files, such as
-absence, mistyping, duplicated entries, or differences in size lengths.
-If any of these problems are found, warnings will appear in `Console`
-and corrections should be made to prevent unintended consequences later.
-A list containing erroneous identifiers is returned invisibly.
+between identifiers in metadata and DNA sequence files. It performs
+three checks, in order:
+
+1.  every identifier in `dna` must be present in `data`; any missing
+    identifiers are reported and abort the function.
+
+2.  `dna` must not contain duplicated identifiers; any duplicates are
+    reported and abort the function.
+
+3.  `data` must not contain duplicated identifiers. Duplicated
+    identifiers that also occur in `dna` are reported and abort the
+    function, since they make matching sequences to metadata ambiguous.
+    Duplicated identifiers that do not occur in `dna` are reported as a
+    warning only, since they do not affect matching.
 
 ## Author
 
@@ -46,6 +54,6 @@ Pedro S. Bittencourt, Rupert A. Collins.
 ## Examples
 
 ``` r
-check_identifiers(geophagus_info, "gbAccession", geophagus)
-#> Error in UseMethod("pull"): no applicable method for 'pull' applied to an object of class "DNAbin"
+check_identifiers(geophagus, "gbAccession", geophagus_info)
+#> ✔ Identifiers passed all checks.
 ```

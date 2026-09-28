@@ -9,7 +9,7 @@ methods, including GMYC, bGMYC, Local Minima, and mPTP."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">delimtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,7 @@ methods, including GMYC, bGMYC, Local Minima, and mPTP.</p>
 
 
 <dl><dt id="arg-tr">tr<a class="anchor" aria-label="anchor" href="#arg-tr"></a></dt>
-<dd><p>An ultrametric, dichotomous tree object in ape format.</p></dd>
+<dd><p>A <code>phylo</code> object (<span class="pkg">ape</span>); the maximum-likelihood (point-estimate) tree.</p></dd>
 
 
 <dt id="arg-posterior">posterior<a class="anchor" aria-label="anchor" href="#arg-posterior"></a></dt>
@@ -91,60 +91,56 @@ methods, including GMYC, bGMYC, Local Minima, and mPTP.</p>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>Method of analysis, either "single" for single-threshold version or "multiple" for multiple-threshold version.</p></dd>
+<dd><p>Which algorithm for Maximum Likelihood point-estimate to be used. Available options are:</p><ul><li><p>single Single-rate PTP model. It assumes that every species evolved with the same rate.</p></li>
+<li><p>multi Multi-rate mPTP model. It assumes that all species have different evolutionary rates.</p></li>
+</ul></dd>
 
 
 <dt id="arg-interval">interval<a class="anchor" aria-label="anchor" href="#arg-interval"></a></dt>
-<dd><p>Upper and lower limit of estimation of scaling parameters, e.g. c(0,10)</p></dd>
+<dd><p>Optimisation interval for the null model scaling exponent; see <a href="gmyc.html">gmyc</a>.</p></dd>
 
 
 <dt id="arg-ppcutoff">ppcutoff<a class="anchor" aria-label="anchor" href="#arg-ppcutoff"></a></dt>
 <dd><p>Posterior probability threshold for clustering samples into species partitions.
-See <a href="https://rdrr.io/pkg/bGMYC/man/bgmyc.point.html" class="external-link">bgmyc.point</a> for details. Default to 0.05.</p></dd>
+See <code><a href="bgmyc_tbl.html">bgmyc_tbl()</a></code> for details. Default to 0.05.</p></dd>
 
 
 <dt id="arg-mcmc">mcmc<a class="anchor" aria-label="anchor" href="#arg-mcmc"></a></dt>
-<dd><p>number of samples to take from the Markov Chain</p></dd>
+<dd><p>Integer. Total MCMC steps (default 11 000).</p></dd>
 
 
 <dt id="arg-burnin">burnin<a class="anchor" aria-label="anchor" href="#arg-burnin"></a></dt>
-<dd><p>the number of samples to discard as burn-in</p></dd>
+<dd><p>Integer. Steps discarded as burn-in (default 1 000).</p></dd>
 
 
 <dt id="arg-thinning">thinning<a class="anchor" aria-label="anchor" href="#arg-thinning"></a></dt>
-<dd><p>the interval at which samples are retained from the Markov Chain</p></dd>
+<dd><p>Integer. Thinning interval; every <code>thinning</code>-th
+post-burnin step is retained (default 100).</p></dd>
 
 
-<dt id="arg-py-">py1<a class="anchor" aria-label="anchor" href="#arg-py-"></a></dt>
-<dd><p>governs the prior on the Yule (speciation) rate change parameter. using the default prior distribution, this is the lower bound of a uniform distribution. this can be the most influential prior of the three. rate change is parameterized as n^py where n is the number of lineages in a waiting interval (see Pons et al. 2006). if there are 50 sequences in an analysis and the Yule rate change parameter is 2, this allows for a potential 50-fold increase in speciation rate. this unrealistic parameter value can cause the threshold between Yule and Coalescent process to be difficult to distinguish. are more reasonable upper bound for the prior would probably be less than 1.5 (a potential 7-fold increase). Or you could modify the prior function to use a different distribution entirely.</p></dd>
+<dt id="arg-py-py-">py1, py2<a class="anchor" aria-label="anchor" href="#arg-py-py-"></a></dt>
+<dd><p>Numeric. Prior bounds for the Yule rate-change exponent
+(default 0 and 2).</p></dd>
 
 
-<dt id="arg-py-">py2<a class="anchor" aria-label="anchor" href="#arg-py-"></a></dt>
-<dd><p>governs the prior on the Yule rate change parameter. using the default prior distribution, this is the upper bound of a uniform distribution.</p></dd>
+<dt id="arg-pc-pc-">pc1, pc2<a class="anchor" aria-label="anchor" href="#arg-pc-pc-"></a></dt>
+<dd><p>Numeric. Prior bounds for the coalescent rate-change exponent
+(default 0 and 2).</p></dd>
 
 
-<dt id="arg-pc-">pc1<a class="anchor" aria-label="anchor" href="#arg-pc-"></a></dt>
-<dd><p>governs the prior on the coalescent rate change parameter. using the default prior distribution, this is the lower bound of a uniform distribution. rate change is parameterized as (n(n-1))^pc where n is the number of lineages in a waiting interval (see Pons et al. 2006). In principle pc can be interpreted as change in effective population size (pc&lt;1 decline, pc&gt;1 growth) but because identical haplotypes must be excluded from this analysis an accurate biological interpretation is not possible.</p></dd>
-
-
-<dt id="arg-pc-">pc2<a class="anchor" aria-label="anchor" href="#arg-pc-"></a></dt>
-<dd><p>governs the prior on the coalescent rate change parameter. using the default prior distribution, this is the upper bound of a uniform distribution.</p></dd>
-
-
-<dt id="arg-t-">t1<a class="anchor" aria-label="anchor" href="#arg-t-"></a></dt>
-<dd><p>governs the prior on the threshold parameter. the lower bound of a uniform distribution. the bounds of this uniform distribution should not be below 1 or greater than the number of unique haplotypes in the analysis.</p></dd>
-
-
-<dt id="arg-t-">t2<a class="anchor" aria-label="anchor" href="#arg-t-"></a></dt>
-<dd><p>governs the prior on the threshold parameter. the upper bound of a uniform distribution</p></dd>
+<dt id="arg-t-t-">t1, t2<a class="anchor" aria-label="anchor" href="#arg-t-t-"></a></dt>
+<dd><p>Integer. Prior bounds for the threshold parameter (number of
+species). Defaults: <code>t1 = 2</code>, <code>t2 = NULL</code> (auto: <code>Nnode - 1</code>).</p></dd>
 
 
 <dt id="arg-scale">scale<a class="anchor" aria-label="anchor" href="#arg-scale"></a></dt>
-<dd><p>a vector of scale parameters governing the proposal distributions for the markov chain. the first to are the Yule and coalescent rate change parameters. increasing them makes the proposals more conservative. the third is the threshold parameter. increasing it makes the proposals more liberal.</p></dd>
+<dd><p>Numeric vector of length 3. Proposal scale parameters for
+<code>py</code>, <code>pc</code>, and <code>t</code> (default <code>c(20, 10, 5)</code>).</p></dd>
 
 
 <dt id="arg-start">start<a class="anchor" aria-label="anchor" href="#arg-start"></a></dt>
-<dd><p>a vector of starting parameters in the same order as the scale parameters, py, pc, t. t may need to be set so that it is not impossible given the dataset.</p></dd>
+<dd><p>Numeric vector of length 3. Starting values for
+<code>py</code>, <code>pc</code>, and <code>t</code> (default <code>c(1, 0.5, 50)</code>).</p></dd>
 
 
 <dt id="arg-dna">dna<a class="anchor" aria-label="anchor" href="#arg-dna"></a></dt>

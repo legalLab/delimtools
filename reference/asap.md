@@ -1,8 +1,8 @@
 # ASAP – Assemble Species by Automatic Partitions
 
-Delimits species from DNAbin sequences or a distance matrix using the
-algorithm of Puillandre, Brouillet & Achaz (2021). The original C code
-(asap_core.c, asap_common.c) is executed without modifications; only the
+Delimits species from aligned sequences using the algorithm of
+Puillandre, Brouillet & Achaz (2021). The original C code (asap_core.c,
+asap_common.c) is executed without modifications; only the
 Python/graphical dependencies are replaced.
 
 ## Usage
@@ -24,20 +24,21 @@ asap(
 
 - x:
 
-  `DNAbin` (ape), `dist`, or a numeric distance matrix.
+  Path to an aligned FASTA file, or an aligned `DNAbin` (ape) object.
+  Distance matrices are not accepted; distances are calculated
+  internally from the sequences.
 
 - model:
 
-  Distance model when `x` is `DNAbin`. `"simple"` (default) uses
-  Simple_Dist, identical to the ASAP original default. Any model from
+  Distance model. `"simple"` (default) uses Simple_Dist, identical to
+  the ASAP original default. Any model from
   [`ape::dist.dna()`](https://rdrr.io/pkg/ape/man/dist.dna.html) is also
   accepted.
 
 - len_seq:
 
-  Sequence length for the coalescent simulations. Inferred automatically
-  from `DNAbin`; use 600 (original default) when the input is a distance
-  matrix.
+  Sequence length for the coalescent simulations. Inferred from the
+  alignment length when `NULL` (default).
 
 - replicates:
 
@@ -109,6 +110,7 @@ if (FALSE) { # \dontrun{
 library(ape)
 seqs   <- read.dna("barcode.fasta", format = "fasta")
 result <- asap(seqs)
+result <- asap("barcode.fasta")   # aligned FASTA path also accepted
 print(result)
 bp <- best_partition(result)
 bp$n_groups   # number of species

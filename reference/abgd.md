@@ -9,7 +9,7 @@ recursion) is performed by the original C code of G. Achaz via
 
 ``` r
 abgd(
-  file,
+  x,
   model = "simple",
   prior_min = 0.001,
   prior_max = 0.1,
@@ -21,12 +21,12 @@ abgd(
 
 ## Arguments
 
-- file:
+- x:
 
-  Path to an aligned FASTA file, a Phylip distance matrix, or a `DNAbin`
-  object (ape). If a `DNAbin` object is provided, sequences are exported
-  to a temporary file and processed by the original C code without
-  intermediate conversion.
+  Path to an aligned FASTA file, or an aligned `DNAbin` (ape) object.
+  Distance matrices are not accepted; distances are calculated
+  internally from the sequences. A `DNAbin` object is exported to a
+  temporary FASTA file and processed by the original C code.
 
 - model:
 
