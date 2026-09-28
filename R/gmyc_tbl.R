@@ -1,17 +1,16 @@
 #' Turns GMYC Results Into a Tibble
 #'
 #' @description
-#' `gmyc_tbl()` processes output from [gmyc][splits::gmyc] into an
+#' `gmyc_tbl()` processes output from [gmyc()][gmyc] into an
 #' object of class \code{\link[tibble]{tbl_df}}.
 #'
-#' @param gmyc_res Output from [gmyc][splits::gmyc].
+#' @param gmyc_res Output from [gmyc()][gmyc].
 #' @param delimname Character. String to rename the delimitation method in the table. Default to 'gmyc'.
 #'
 #' @details
-#' `splits` package uses [gmyc][splits::gmyc] to optimize
-#' genetic clusters and [spec.list][splits::spec.list] to cluster samples into
-#' species partitions. `gmyc_tbl()` turns these results into a tibble which matches
-#' the output from [bgmyc_tbl] and [locmin_tbl].
+#' [gmyc()][gmyc] optimizes genetic clusters, and [spec.list()][spec.list] clusters
+#' samples into species partitions from the result. `gmyc_tbl()` turns these results
+#' into a tibble which matches the output from [bgmyc_tbl] and [locmin_tbl].
 #'
 #' @return
 #' An object of class [tbl_df][tibble::tbl_df].
@@ -37,7 +36,7 @@
 #' 
 #' \donttest{
 #' # run GMYC
-#' gmyc_res <- try( splits::gmyc(ape::as.phylo(geophagus_beast)) )
+#' gmyc_res <- try( gmyc(ape::as.phylo(geophagus_beast)) )
 #'
 #' # create a tibble
 #' gmyc_df <- try( gmyc_tbl(gmyc_res) )

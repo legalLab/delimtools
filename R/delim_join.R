@@ -28,13 +28,13 @@
 #' 
 #' \donttest{
 #' ## run GMYC
-#' gmyc_res <- try( splits::gmyc(ape::as.phylo(geophagus_beast), method = "single") )
+#' gmyc_res <- try( gmyc(ape::as.phylo(geophagus_beast), method = "single") )
 #'
 #' # create a tibble
 #' gmyc_df <- try( gmyc_tbl(gmyc_res) )
 #'
 #' ## run bGMYC
-#' bgmyc_res <- try( bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
+#' bgmyc_res <- try( bgmyc(ape::as.phylo(geophagus_beast),
 #'   mcmc = 11000,
 #'   burnin = 1000,
 #'   thinning = 100,
