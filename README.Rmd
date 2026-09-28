@@ -24,13 +24,13 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 This software is under development, and as such cannot be assumed to be free of bugs or poor functionality. Always inspect results carefully. If you find a problem, please report it with as much detail as possible in [Issues](https://github.com/LegalLab/delimtools/issues). The current version is completely stand alone, no longer depending on third party binaries or R dependencies no longer available on CRAN. The affected functions, however, retain their legacy behavior for now and instructions for installing the third party binaries and R dependencies are provided at [https://legallab.github.io/delimtools/articles/install.html](https://legallab.github.io/delimtools/articles/install.html). A tutorial vignette running through all major package functionality is found at [https://legallab.github.io/delimtools/articles/delimtools.html](https://legallab.github.io/delimtools/articles/delimtools.html).
 
-## delimtools v1.0.0 - Announcement
+## delimtools v0.3.x - Announcement
 
-As of v0.3.0, delimtools provides native R ports for all species delimitation software currently supported by this package. This means that ABGD, ASAP, bGMYC, GMYC and mPTP, previously dependent on external binaries or third-party R packages, will run **entirely** within the R environment, with performance-critical likelihood computations handled by embedded C code.
+As of v0.3.0, `delimtools`  provides native R ports for all species delimitation software currently supported by this package. This means that ABGD, ASAP, bGMYC, GMYC and mPTP---previously dependent on external binaries or third-party R packages---will run **entirely** within the R environment, with performance-critical likelihood computations handled by embedded C code.
 
-These R ports were developed with the assistance of Claude (Anthropic), under continuous human supervision. This porting process prioritezed **fidelity to the original source code**: algorithms, likelihood functions, and core logic were preserved as closely as possible, with changes limited to what was strictly necessary for integration into the R/C ecosystem.
+These R ports were developed with the assistance of Claude (Anthropic), under continuous human supervision. This porting process prioritized **fidelity to the original source code**: algorithms, likelihood functions, and core logic were preserved as closely as possible, with changes limited to what was strictly necessary for integration into the R/C ecosystem.
 
-This change removes the Unix-only restriction that affected several functions in earlier versions, making the full delimtools pipeline **available on all platforms**, including **Windows**. Users will no longer need to install or configure standalone executables to run any of the supported methods. All currently implemented wrappers (*_tbl() functions) will continue to be available for comparative purposes for some time, but will eventually be deprecated in the next updates.
+This change removes the Unix-only restriction that affected several functions in earlier versions, making the full  `delimtools` pipeline **available on all platforms**, including **Windows**. Users will no longer need to install or configure standalone executables to run any of the supported methods. All currently implemented wrappers (*_tbl() functions) will continue to be available for comparative purposes for some time, but will eventually be deprecated in the next updates.
 
 ## Overview
 
@@ -66,6 +66,11 @@ install.packages("delimtools")
 Development version from GitHub:
 ```{r, eval= FALSE}
 pak::pak("LegalLab/delimtools")
+# or alternately
+devtools::install_github("LegalLab/delimtools")
+# Windows and macOS binaries are also provided with each release (currently release v0.3.4)
+install.packages("https://github.com/legalLab/delimtools/releases/download/v0.3.4/delimtools_0.3.4.zip", repos = NULL, type = "win.binary")
+install.packages("https://github.com/legalLab/delimtools/releases/download/v0.3.4/delimtools_0.3.4.tgz", repos = NULL, type = "mac.binary")
 ```
 
 Or a specific version via renv:

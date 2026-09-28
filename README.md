@@ -25,24 +25,24 @@ tutorial vignette running through all major package functionality is
 found at
 <https://legallab.github.io/delimtools/articles/delimtools.html>.
 
-## delimtools v1.0.0 - Announcement
+## delimtools v0.3.x - Announcement
 
-As of v0.3.0, delimtools provides native R ports for all species
+As of v0.3.0, `delimtools` provides native R ports for all species
 delimitation software currently supported by this package. This means
-that ABGD, ASAP, bGMYC, GMYC and mPTP, previously dependent on external
-binaries or third-party R packages, will run **entirely** within the R
+that ABGD, ASAP, bGMYC, GMYC and mPTP—previously dependent on external
+binaries or third-party R packages—will run **entirely** within the R
 environment, with performance-critical likelihood computations handled
 by embedded C code.
 
 These R ports were developed with the assistance of Claude (Anthropic),
-under continuous human supervision. This porting process prioritezed
+under continuous human supervision. This porting process prioritized
 **fidelity to the original source code**: algorithms, likelihood
 functions, and core logic were preserved as closely as possible, with
 changes limited to what was strictly necessary for integration into the
 R/C ecosystem.
 
 This change removes the Unix-only restriction that affected several
-functions in earlier versions, making the full delimtools pipeline
+functions in earlier versions, making the full `delimtools` pipeline
 **available on all platforms**, including **Windows**. Users will no
 longer need to install or configure standalone executables to run any of
 the supported methods. All currently implemented wrappers (\*\_tbl()
@@ -106,6 +106,11 @@ Development version from GitHub:
 
 ``` r
 pak::pak("LegalLab/delimtools")
+# or alternately
+devtools::install_github("LegalLab/delimtools")
+# Windows and macOS binaries are also provided with each release (currently release v0.3.4)
+install.packages("https://github.com/legalLab/delimtools/releases/download/v0.3.4/delimtools_0.3.4.zip", repos = NULL, type = "win.binary")
+install.packages("https://github.com/legalLab/delimtools/releases/download/v0.3.4/delimtools_0.3.4.tgz", repos = NULL, type = "mac.binary")
 ```
 
 Or a specific version via renv:
@@ -154,12 +159,6 @@ delim_autoplot(delim = geophagus_delims,
                col_vec = cols,
                hexpand = 0.7,
                widths = c(0.5, 0.5))
-#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-#> ℹ Please use `linewidth` instead.
-#> ℹ The deprecated feature was likely used in the ggtree package.
-#>   Please report the issue at <https://github.com/YuLab-SMU/ggtree/issues>.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 ![](man/figures/README-example-1.png)<!-- -->
