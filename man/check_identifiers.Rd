@@ -4,17 +4,17 @@
 \alias{check_identifiers}
 \title{Checks for Differences Between Identifiers in Metadata and DNA Sequence Files}
 \usage{
-check_identifiers(data, identifier, dna)
+check_identifiers(dna, identifier, data)
 }
 \arguments{
-\item{data}{an object of class \link[tibble:tbl_df]{tbl_df} containing sequence metadata.}
+\item{dna}{a \link[ape:DNAbin]{DNAbin} object.}
 
 \item{identifier}{column in \code{data} which contains sequence identifiers.}
 
-\item{dna}{a \link[ape:DNAbin]{DNAbin} object.}
+\item{data}{an object of class \link[tibble:tbl_df]{tbl_df} containing sequence metadata.}
 }
 \value{
-A list containing erroneus identifiers between metadata and sequence file.
+Invisibly returns \code{TRUE} if all checks pass.
 }
 \description{
 \code{check_identifiers()} checks for differences between identifiers in metadata
@@ -22,14 +22,22 @@ and DNA sequence files.
 }
 \details{
 \code{check_identifiers()} is a helper function to check for inconsistencies
-between identifiers in metadata and DNA sequences files, such as absence, mistyping,
-duplicated entries, or differences in size lengths. If any of these problems are found,
-warnings will appear in \code{Console} and corrections should be made to prevent
-unintended consequences later. A list containing erroneous identifiers is returned
-invisibly.
+between identifiers in metadata and DNA sequence files. It performs three
+checks, in order:
+\enumerate{
+\item every identifier in \code{dna} must be present in \code{data}; any missing
+identifiers are reported and abort the function.
+\item \code{dna} must not contain duplicated identifiers; any duplicates are
+reported and abort the function.
+\item \code{data} must not contain duplicated identifiers. Duplicated identifiers
+that also occur in \code{dna} are reported and abort the function, since they
+make matching sequences to metadata ambiguous. Duplicated identifiers
+that do not occur in \code{dna} are reported as a warning only, since they
+do not affect matching.
+}
 }
 \examples{
-check_identifiers(geophagus_info, "gbAccession", geophagus)
+check_identifiers(geophagus, "gbAccession", geophagus_info)
 
 }
 \author{

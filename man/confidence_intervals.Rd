@@ -40,6 +40,8 @@ mptp_ci(
 )
 }
 \arguments{
+\item{tr}{A \code{phylo} object (\pkg{ape}); the maximum-likelihood (point-estimate) tree.}
+
 \item{posterior}{Trees from posterior. An object of class \link[ape:multiphylo]{multiphylo}.}
 
 \item{method}{Which algorithm for Maximum Likelihood point-estimate to be used. Available options are:
@@ -47,6 +49,8 @@ mptp_ci(
 \item single Single-rate PTP model. It assumes that every species evolved with the same rate.
 \item multi Multi-rate mPTP model. It assumes that all species have different evolutionary rates.
 }}
+
+\item{interval}{Optimisation interval for the null model scaling exponent; see \link{gmyc}.}
 
 \item{ppcutoff}{Posterior probability threshold for clustering samples into species partitions.
 See \code{\link[=bgmyc_tbl]{bgmyc_tbl()}} for details. Default to 0.05.}

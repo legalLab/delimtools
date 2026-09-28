@@ -52,13 +52,17 @@ result <- try( bgmyc(ape::as.phylo(geophagus_beast),
 bgmyc_df <- try( bgmyc_tbl(result, ppcutoff = 0.05) )
 try(bgmyc_df)
 
-# legacy bGMYC object
-bgmyc_res <- try( bGMYC::bgmyc.singlephy(ape::as.phylo(geophagus_beast),
-  mcmc = 11000, burnin = 1000, thinning = 100,
-  t1 = 2, t2 = ape::Ntip(geophagus_beast),
-  start = c(1, 0.5, 50)
-))
-bgmyc_df2 <- try( bgmyc_tbl(bgmyc_res, ppcutoff = 0.05) )
+# legacy `singlebgmyc` object, as produced by the original bGMYC package
+# (bGMYC itself is not required to build this example): `par` holds
+# post-burnin (py, pc, t) draws, and `mrca[[t]]` lists the MRCA node
+# offsets (APE node number - Ntip) merged into one species at threshold t.
+tr <- ape::as.phylo(geophagus_beast)
+mrca_node <- ape::getMRCA(tr, tr$tip.label[1:2]) - ape::Ntip(tr)
+legacy_res <- structure(
+  list(tree = tr, par = cbind(py = 1, pc = 1, t = 1L), mrca = list(mrca_node)),
+  class = "singlebgmyc"
+)
+bgmyc_df2 <- try( bgmyc_tbl(legacy_res, ppcutoff = 0.5) )
 try(bgmyc_df2)
 }
 

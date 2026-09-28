@@ -21,7 +21,7 @@ on Simulated Data Sets. Systematic Biology. 62(5):707–724.
 gmyc_tbl(gmyc_res, delimname = "gmyc")
 }
 \arguments{
-\item{gmyc_res}{Output from \link[splits:gmyc]{gmyc}.}
+\item{gmyc_res}{Output from \link[=gmyc]{gmyc()}.}
 
 \item{delimname}{Character. String to rename the delimitation method in the table. Default to 'gmyc'.}
 }
@@ -29,20 +29,19 @@ gmyc_tbl(gmyc_res, delimname = "gmyc")
 An object of class \link[tibble:tbl_df]{tbl_df}.
 }
 \description{
-\code{gmyc_tbl()} processes output from \link[splits:gmyc]{gmyc} into an
+\code{gmyc_tbl()} processes output from \link[=gmyc]{gmyc()} into an
 object of class \code{\link[tibble]{tbl_df}}.
 }
 \details{
-\code{splits} package uses \link[splits:gmyc]{gmyc} to optimize
-genetic clusters and \link[splits:spec.list]{spec.list} to cluster samples into
-species partitions. \code{gmyc_tbl()} turns these results into a tibble which matches
-the output from \link{bgmyc_tbl} and \link{locmin_tbl}.
+\link[=gmyc]{gmyc()} optimizes genetic clusters, and \link[=spec.list]{spec.list()} clusters
+samples into species partitions from the result. \code{gmyc_tbl()} turns these results
+into a tibble which matches the output from \link{bgmyc_tbl} and \link{locmin_tbl}.
 }
 \examples{
 
 \donttest{
 # run GMYC
-gmyc_res <- try( splits::gmyc(ape::as.phylo(geophagus_beast)) )
+gmyc_res <- try( gmyc(ape::as.phylo(geophagus_beast)) )
 
 # create a tibble
 gmyc_df <- try( gmyc_tbl(gmyc_res) )
@@ -53,5 +52,5 @@ try(gmyc_df)
 
 }
 \author{
-Thomas Ezard, Tomochika Fujisawa, Tim Barraclough.
+Pedro S. Bittencourt, Tomas Hrbek
 }
