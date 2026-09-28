@@ -65,12 +65,12 @@ install.packages("delimtools")
 
 Development version from GitHub:
 ```{r, eval= FALSE}
-pak::pak("LegalLab/delimtools")
+pak::pak("legalLab/delimtools")
 # or alternately
-devtools::install_github("LegalLab/delimtools")
-# Windows and macOS binaries are also provided with each release (currently release v0.3.4)
-install.packages("https://github.com/legalLab/delimtools/releases/download/v0.3.4/delimtools_0.3.4.zip", repos = NULL, type = "win.binary")
-install.packages("https://github.com/legalLab/delimtools/releases/download/v0.3.4/delimtools_0.3.4.tgz", repos = NULL, type = "mac.binary")
+devtools::install_github("legalLab/delimtools")
+# Windows and macOS binaries are also provided with each release
+install.packages("https://github.com/legalLab/delimtools/releases/download/v0.3.5/delimtools_0.3.5.zip", repos = NULL, type = "win.binary")
+install.packages("https://github.com/legalLab/delimtools/releases/download/v0.3.5/delimtools_0.3.5.tgz", repos = NULL, type = "mac.binary")
 ```
 
 Or a specific version via renv:
