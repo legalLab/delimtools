@@ -41,8 +41,11 @@ jobs:
 
       - uses: codecov/codecov-action@v5
         with:
-          # Fail if error if not on PR, or if on PR and token is given
-          fail_ci_if_error: ${{ github.event_name != 'pull_request' || secrets.CODECOV_TOKEN }}
+          # Only hard-fail the job when a CODECOV_TOKEN secret is actually
+          # configured for this repo. Without that condition, every push
+          # (github.event_name != 'pull_request') hard-fails on any upload
+          # hiccup -- including simply not having the secret set.
+          fail_ci_if_error: ${{ !!secrets.CODECOV_TOKEN }}
           files: ./cobertura.xml
           plugins: noop
           disable_search: true
