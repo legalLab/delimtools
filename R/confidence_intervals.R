@@ -16,7 +16,8 @@
 #' A vector containing the number of species partitions in `tr`, `dna` or `infile` followed by
 #' the number of partitions in `posterior`, `reps` or `bootstraps`.
 #'
-#' @inheritParams splits::gmyc
+#' @param tr A `phylo` object (\pkg{ape}); the maximum-likelihood (point-estimate) tree.
+#' @param interval Optimisation interval for the null model scaling exponent; see [gmyc].
 #' @param posterior Trees from posterior. An object of class [multiphylo][ape::multiphylo].
 #' @name confidence_intervals
 #'
