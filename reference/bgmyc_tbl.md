@@ -1,9 +1,8 @@
 # Turns bGMYC Results Into a Tibble
 
 `bgmyc_tbl()` processes output from [`bgmyc()`](bgmyc.md) (class
-`"bgmyc_fit"`) or
-[`bGMYC::bgmyc.singlephy()`](https://rdrr.io/pkg/bGMYC/man/bgmyc.singlephy.html)
-(class `"singlebgmyc"`) into an object of class
+`"bgmyc_fit"`) or `bGMYC::bgmyc.singlephy()` (class `"singlebgmyc"`)
+into an object of class
 [tbl_df](https://tibble.tidyverse.org/reference/tbl_df-class.html).
 
 For `"bgmyc_fit"` objects the partition is derived from the stored
@@ -32,8 +31,7 @@ of the general mixed Yule-coalescent model. BMC Evolutionary Biology 12
 
 - bgmyc_res:
 
-  Output from [`bgmyc()`](bgmyc.md) or
-  [`bGMYC::bgmyc.singlephy()`](https://rdrr.io/pkg/bGMYC/man/bgmyc.singlephy.html).
+  Output from [`bgmyc()`](bgmyc.md) or `bGMYC::bgmyc.singlephy()`.
 
 - ppcutoff:
 

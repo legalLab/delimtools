@@ -34,9 +34,8 @@ gmyc(tree, method = "single", interval = c(0, 5), quiet = TRUE, tol = 1e-06)
 ## Value
 
 A named list of class `"gmyc"`, with the same structure as
-[`splits::gmyc()`](https://rdrr.io/pkg/splits/man/gmyc.html): `method`,
-`likelihood` (per-threshold vector), `parameters`, `entity`, `cluster`,
-`MRCA`, `threshold.time`, and `tree`.
+`splits::gmyc()`: `method`, `likelihood` (per-threshold vector),
+`parameters`, `entity`, `cluster`, `MRCA`, `threshold.time`, and `tree`.
 
 ## References
 
