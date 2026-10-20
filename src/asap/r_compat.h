@@ -15,6 +15,7 @@ void r_compat_exit(int code);
 int  r_compat_rand(void);
 int  r_compat_asprintf(char **strp, const char *fmt, ...);
 extern FILE *r_compat_null_stream;
+FILE *r_compat_get_null_stream(void);
 #ifdef __cplusplus
 }
 #endif
@@ -35,9 +36,12 @@ extern FILE *r_compat_null_stream;
 #define rand()          r_compat_rand()
 #undef  asprintf
 #define asprintf(strp, ...)  r_compat_asprintf((strp), __VA_ARGS__)
+/* Calls to get_null_stream() (not the raw variable) so the very first use
+ * of stdout/stderr -- fprintf(stdout, ...), fputs(..., stderr), etc. --
+ * lazily opens the stream instead of dereferencing it while still NULL. */
 #undef  stderr
-#define stderr          r_compat_null_stream
+#define stderr          r_compat_get_null_stream()
 #undef  stdout
-#define stdout          r_compat_null_stream
+#define stdout          r_compat_get_null_stream()
 #endif /* R_COMPAT_IMPL */
 #endif /* R_COMPAT_H */

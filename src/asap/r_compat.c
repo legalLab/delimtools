@@ -11,7 +11,18 @@
 
 FILE *r_compat_null_stream = NULL;
 
-static void r_compat_init_null_stream(void)
+/*
+ * stdout/stderr are macro-redirected (see r_compat.h) to a call to this
+ * function rather than to the r_compat_null_stream variable directly, so
+ * that the very first use of stdout/stderr in the original CLI source --
+ * via fprintf(stdout, ...), fputs(..., stderr), etc. -- lazily opens the
+ * stream instead of dereferencing it while it is still NULL. Earlier this
+ * was only initialized as a side effect of r_compat_sprintf(), which is not
+ * on the path of every caller (e.g. dp_ptp()'s fprintf(stdout, ...) and the
+ * fprintf(stderr, ...) minbr warning in dp.c), so any call to those
+ * functions before the first sprintf() segfaulted with a NULL FILE*.
+ */
+FILE *r_compat_get_null_stream(void)
 {
     if (r_compat_null_stream == NULL) {
         r_compat_null_stream = fopen("/dev/null", "w");
@@ -19,6 +30,7 @@ static void r_compat_init_null_stream(void)
             r_compat_null_stream = tmpfile();
         }
     }
+    return r_compat_null_stream;
 }
 
 void r_compat_printf(const char *fmt, ...)
@@ -38,7 +50,6 @@ int r_compat_sprintf(char *buf, const char *fmt, ...)
     va_start(ap, fmt);
     ret = vsnprintf(buf, 8192, fmt, ap);
     va_end(ap);
-    r_compat_init_null_stream();
     return ret;
 }
 
