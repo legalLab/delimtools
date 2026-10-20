@@ -23,20 +23,34 @@
 #' Pedro S. Bittencourt, Rupert A. Collins
 #' 
 #' @examples
-#' dwc <- get_dwc(type= "simple") 
+#' dwc <- get_dwc(type = "simple") 
 #'
 #' @export
 
 get_dwc <- function(type){
-  
+
   # check if `readr` is installed
   rlang::check_installed("readr", reason= "to run `get_dwc` properly.")
 
-  dwc <- readr::read_csv(glue::glue("https://raw.githubusercontent.com/tdwg/dwc/master/dist/{type}_dwc_vertical.csv"), show_col_types = FALSE)
+  # "simple" maps to simple_dwc_vertical.csv; the full term list is dwc_vertical.csv.
+  dist_file <- switch(type,
+    simple = "simple_dwc_vertical.csv",
+    all = "dwc_vertical.csv",
+    stop("`type` must be 'simple' or 'all'.")
+  )
+
+  # These distribution files are a bare list of term names with no header
+  # row, so col_names must be supplied explicitly -- otherwise readr treats
+  # the first term as the header and silently drops it from the data.
+  dwc <- readr::read_csv(
+    glue::glue("https://raw.githubusercontent.com/tdwg/dwc/master/dist/{dist_file}"),
+    col_names = "term",
+    show_col_types = FALSE
+  )
   terms <- readr::read_csv("https://raw.githubusercontent.com/tdwg/dwc/master/vocabulary/term_versions.csv", show_col_types = FALSE)
   terms <- terms |>
-    dplyr::filter(.data$term_localName %in% dplyr::pull(dwc, type) & .data$status == "recommended") |>
+    dplyr::filter(.data$term_localName %in% dwc$term & .data$status == "recommended") |>
     dplyr::distinct(.data$term_localName, .keep_all = TRUE)
 
-  return(list(dwc= dplyr::pull(dwc, type), terms= terms))
+  return(list(dwc = dwc$term, terms = terms))
 }
