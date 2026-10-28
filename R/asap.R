@@ -47,6 +47,42 @@
 
 
 # =============================================================================
+# .asap_check_overlap -- reject sequence pairs with no shared informative site
+# Mirrors abgd's check_compat() guard: a pair that shares no non-gap/non-N
+# site has an undefined distance under every model (the "simple" C path
+# falls back to 1.0 to avoid crashing; ape::dist.dna() returns NaN, which
+# would otherwise be silently zeroed out below as if the pair were
+# identical). Caught here, up front, with a clear error instead.
+# =============================================================================
+
+#' @keywords internal
+.asap_check_overlap <- function(x) {
+  mat   <- toupper(as.character(as.matrix(x)))
+  nseq  <- nrow(mat)
+  taxa  <- rownames(mat)
+  if (is.null(taxa)) taxa <- paste0("seq", seq_len(nseq))
+  valid <- matrix(!(mat %in% c("-", "N", "+")), nrow = nseq)
+
+  bad <- character(0)
+  for (i in seq_len(nseq - 1L)) {
+    for (j in seq.int(i + 1L, nseq)) {
+      if (!any(valid[i, ] & valid[j, ]))
+        bad <- c(bad, sprintf("'%s' and '%s'", taxa[i], taxa[j]))
+    }
+  }
+
+  if (length(bad) > 0)
+    stop(
+      "ASAP: the following sequence pairs share no non-gap/non-N site in ",
+      "common; distance can't be computed: ", paste(bad, collapse = ", "),
+      ". Check your alignment for sparse or disjoint regions."
+    )
+
+  invisible(TRUE)
+}
+
+
+# =============================================================================
 # Converts symmetric matrix to lower-triangular vector
 # order: a=1..n, b=0..(a-1) -> a*(a-1)/2 + b  (zero-based, same as C)
 # =============================================================================
@@ -184,6 +220,7 @@ asap <- function(x,
 
   # --- 1. Read/validate sequences and compute distance matrix ---
   x <- .read_aligned_dna(x)
+  .asap_check_overlap(x)
   if (is.null(len_seq)) len_seq <- ncol(x)
   if (model == "simple") {
     mat <- .dist_simple(x)
