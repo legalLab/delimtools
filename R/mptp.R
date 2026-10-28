@@ -21,6 +21,25 @@
   invisible(TRUE)
 }
 
+#' @keywords internal
+.mptp_rooting_notice <- function(tree, outgroup) {
+  if (!is.null(outgroup)) return(invisible(NULL))
+
+  phy <- if (inherits(tree, "phylo")) tree
+         else tryCatch(ape::read.tree(tree), error = function(e) NULL)
+
+  if (!is.null(phy) && !ape::is.rooted(phy))
+    message(
+      "Note: tree is unrooted and no 'outgroup' was given -- mPTP will root ",
+      "it automatically, using the tip with the single longest terminal ",
+      "branch as outgroup. This is not midpoint rooting. Consider rooting ",
+      "the tree yourself beforehand, or passing 'outgroup' explicitly, for ",
+      "a reproducible result."
+    )
+
+  invisible(NULL)
+}
+
 # ── Internal: resolve tree input (file path or ape phylo) ─────────────────────
 
 #' @keywords internal
@@ -215,6 +234,7 @@ mptp <- function(tree,
                         quiet         = FALSE) {
 
   method    <- match.arg(method)
+  .mptp_rooting_notice(tree, outgroup)
   tmpfiles  <- new.env(parent = emptyenv())
   on.exit(if (!is.null(tmpfiles$path)) unlink(tmpfiles$path), add = TRUE)
   tree_file <- .resolve_tree_input(tree, tmpfiles)
@@ -313,6 +333,7 @@ mptp_mcmc <- function(tree,
                           quiet            = FALSE) {
 
   method   <- match.arg(method)
+  .mptp_rooting_notice(tree, outgroup)
   tmpfiles <- new.env(parent = emptyenv())
   on.exit(if (!is.null(tmpfiles$path)) unlink(tmpfiles$path), add = TRUE)
   tree_file <- .resolve_tree_input(tree, tmpfiles)
