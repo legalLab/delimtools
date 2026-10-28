@@ -1,8 +1,32 @@
+# ── Internal: validate tree input (ape phylo) ─────────────────────
+
+#' @keywords internal
+.mptp_validate_tree <- function(tree) {
+  if (!inherits(tree, "phylo"))
+    stop("'tree' must be an object of class 'phylo' (ape package).")
+  
+  dupes <- tree$tip.label[duplicated(tree$tip.label)]
+  if (length(dupes) > 0)
+    stop("Tree contains duplicate tip labels: ",
+         paste(unique(dupes), collapse = ", "))
+  
+  if (length(tree$tip.label) < 3L)
+    stop("mPTP requires at least 3 taxa.")
+  
+  if (!ape::is.binary(tree))
+    stop("Tree is not fully binary (it contains polytomies), which mPTP's ",
+         "Newick parser cannot read. Resolve polytomies first, e.g. with ",
+         "ape::multi2di(tree).")
+  
+  invisible(TRUE)
+}
+
 # ── Internal: resolve tree input (file path or ape phylo) ─────────────────────
 
 #' @keywords internal
 .resolve_tree_input <- function(tree, tmpfiles) {
   if (inherits(tree, "phylo")) {
+    .mptp_validate_tree(tree)
     if (!requireNamespace("ape", quietly = TRUE))
       stop("Package 'ape' is required to pass a phylo object.")
     tmp <- tempfile(fileext = ".nwk")
@@ -12,7 +36,15 @@
   }
   if (!is.character(tree) || length(tree) != 1L)
     stop("'tree' must be a file path (character) or a phylo object.")
-  normalizePath(tree, mustWork = TRUE)
+  path <- normalizePath(tree, mustWork = TRUE)
+  
+  # Best-effort pre-check: a file ape can't parse is left to the C parser's
+  # own error, so this never introduces a new failure mode for valid Newick
+  # the R side happens not to understand.
+  phy <- tryCatch(ape::read.tree(path), error = function(e) NULL)
+  if (!is.null(phy)) .mptp_validate_tree(phy)
+  
+  path
 }
 
 # ── Internal: call the C library ──────────────────────────────────────────────
