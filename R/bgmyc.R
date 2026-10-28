@@ -2,6 +2,9 @@
 
 #' @keywords internal
 .bgmyc_prep <- function(tree) {
+  # convert BEAST tree read with treeio::read.beast() to a phylo object
+  if (inherits(tree, "treedata"))
+    tree <- ape::as.phylo(tree)
   if (!inherits(tree, "phylo"))
     stop("'tree' must be a 'phylo' object.")
   if (!ape::is.ultrametric(tree))
