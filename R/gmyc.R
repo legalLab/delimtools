@@ -14,6 +14,9 @@
 #' @export
 gmyc <- function(tree, method = "single", interval = c(0, 5),
                  quiet = TRUE, tol = 1e-6) {
+  # convert BEAST tree read with treeio::read.beast() to a phylo object
+  if (inherits(tree, "treedata"))
+    tree <- ape::as.phylo(tree)
   if (!inherits(tree, "phylo"))
     stop("'tree' must be an object of class 'phylo' (ape package).")
   if (!ape::is.binary(tree))
