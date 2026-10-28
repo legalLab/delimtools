@@ -70,13 +70,7 @@ static short verbose;
 
 static void exit_properly(char *ledir)
 {
-	char commande [1024];
-	if (strlen (ledir) >1)
-	{
-	sprintf(commande, "mv %s%s/results_.html %s%s/results.html", WORKDIR, ledir, WORKDIR, ledir);
-
-	system(commande);
-	}
+	(void)ledir; /* unused: CGI-only system("mv ...") rename removed for CRAN compliance */
 	error("abgd: fatal error (code 1)");
 }
 
