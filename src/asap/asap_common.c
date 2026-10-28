@@ -78,10 +78,8 @@ char debug;
 /*--------------------------------------------------*/
 void asap_exit_properly(char *ledir)
 {
-	if (strlen (ledir) >1)
-	{
-		exit(1);
-	}
+	(void)ledir; /* unused: CGI-only gating removed -- always stop via R's error() */
+	exit(1);
 }
 /*-----explor---------------------------------------------*/
 /*COMPARAISON FNS*/
