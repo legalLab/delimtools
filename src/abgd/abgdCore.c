@@ -509,7 +509,7 @@ void distancesimple(struct FastaSeq *mesSeqs,int l,struct  DistanceMatrix  my_ma
 			v=0;ncor=0;
 			s2= mesSeqs[b].seq;
 			if (check_compat(s1,s2, l)==0)
-			{fprintf(fres,"<H4>Sequence %s and %s have no common site. Distance can't be computed. Bye </H4><BR>",my_mat.names[a],my_mat.names[b]);fclose(fres);exit_properly(ledir);}
+				error("Sequence %s and %s have no common site. Distance can't be computed. Bye", my_mat.names[a], my_mat.names[b]);
 
 			for (i=0;i<l;i++)
 				{
@@ -558,7 +558,7 @@ for (a=0;a<nseq-1;a++)
 		s2= mesSeqs[b].seq;
 		newl=0;v=0;
 		if (check_compat(s1,s2, l)==0)
-			{fprintf(fres,"<H4>Sequence %s and %s have no common site. Distance can't be computed. Bye </H4><BR>",mymat.names[a],mymat.names[b]);fclose(fres);exit_properly(ledir);}
+			error("Sequence %s and %s have no common site. Distance can't be computed. Bye", mymat.names[a], mymat.names[b]);
 		for (i=0;i<l;i++)
 			{
 			c1=toupper(*(s1+i));
@@ -706,7 +706,7 @@ int nseq=my_mat.n;
 		for(j=i+1;j<nseq; j++){
 
 			if (check_compat(mesSeqs[i].seq, mesSeqs[j].seq, l)==0)
-				{fprintf(fres,"<H4>Sequence %s and %s have no common site. Distance can't be computed. Bye </H4><BR>",my_mat.names[i],my_mat.names[j]);fclose(fres);exit_properly(ledir);}
+				error("Sequence %s and %s have no common site. Distance can't be computed. Bye", my_mat.names[i], my_mat.names[j]);
 
 			transition_transversion_sequences(mesSeqs[i].seq, mesSeqs[j].seq, l, &tsi, &tsv);
 
@@ -772,7 +772,7 @@ for (a=0;a<nseq-1;a++)
 		{
 		s2= mesSeqs[b].seq;
 		if (check_compat(s1,s2, l)==0)
-			{fprintf(fres,"<H4>Sequence %s and %s have no common site. Distance can't be computed. Bye </H4><BR>",my_mat.names[a],my_mat.names[b]);fclose(fres);exit_properly(ledir);}
+			error("Sequence %s and %s have no common site. Distance can't be computed. Bye", my_mat.names[a], my_mat.names[b]);
 		newl=0;v=0;
 		for (i=0;i<5;i++)
 			f[i]=0;
