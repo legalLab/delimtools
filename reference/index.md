@@ -85,6 +85,9 @@
 - [`mptp_support()`](mptp_support.md) : Extract MCMC support values
 - [`mptp_tbl()`](mptp_tbl.md) : A Command-Line Interface for mPTP -
   multi-rate Poisson Tree Processes
+- [`ptp()`](ptp.md) : Run PTP species delimitation (Maximum Likelihood)
+- [`ptp_tbl()`](ptp_tbl.md) : A Command-Line Interface for PTP - Poisson
+  Tree Process
 - [`report_delim()`](report_delim.md) : Report Unique Species Partitions
 - [`spec.list()`](spec.list.md) : Get species list from a delimitation
   result
