@@ -742,9 +742,10 @@ further analysis. For this task, we can use <code>delim_join</code>.
 This function takes a <code>list</code> of species partitions to recode
 and then join.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">all_delims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">abgd_df</span>, <span class="va">asap_df</span>, <span class="va">bgmyc_df</span>, <span class="va">gmyc_df</span>, </span>
-<span>                   <span class="va">locmin_df</span>, <span class="va">morph_df</span>, <span class="va">mptp_df</span>, <span class="va">ptp_df</span>, </span>
-<span>                   <span class="va">percent_df</span>, <span class="va">treedist_df</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">all_delims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">abgd_df</span>, <span class="va">asap_df</span>, <span class="va">locmin_df</span>, <span class="va">percent_df</span>, <span class="va">treedist_df</span>,</span>
+<span>                   <span class="va">bgmyc_df</span>, <span class="va">gmyc_df</span>,</span>
+<span>                   <span class="va">mptp_df</span>, <span class="va">ptp_df</span>,</span>
+<span>                   <span class="va">morph_df</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">all_delims_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/delim_join.html">delim_join</a></span><span class="op">(</span><span class="va">all_delims</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Dimensions are not the same across tables.</span></span>
@@ -781,8 +782,8 @@ and then join.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; |method   | partitions|</span></span>
 <span><span class="co">#&gt; |:--------|----------:|</span></span>
-<span><span class="co">#&gt; |gmyc     |         21|</span></span>
 <span><span class="co">#&gt; |locmin   |         21|</span></span>
+<span><span class="co">#&gt; |gmyc     |         21|</span></span>
 <span><span class="co">#&gt; |abgd     |         19|</span></span>
 <span><span class="co">#&gt; |bgmyc    |         19|</span></span>
 <span><span class="co">#&gt; |ptp      |         17|</span></span>
@@ -792,18 +793,18 @@ and then join.</p>
 <span><span class="co">#&gt; |percent  |         12|</span></span>
 <span><span class="co">#&gt; |treedist |          7|</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 137 × 11</span></span></span>
-<span><span class="co">#&gt;    labels     abgd  asap  bgmyc gmyc  locmin morph mptp  ptp   percent treedist</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> MZ504301.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40    sp44    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> MZ504318.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40    sp44    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> MZ504341.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40    sp44    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> MZ504337.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40    sp44    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> MZ504342.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40    sp44    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> MZ504304.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40    sp44    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> MZ504332.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40    sp44    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> MZ504343.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40    sp44    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> MZ504315.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40    sp44    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> MZ504345.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40    sp44    </span></span>
+<span><span class="co">#&gt;    labels     abgd  asap  locmin percent treedist bgmyc gmyc  mptp  ptp   morph</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> MZ504301.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> MZ504318.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> MZ504341.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> MZ504337.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> MZ504342.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> MZ504304.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> MZ504332.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> MZ504343.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> MZ504315.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> MZ504345.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 127 more rows</span></span></span></code></pre></div>
 <p>We can also check the match ratio statistics of Ahrens et al (2014)
 using <code>match_ratio</code>.</p>
@@ -821,44 +822,44 @@ using <code>match_ratio</code>.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> abgd-ptp              19      17      13        0.72</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> bgmyc-ptp             19      17      13        0.72</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> asap-ptp              14      17      11        0.71</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> gmyc-locmin           21      21      15        0.71</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> bgmyc-locmin          19      21      14        0.7 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> locmin-gmyc           21      21      15        0.71</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> locmin-bgmyc          21      19      14        0.7 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> gmyc-ptp              21      17      13        0.68</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> asap-morph            14      16      10        0.67</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> mptp-ptp              14      17      10        0.65</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> asap-mptp             14      14       9        0.64</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> bgmyc-morph           19      16      11        0.63</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> locmin-ptp            21      17      12        0.63</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> ptp-percent           17      12       9        0.62</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> percent-ptp           12      17       9        0.62</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> abgd-asap             19      14      10        0.61</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> asap-bgmyc            14      19      10        0.61</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> abgd-gmyc             19      21      12        0.6 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> abgd-percent          19      12       9        0.58</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">21</span> bgmyc-percent         19      12       9        0.58</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">22</span> morph-percent         16      12       8        0.57</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">21</span> percent-bgmyc         12      19       9        0.58</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">22</span> percent-morph         12      16       8        0.57</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">23</span> abgd-morph            19      16       9        0.51</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">24</span> asap-gmyc             14      21       9        0.51</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">25</span> gmyc-morph            21      16       9        0.49</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">26</span> abgd-mptp             19      14       8        0.48</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">27</span> bgmyc-mptp            19      14       8        0.48</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">28</span> gmyc-percent          21      12       8        0.48</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">29</span> morph-ptp             16      17       8        0.48</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">30</span> morph-mptp            16      14       7        0.47</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">28</span> percent-gmyc          12      21       8        0.48</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">29</span> ptp-morph             17      16       8        0.48</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">30</span> mptp-morph            14      16       7        0.47</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">31</span> asap-locmin           14      21       8        0.46</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">32</span> gmyc-mptp             21      14       8        0.46</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">33</span> mptp-percent          14      12       6        0.46</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">33</span> percent-mptp          12      14       6        0.46</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">34</span> locmin-morph          21      16       8        0.43</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">35</span> locmin-percent        21      12       7        0.42</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">36</span> percent-treedist      12       7       4        0.42</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">37</span> locmin-mptp           21      14       7        0.4 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">38</span> asap-treedist         14       7       4        0.38</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">39</span> mptp-treedist         14       7       4        0.38</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">40</span> ptp-treedist          17       7       4        0.33</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">39</span> treedist-mptp          7      14       4        0.38</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">40</span> treedist-ptp           7      17       4        0.33</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">41</span> abgd-treedist         19       7       4        0.31</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">42</span> bgmyc-treedist        19       7       3        0.23</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">43</span> gmyc-treedist         21       7       3        0.21</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">44</span> locmin-treedist       21       7       3        0.21</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">45</span> morph-treedist        16       7       2        0.17</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">42</span> treedist-bgmyc         7      19       3        0.23</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">43</span> locmin-treedist       21       7       3        0.21</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">44</span> treedist-gmyc          7      21       3        0.21</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">45</span> treedist-morph         7      16       2        0.17</span></span></code></pre></div>
 <p>By checking the results, all comparisons including treedist have a
 low <code>match_ratio</code>. Since species partitions with very low
 <code>match_ratio</code> values can impact consensus calculations, we
@@ -873,8 +874,8 @@ will remove treedist before visualizing our results.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; |method  | partitions|</span></span>
 <span><span class="co">#&gt; |:-------|----------:|</span></span>
-<span><span class="co">#&gt; |gmyc    |         21|</span></span>
 <span><span class="co">#&gt; |locmin  |         21|</span></span>
+<span><span class="co">#&gt; |gmyc    |         21|</span></span>
 <span><span class="co">#&gt; |abgd    |         19|</span></span>
 <span><span class="co">#&gt; |bgmyc   |         19|</span></span>
 <span><span class="co">#&gt; |ptp     |         17|</span></span>
@@ -883,18 +884,18 @@ will remove treedist before visualizing our results.</p>
 <span><span class="co">#&gt; |mptp    |         14|</span></span>
 <span><span class="co">#&gt; |percent |         12|</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 137 × 10</span></span></span>
-<span><span class="co">#&gt;    labels     abgd  asap  bgmyc gmyc  locmin morph mptp  ptp   percent</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> MZ504301.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> MZ504318.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> MZ504341.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> MZ504337.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> MZ504342.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> MZ504304.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> MZ504332.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> MZ504343.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> MZ504315.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> MZ504345.1 sp1   sp20  sp1   sp1   sp1    sp36  sp1   sp1   sp40   </span></span>
+<span><span class="co">#&gt;    labels     abgd  asap  locmin percent bgmyc gmyc  mptp  ptp   morph</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> MZ504301.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> MZ504318.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> MZ504341.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> MZ504337.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> MZ504342.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> MZ504304.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> MZ504332.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> MZ504343.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> MZ504315.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> MZ504345.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 127 more rows</span></span></span></code></pre></div>
 </div>
 <div class="section level3">

@@ -477,7 +477,7 @@
 <span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a><span class="co">#&gt; 90%</span></span>
 <span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a><span class="co">#&gt; 100%</span></span>
 <span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a><span class="co">#&gt; Acceptance rates (py / pc / t):</span></span>
-<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="co">#&gt; 0.5216  0.8407  0.3470</span></span></code></pre></div>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="co">#&gt; 0.5302  0.8366  0.3504</span></span></code></pre></div>
 <p>The results then need to be transformed into a table using the <code>bgmyc_tbl</code> function. By default, <code>0.05</code> is used as default posterior probability threshold for clustering samples into species partitions.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>bgmyc_df <span class="ot">&lt;-</span> <span class="fu">bgmyc_tbl</span>(bgmyc_delim)</span>
 <span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a></span>
@@ -592,47 +592,48 @@
 <h2 id="joining-species-delimitation-outputs">Joining Species Delimitation Outputs<a class="anchor" aria-label="anchor" href="#joining-species-delimitation-outputs"></a>
 </h2>
 <p>Since we have several species partitions, we need to merge them into a single data frame in order to visualize the results. However, since each method has its own rankings, we need to recode them prior to any further analysis. For this task, we can use <code>delim_join</code>. This function takes a <code>list</code> of species partitions to recode and then join.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>all_delims <span class="ot">&lt;-</span> <span class="fu">list</span>(abgd_df, asap_df, bgmyc_df, gmyc_df, </span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>                   locmin_df, morph_df, mptp_df, ptp_df, </span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>                   percent_df, treedist_df)</span>
-<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>all_delims_df <span class="ot">&lt;-</span> <span class="fu">delim_join</span>(all_delims)</span>
-<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a><span class="co">#&gt; Warning: Dimensions are not the same across tables.</span></span>
-<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
-<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
-<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span>
-<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a><span class="co">#&gt; Dimensions are not the same across tables.</span></span>
-<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
-<span id="cb31-12"><a href="#cb31-12" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
-<span id="cb31-13"><a href="#cb31-13" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span>
-<span id="cb31-14"><a href="#cb31-14" tabindex="-1"></a><span class="co">#&gt; Dimensions are not the same across tables.</span></span>
-<span id="cb31-15"><a href="#cb31-15" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
-<span id="cb31-16"><a href="#cb31-16" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
-<span id="cb31-17"><a href="#cb31-17" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span>
-<span id="cb31-18"><a href="#cb31-18" tabindex="-1"></a><span class="co">#&gt; Dimensions are not the same across tables.</span></span>
-<span id="cb31-19"><a href="#cb31-19" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
-<span id="cb31-20"><a href="#cb31-20" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
-<span id="cb31-21"><a href="#cb31-21" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span>
-<span id="cb31-22"><a href="#cb31-22" tabindex="-1"></a><span class="co">#&gt; Dimensions are not the same across tables.</span></span>
-<span id="cb31-23"><a href="#cb31-23" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
-<span id="cb31-24"><a href="#cb31-24" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
-<span id="cb31-25"><a href="#cb31-25" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span>
-<span id="cb31-26"><a href="#cb31-26" tabindex="-1"></a><span class="co">#&gt; Dimensions are not the same across tables.</span></span>
-<span id="cb31-27"><a href="#cb31-27" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
-<span id="cb31-28"><a href="#cb31-28" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
-<span id="cb31-29"><a href="#cb31-29" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>all_delims <span class="ot">&lt;-</span> <span class="fu">list</span>(abgd_df, asap_df, locmin_df, percent_df, treedist_df,</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>                   bgmyc_df, gmyc_df,</span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>                   mptp_df, ptp_df,</span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>                   morph_df)</span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>all_delims_df <span class="ot">&lt;-</span> <span class="fu">delim_join</span>(all_delims)</span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a><span class="co">#&gt; Warning: Dimensions are not the same across tables.</span></span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
+<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
+<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span>
+<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a><span class="co">#&gt; Dimensions are not the same across tables.</span></span>
+<span id="cb31-12"><a href="#cb31-12" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
+<span id="cb31-13"><a href="#cb31-13" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
+<span id="cb31-14"><a href="#cb31-14" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span>
+<span id="cb31-15"><a href="#cb31-15" tabindex="-1"></a><span class="co">#&gt; Dimensions are not the same across tables.</span></span>
+<span id="cb31-16"><a href="#cb31-16" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
+<span id="cb31-17"><a href="#cb31-17" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
+<span id="cb31-18"><a href="#cb31-18" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span>
+<span id="cb31-19"><a href="#cb31-19" tabindex="-1"></a><span class="co">#&gt; Dimensions are not the same across tables.</span></span>
+<span id="cb31-20"><a href="#cb31-20" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
+<span id="cb31-21"><a href="#cb31-21" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
+<span id="cb31-22"><a href="#cb31-22" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span>
+<span id="cb31-23"><a href="#cb31-23" tabindex="-1"></a><span class="co">#&gt; Dimensions are not the same across tables.</span></span>
+<span id="cb31-24"><a href="#cb31-24" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
+<span id="cb31-25"><a href="#cb31-25" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
+<span id="cb31-26"><a href="#cb31-26" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span>
+<span id="cb31-27"><a href="#cb31-27" tabindex="-1"></a><span class="co">#&gt; Dimensions are not the same across tables.</span></span>
+<span id="cb31-28"><a href="#cb31-28" tabindex="-1"></a><span class="co">#&gt; ✖ You've supplied inputs with different dimensions.</span></span>
+<span id="cb31-29"><a href="#cb31-29" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 1` has 354 rows and 2 columns</span></span>
+<span id="cb31-30"><a href="#cb31-30" tabindex="-1"></a><span class="co">#&gt; ℹ `delim 2` has 137 rows and 2 columns</span></span></code></pre></div>
 <p>We can summarize the <code>all_delims_df</code> object by using the <code>report_delim</code> function.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">report_delim</span>(all_delims_df)</span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="co">#&gt; ℹ Joined delimitations have a total of 46 unique species partitions.</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="co">#&gt; ℹ Joined delimitations have a total of 45 unique species partitions.</span></span>
 <span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="co">#&gt; ℹ Check below the number of species partitions per method:</span></span>
 <span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="co">#&gt; |method   | partitions|</span></span>
 <span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="co">#&gt; |:--------|----------:|</span></span>
-<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a><span class="co">#&gt; |gmyc     |         21|</span></span>
-<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a><span class="co">#&gt; |locmin   |         21|</span></span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a><span class="co">#&gt; |locmin   |         21|</span></span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a><span class="co">#&gt; |gmyc     |         21|</span></span>
 <span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a><span class="co">#&gt; |abgd     |         19|</span></span>
-<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="co">#&gt; |bgmyc    |         18|</span></span>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="co">#&gt; |bgmyc    |         19|</span></span>
 <span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a><span class="co">#&gt; |ptp      |         17|</span></span>
 <span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a><span class="co">#&gt; |morph    |         16|</span></span>
 <span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a><span class="co">#&gt; |asap     |         14|</span></span>
@@ -640,18 +641,18 @@
 <span id="cb32-16"><a href="#cb32-16" tabindex="-1"></a><span class="co">#&gt; |percent  |         12|</span></span>
 <span id="cb32-17"><a href="#cb32-17" tabindex="-1"></a><span class="co">#&gt; |treedist |          7|</span></span>
 <span id="cb32-18"><a href="#cb32-18" tabindex="-1"></a><span class="co">#&gt; # A tibble: 137 × 11</span></span>
-<span id="cb32-19"><a href="#cb32-19" tabindex="-1"></a><span class="co">#&gt;    labels     abgd  asap  bgmyc gmyc  locmin morph mptp  ptp   percent treedist</span></span>
-<span id="cb32-20"><a href="#cb32-20" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   </span></span>
-<span id="cb32-21"><a href="#cb32-21" tabindex="-1"></a><span class="co">#&gt;  1 MZ504301.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    </span></span>
-<span id="cb32-22"><a href="#cb32-22" tabindex="-1"></a><span class="co">#&gt;  2 MZ504318.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    </span></span>
-<span id="cb32-23"><a href="#cb32-23" tabindex="-1"></a><span class="co">#&gt;  3 MZ504341.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    </span></span>
-<span id="cb32-24"><a href="#cb32-24" tabindex="-1"></a><span class="co">#&gt;  4 MZ504337.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    </span></span>
-<span id="cb32-25"><a href="#cb32-25" tabindex="-1"></a><span class="co">#&gt;  5 MZ504342.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    </span></span>
-<span id="cb32-26"><a href="#cb32-26" tabindex="-1"></a><span class="co">#&gt;  6 MZ504304.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    </span></span>
-<span id="cb32-27"><a href="#cb32-27" tabindex="-1"></a><span class="co">#&gt;  7 MZ504332.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    </span></span>
-<span id="cb32-28"><a href="#cb32-28" tabindex="-1"></a><span class="co">#&gt;  8 MZ504343.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    </span></span>
-<span id="cb32-29"><a href="#cb32-29" tabindex="-1"></a><span class="co">#&gt;  9 MZ504315.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    </span></span>
-<span id="cb32-30"><a href="#cb32-30" tabindex="-1"></a><span class="co">#&gt; 10 MZ504345.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    </span></span>
+<span id="cb32-19"><a href="#cb32-19" tabindex="-1"></a><span class="co">#&gt;    labels     abgd  asap  locmin percent treedist bgmyc gmyc  mptp  ptp   morph</span></span>
+<span id="cb32-20"><a href="#cb32-20" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></span>
+<span id="cb32-21"><a href="#cb32-21" tabindex="-1"></a><span class="co">#&gt;  1 MZ504301.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb32-22"><a href="#cb32-22" tabindex="-1"></a><span class="co">#&gt;  2 MZ504318.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb32-23"><a href="#cb32-23" tabindex="-1"></a><span class="co">#&gt;  3 MZ504341.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb32-24"><a href="#cb32-24" tabindex="-1"></a><span class="co">#&gt;  4 MZ504337.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb32-25"><a href="#cb32-25" tabindex="-1"></a><span class="co">#&gt;  5 MZ504342.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb32-26"><a href="#cb32-26" tabindex="-1"></a><span class="co">#&gt;  6 MZ504304.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb32-27"><a href="#cb32-27" tabindex="-1"></a><span class="co">#&gt;  7 MZ504332.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb32-28"><a href="#cb32-28" tabindex="-1"></a><span class="co">#&gt;  8 MZ504343.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb32-29"><a href="#cb32-29" tabindex="-1"></a><span class="co">#&gt;  9 MZ504315.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb32-30"><a href="#cb32-30" tabindex="-1"></a><span class="co">#&gt; 10 MZ504345.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 </span></span>
 <span id="cb32-31"><a href="#cb32-31" tabindex="-1"></a><span class="co">#&gt; # ℹ 127 more rows</span></span></code></pre></div>
 <p>We can also check the match ratio statistics of Ahrens et al (2014) using <code>match_ratio</code>.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">match_ratio</span>(all_delims_df) <span class="sc">|&gt;</span> </span>
@@ -661,82 +662,82 @@
 <span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a><span class="co">#&gt;    pairs            delim_1 delim_2 n_match match_ratio</span></span>
 <span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;              &lt;int&gt;   &lt;int&gt;   &lt;int&gt;       &lt;dbl&gt;</span></span>
 <span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a><span class="co">#&gt;  1 abgd-locmin           19      21      17        0.85</span></span>
-<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a><span class="co">#&gt;  2 asap-percent          14      12      10        0.77</span></span>
-<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a><span class="co">#&gt;  3 bgmyc-gmyc            18      21      15        0.77</span></span>
-<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a><span class="co">#&gt;  4 abgd-bgmyc            19      18      14        0.76</span></span>
-<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a><span class="co">#&gt;  5 bgmyc-ptp             18      17      13        0.74</span></span>
-<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a><span class="co">#&gt;  6 abgd-ptp              19      17      13        0.72</span></span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a><span class="co">#&gt;  2 bgmyc-gmyc            19      21      17        0.85</span></span>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a><span class="co">#&gt;  3 asap-percent          14      12      10        0.77</span></span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a><span class="co">#&gt;  4 abgd-bgmyc            19      19      14        0.74</span></span>
+<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a><span class="co">#&gt;  5 abgd-ptp              19      17      13        0.72</span></span>
+<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a><span class="co">#&gt;  6 bgmyc-ptp             19      17      13        0.72</span></span>
 <span id="cb33-13"><a href="#cb33-13" tabindex="-1"></a><span class="co">#&gt;  7 asap-ptp              14      17      11        0.71</span></span>
-<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a><span class="co">#&gt;  8 gmyc-locmin           21      21      15        0.71</span></span>
-<span id="cb33-15"><a href="#cb33-15" tabindex="-1"></a><span class="co">#&gt;  9 gmyc-ptp              21      17      13        0.68</span></span>
-<span id="cb33-16"><a href="#cb33-16" tabindex="-1"></a><span class="co">#&gt; 10 asap-morph            14      16      10        0.67</span></span>
-<span id="cb33-17"><a href="#cb33-17" tabindex="-1"></a><span class="co">#&gt; 11 bgmyc-locmin          18      21      13        0.67</span></span>
-<span id="cb33-18"><a href="#cb33-18" tabindex="-1"></a><span class="co">#&gt; 12 bgmyc-morph           18      16      11        0.65</span></span>
-<span id="cb33-19"><a href="#cb33-19" tabindex="-1"></a><span class="co">#&gt; 13 mptp-ptp              14      17      10        0.65</span></span>
-<span id="cb33-20"><a href="#cb33-20" tabindex="-1"></a><span class="co">#&gt; 14 asap-mptp             14      14       9        0.64</span></span>
+<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a><span class="co">#&gt;  8 locmin-gmyc           21      21      15        0.71</span></span>
+<span id="cb33-15"><a href="#cb33-15" tabindex="-1"></a><span class="co">#&gt;  9 locmin-bgmyc          21      19      14        0.7 </span></span>
+<span id="cb33-16"><a href="#cb33-16" tabindex="-1"></a><span class="co">#&gt; 10 gmyc-ptp              21      17      13        0.68</span></span>
+<span id="cb33-17"><a href="#cb33-17" tabindex="-1"></a><span class="co">#&gt; 11 asap-morph            14      16      10        0.67</span></span>
+<span id="cb33-18"><a href="#cb33-18" tabindex="-1"></a><span class="co">#&gt; 12 mptp-ptp              14      17      10        0.65</span></span>
+<span id="cb33-19"><a href="#cb33-19" tabindex="-1"></a><span class="co">#&gt; 13 asap-mptp             14      14       9        0.64</span></span>
+<span id="cb33-20"><a href="#cb33-20" tabindex="-1"></a><span class="co">#&gt; 14 bgmyc-morph           19      16      11        0.63</span></span>
 <span id="cb33-21"><a href="#cb33-21" tabindex="-1"></a><span class="co">#&gt; 15 locmin-ptp            21      17      12        0.63</span></span>
-<span id="cb33-22"><a href="#cb33-22" tabindex="-1"></a><span class="co">#&gt; 16 asap-bgmyc            14      18      10        0.62</span></span>
-<span id="cb33-23"><a href="#cb33-23" tabindex="-1"></a><span class="co">#&gt; 17 ptp-percent           17      12       9        0.62</span></span>
-<span id="cb33-24"><a href="#cb33-24" tabindex="-1"></a><span class="co">#&gt; 18 abgd-asap             19      14      10        0.61</span></span>
+<span id="cb33-22"><a href="#cb33-22" tabindex="-1"></a><span class="co">#&gt; 16 percent-ptp           12      17       9        0.62</span></span>
+<span id="cb33-23"><a href="#cb33-23" tabindex="-1"></a><span class="co">#&gt; 17 abgd-asap             19      14      10        0.61</span></span>
+<span id="cb33-24"><a href="#cb33-24" tabindex="-1"></a><span class="co">#&gt; 18 asap-bgmyc            14      19      10        0.61</span></span>
 <span id="cb33-25"><a href="#cb33-25" tabindex="-1"></a><span class="co">#&gt; 19 abgd-gmyc             19      21      12        0.6 </span></span>
-<span id="cb33-26"><a href="#cb33-26" tabindex="-1"></a><span class="co">#&gt; 20 bgmyc-percent         18      12       9        0.6 </span></span>
-<span id="cb33-27"><a href="#cb33-27" tabindex="-1"></a><span class="co">#&gt; 21 abgd-percent          19      12       9        0.58</span></span>
-<span id="cb33-28"><a href="#cb33-28" tabindex="-1"></a><span class="co">#&gt; 22 morph-percent         16      12       8        0.57</span></span>
+<span id="cb33-26"><a href="#cb33-26" tabindex="-1"></a><span class="co">#&gt; 20 abgd-percent          19      12       9        0.58</span></span>
+<span id="cb33-27"><a href="#cb33-27" tabindex="-1"></a><span class="co">#&gt; 21 percent-bgmyc         12      19       9        0.58</span></span>
+<span id="cb33-28"><a href="#cb33-28" tabindex="-1"></a><span class="co">#&gt; 22 percent-morph         12      16       8        0.57</span></span>
 <span id="cb33-29"><a href="#cb33-29" tabindex="-1"></a><span class="co">#&gt; 23 abgd-morph            19      16       9        0.51</span></span>
 <span id="cb33-30"><a href="#cb33-30" tabindex="-1"></a><span class="co">#&gt; 24 asap-gmyc             14      21       9        0.51</span></span>
-<span id="cb33-31"><a href="#cb33-31" tabindex="-1"></a><span class="co">#&gt; 25 bgmyc-mptp            18      14       8        0.5 </span></span>
-<span id="cb33-32"><a href="#cb33-32" tabindex="-1"></a><span class="co">#&gt; 26 gmyc-morph            21      16       9        0.49</span></span>
-<span id="cb33-33"><a href="#cb33-33" tabindex="-1"></a><span class="co">#&gt; 27 abgd-mptp             19      14       8        0.48</span></span>
-<span id="cb33-34"><a href="#cb33-34" tabindex="-1"></a><span class="co">#&gt; 28 gmyc-percent          21      12       8        0.48</span></span>
-<span id="cb33-35"><a href="#cb33-35" tabindex="-1"></a><span class="co">#&gt; 29 morph-ptp             16      17       8        0.48</span></span>
-<span id="cb33-36"><a href="#cb33-36" tabindex="-1"></a><span class="co">#&gt; 30 morph-mptp            16      14       7        0.47</span></span>
+<span id="cb33-31"><a href="#cb33-31" tabindex="-1"></a><span class="co">#&gt; 25 gmyc-morph            21      16       9        0.49</span></span>
+<span id="cb33-32"><a href="#cb33-32" tabindex="-1"></a><span class="co">#&gt; 26 abgd-mptp             19      14       8        0.48</span></span>
+<span id="cb33-33"><a href="#cb33-33" tabindex="-1"></a><span class="co">#&gt; 27 bgmyc-mptp            19      14       8        0.48</span></span>
+<span id="cb33-34"><a href="#cb33-34" tabindex="-1"></a><span class="co">#&gt; 28 percent-gmyc          12      21       8        0.48</span></span>
+<span id="cb33-35"><a href="#cb33-35" tabindex="-1"></a><span class="co">#&gt; 29 ptp-morph             17      16       8        0.48</span></span>
+<span id="cb33-36"><a href="#cb33-36" tabindex="-1"></a><span class="co">#&gt; 30 mptp-morph            14      16       7        0.47</span></span>
 <span id="cb33-37"><a href="#cb33-37" tabindex="-1"></a><span class="co">#&gt; 31 asap-locmin           14      21       8        0.46</span></span>
 <span id="cb33-38"><a href="#cb33-38" tabindex="-1"></a><span class="co">#&gt; 32 gmyc-mptp             21      14       8        0.46</span></span>
-<span id="cb33-39"><a href="#cb33-39" tabindex="-1"></a><span class="co">#&gt; 33 mptp-percent          14      12       6        0.46</span></span>
+<span id="cb33-39"><a href="#cb33-39" tabindex="-1"></a><span class="co">#&gt; 33 percent-mptp          12      14       6        0.46</span></span>
 <span id="cb33-40"><a href="#cb33-40" tabindex="-1"></a><span class="co">#&gt; 34 locmin-morph          21      16       8        0.43</span></span>
 <span id="cb33-41"><a href="#cb33-41" tabindex="-1"></a><span class="co">#&gt; 35 locmin-percent        21      12       7        0.42</span></span>
 <span id="cb33-42"><a href="#cb33-42" tabindex="-1"></a><span class="co">#&gt; 36 percent-treedist      12       7       4        0.42</span></span>
 <span id="cb33-43"><a href="#cb33-43" tabindex="-1"></a><span class="co">#&gt; 37 locmin-mptp           21      14       7        0.4 </span></span>
 <span id="cb33-44"><a href="#cb33-44" tabindex="-1"></a><span class="co">#&gt; 38 asap-treedist         14       7       4        0.38</span></span>
-<span id="cb33-45"><a href="#cb33-45" tabindex="-1"></a><span class="co">#&gt; 39 mptp-treedist         14       7       4        0.38</span></span>
-<span id="cb33-46"><a href="#cb33-46" tabindex="-1"></a><span class="co">#&gt; 40 ptp-treedist          17       7       4        0.33</span></span>
+<span id="cb33-45"><a href="#cb33-45" tabindex="-1"></a><span class="co">#&gt; 39 treedist-mptp          7      14       4        0.38</span></span>
+<span id="cb33-46"><a href="#cb33-46" tabindex="-1"></a><span class="co">#&gt; 40 treedist-ptp           7      17       4        0.33</span></span>
 <span id="cb33-47"><a href="#cb33-47" tabindex="-1"></a><span class="co">#&gt; 41 abgd-treedist         19       7       4        0.31</span></span>
-<span id="cb33-48"><a href="#cb33-48" tabindex="-1"></a><span class="co">#&gt; 42 bgmyc-treedist        18       7       3        0.24</span></span>
-<span id="cb33-49"><a href="#cb33-49" tabindex="-1"></a><span class="co">#&gt; 43 gmyc-treedist         21       7       3        0.21</span></span>
-<span id="cb33-50"><a href="#cb33-50" tabindex="-1"></a><span class="co">#&gt; 44 locmin-treedist       21       7       3        0.21</span></span>
-<span id="cb33-51"><a href="#cb33-51" tabindex="-1"></a><span class="co">#&gt; 45 morph-treedist        16       7       2        0.17</span></span></code></pre></div>
+<span id="cb33-48"><a href="#cb33-48" tabindex="-1"></a><span class="co">#&gt; 42 treedist-bgmyc         7      19       3        0.23</span></span>
+<span id="cb33-49"><a href="#cb33-49" tabindex="-1"></a><span class="co">#&gt; 43 locmin-treedist       21       7       3        0.21</span></span>
+<span id="cb33-50"><a href="#cb33-50" tabindex="-1"></a><span class="co">#&gt; 44 treedist-gmyc          7      21       3        0.21</span></span>
+<span id="cb33-51"><a href="#cb33-51" tabindex="-1"></a><span class="co">#&gt; 45 treedist-morph         7      16       2        0.17</span></span></code></pre></div>
 <p>By checking the results, all comparisons including treedist have a low <code>match_ratio</code>. Since species partitions with very low <code>match_ratio</code> values can impact consensus calculations, we will remove treedist before visualizing our results.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>all_delims_df <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>(all_delims_df, <span class="sc">-</span>treedist)</span>
 <span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a></span>
 <span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="fu">report_delim</span>(all_delims_df)</span>
-<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co">#&gt; ℹ Joined delimitations have a total of 44 unique species partitions.</span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co">#&gt; ℹ Joined delimitations have a total of 43 unique species partitions.</span></span>
 <span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="co">#&gt; ℹ Check below the number of species partitions per method:</span></span>
 <span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a><span class="co">#&gt; |method  | partitions|</span></span>
 <span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a><span class="co">#&gt; |:-------|----------:|</span></span>
-<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a><span class="co">#&gt; |gmyc    |         21|</span></span>
-<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a><span class="co">#&gt; |locmin  |         21|</span></span>
+<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a><span class="co">#&gt; |locmin  |         21|</span></span>
+<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a><span class="co">#&gt; |gmyc    |         21|</span></span>
 <span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a><span class="co">#&gt; |abgd    |         19|</span></span>
-<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a><span class="co">#&gt; |bgmyc   |         18|</span></span>
+<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a><span class="co">#&gt; |bgmyc   |         19|</span></span>
 <span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a><span class="co">#&gt; |ptp     |         17|</span></span>
 <span id="cb34-15"><a href="#cb34-15" tabindex="-1"></a><span class="co">#&gt; |morph   |         16|</span></span>
 <span id="cb34-16"><a href="#cb34-16" tabindex="-1"></a><span class="co">#&gt; |asap    |         14|</span></span>
 <span id="cb34-17"><a href="#cb34-17" tabindex="-1"></a><span class="co">#&gt; |mptp    |         14|</span></span>
 <span id="cb34-18"><a href="#cb34-18" tabindex="-1"></a><span class="co">#&gt; |percent |         12|</span></span>
 <span id="cb34-19"><a href="#cb34-19" tabindex="-1"></a><span class="co">#&gt; # A tibble: 137 × 10</span></span>
-<span id="cb34-20"><a href="#cb34-20" tabindex="-1"></a><span class="co">#&gt;    labels     abgd  asap  bgmyc gmyc  locmin morph mptp  ptp   percent</span></span>
-<span id="cb34-21"><a href="#cb34-21" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  </span></span>
-<span id="cb34-22"><a href="#cb34-22" tabindex="-1"></a><span class="co">#&gt;  1 MZ504301.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   </span></span>
-<span id="cb34-23"><a href="#cb34-23" tabindex="-1"></a><span class="co">#&gt;  2 MZ504318.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   </span></span>
-<span id="cb34-24"><a href="#cb34-24" tabindex="-1"></a><span class="co">#&gt;  3 MZ504341.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   </span></span>
-<span id="cb34-25"><a href="#cb34-25" tabindex="-1"></a><span class="co">#&gt;  4 MZ504337.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   </span></span>
-<span id="cb34-26"><a href="#cb34-26" tabindex="-1"></a><span class="co">#&gt;  5 MZ504342.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   </span></span>
-<span id="cb34-27"><a href="#cb34-27" tabindex="-1"></a><span class="co">#&gt;  6 MZ504304.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   </span></span>
-<span id="cb34-28"><a href="#cb34-28" tabindex="-1"></a><span class="co">#&gt;  7 MZ504332.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   </span></span>
-<span id="cb34-29"><a href="#cb34-29" tabindex="-1"></a><span class="co">#&gt;  8 MZ504343.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   </span></span>
-<span id="cb34-30"><a href="#cb34-30" tabindex="-1"></a><span class="co">#&gt;  9 MZ504315.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   </span></span>
-<span id="cb34-31"><a href="#cb34-31" tabindex="-1"></a><span class="co">#&gt; 10 MZ504345.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   </span></span>
+<span id="cb34-20"><a href="#cb34-20" tabindex="-1"></a><span class="co">#&gt;    labels     abgd  asap  locmin percent bgmyc gmyc  mptp  ptp   morph</span></span>
+<span id="cb34-21"><a href="#cb34-21" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></span>
+<span id="cb34-22"><a href="#cb34-22" tabindex="-1"></a><span class="co">#&gt;  1 MZ504301.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb34-23"><a href="#cb34-23" tabindex="-1"></a><span class="co">#&gt;  2 MZ504318.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb34-24"><a href="#cb34-24" tabindex="-1"></a><span class="co">#&gt;  3 MZ504341.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb34-25"><a href="#cb34-25" tabindex="-1"></a><span class="co">#&gt;  4 MZ504337.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb34-26"><a href="#cb34-26" tabindex="-1"></a><span class="co">#&gt;  5 MZ504342.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb34-27"><a href="#cb34-27" tabindex="-1"></a><span class="co">#&gt;  6 MZ504304.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb34-28"><a href="#cb34-28" tabindex="-1"></a><span class="co">#&gt;  7 MZ504332.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb34-29"><a href="#cb34-29" tabindex="-1"></a><span class="co">#&gt;  8 MZ504343.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb34-30"><a href="#cb34-30" tabindex="-1"></a><span class="co">#&gt;  9 MZ504315.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
+<span id="cb34-31"><a href="#cb34-31" tabindex="-1"></a><span class="co">#&gt; 10 MZ504345.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 </span></span>
 <span id="cb34-32"><a href="#cb34-32" tabindex="-1"></a><span class="co">#&gt; # ℹ 127 more rows</span></span></code></pre></div>
 </div>
 <div class="section level2">

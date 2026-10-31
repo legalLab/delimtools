@@ -593,7 +593,7 @@ bgmyc_delim <- bgmyc(beast_tree)
 #> 90%
 #> 100%
 #> Acceptance rates (py / pc / t):
-#> 0.5216  0.8407  0.3470
+#> 0.5302  0.8366  0.3504
 ```
 
 The results then need to be transformed into a table using the
@@ -747,9 +747,10 @@ analysis. For this task, we can use `delim_join`. This function takes a
 `list` of species partitions to recode and then join.
 
 ``` R
-all_delims <- list(abgd_df, asap_df, bgmyc_df, gmyc_df, 
-                   locmin_df, morph_df, mptp_df, ptp_df, 
-                   percent_df, treedist_df)
+all_delims <- list(abgd_df, asap_df, locmin_df, percent_df, treedist_df,
+                   bgmyc_df, gmyc_df,
+                   mptp_df, ptp_df,
+                   morph_df)
 
 all_delims_df <- delim_join(all_delims)
 #> Warning: Dimensions are not the same across tables.
@@ -783,16 +784,16 @@ function.
 
 ``` R
 report_delim(all_delims_df)
-#> ℹ Joined delimitations have a total of 46 unique species partitions.
+#> ℹ Joined delimitations have a total of 45 unique species partitions.
 #> ℹ Check below the number of species partitions per method:
 #> 
 #> 
 #> |method   | partitions|
 #> |:--------|----------:|
-#> |gmyc     |         21|
 #> |locmin   |         21|
+#> |gmyc     |         21|
 #> |abgd     |         19|
-#> |bgmyc    |         18|
+#> |bgmyc    |         19|
 #> |ptp      |         17|
 #> |morph    |         16|
 #> |asap     |         14|
@@ -800,18 +801,18 @@ report_delim(all_delims_df)
 #> |percent  |         12|
 #> |treedist |          7|
 #> # A tibble: 137 × 11
-#>    labels     abgd  asap  bgmyc gmyc  locmin morph mptp  ptp   percent treedist
-#>    <chr>      <chr> <chr> <chr> <chr> <chr>  <chr> <chr> <chr> <chr>   <chr>   
-#>  1 MZ504301.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    
-#>  2 MZ504318.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    
-#>  3 MZ504341.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    
-#>  4 MZ504337.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    
-#>  5 MZ504342.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    
-#>  6 MZ504304.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    
-#>  7 MZ504332.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    
-#>  8 MZ504343.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    
-#>  9 MZ504315.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    
-#> 10 MZ504345.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41    sp45    
+#>    labels     abgd  asap  locmin percent treedist bgmyc gmyc  mptp  ptp   morph
+#>    <chr>      <chr> <chr> <chr>  <chr>   <chr>    <chr> <chr> <chr> <chr> <chr>
+#>  1 MZ504301.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 
+#>  2 MZ504318.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 
+#>  3 MZ504341.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 
+#>  4 MZ504337.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 
+#>  5 MZ504342.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 
+#>  6 MZ504304.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 
+#>  7 MZ504332.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 
+#>  8 MZ504343.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 
+#>  9 MZ504315.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 
+#> 10 MZ504345.1 sp1   sp20  sp1    sp40    sp44     sp1   sp1   sp1   sp1   sp36 
 #> # ℹ 127 more rows
 ```
 
@@ -826,50 +827,50 @@ match_ratio(all_delims_df) |>
 #>    pairs            delim_1 delim_2 n_match match_ratio
 #>    <chr>              <int>   <int>   <int>       <dbl>
 #>  1 abgd-locmin           19      21      17        0.85
-#>  2 asap-percent          14      12      10        0.77
-#>  3 bgmyc-gmyc            18      21      15        0.77
-#>  4 abgd-bgmyc            19      18      14        0.76
-#>  5 bgmyc-ptp             18      17      13        0.74
-#>  6 abgd-ptp              19      17      13        0.72
+#>  2 bgmyc-gmyc            19      21      17        0.85
+#>  3 asap-percent          14      12      10        0.77
+#>  4 abgd-bgmyc            19      19      14        0.74
+#>  5 abgd-ptp              19      17      13        0.72
+#>  6 bgmyc-ptp             19      17      13        0.72
 #>  7 asap-ptp              14      17      11        0.71
-#>  8 gmyc-locmin           21      21      15        0.71
-#>  9 gmyc-ptp              21      17      13        0.68
-#> 10 asap-morph            14      16      10        0.67
-#> 11 bgmyc-locmin          18      21      13        0.67
-#> 12 bgmyc-morph           18      16      11        0.65
-#> 13 mptp-ptp              14      17      10        0.65
-#> 14 asap-mptp             14      14       9        0.64
+#>  8 locmin-gmyc           21      21      15        0.71
+#>  9 locmin-bgmyc          21      19      14        0.7 
+#> 10 gmyc-ptp              21      17      13        0.68
+#> 11 asap-morph            14      16      10        0.67
+#> 12 mptp-ptp              14      17      10        0.65
+#> 13 asap-mptp             14      14       9        0.64
+#> 14 bgmyc-morph           19      16      11        0.63
 #> 15 locmin-ptp            21      17      12        0.63
-#> 16 asap-bgmyc            14      18      10        0.62
-#> 17 ptp-percent           17      12       9        0.62
-#> 18 abgd-asap             19      14      10        0.61
+#> 16 percent-ptp           12      17       9        0.62
+#> 17 abgd-asap             19      14      10        0.61
+#> 18 asap-bgmyc            14      19      10        0.61
 #> 19 abgd-gmyc             19      21      12        0.6 
-#> 20 bgmyc-percent         18      12       9        0.6 
-#> 21 abgd-percent          19      12       9        0.58
-#> 22 morph-percent         16      12       8        0.57
+#> 20 abgd-percent          19      12       9        0.58
+#> 21 percent-bgmyc         12      19       9        0.58
+#> 22 percent-morph         12      16       8        0.57
 #> 23 abgd-morph            19      16       9        0.51
 #> 24 asap-gmyc             14      21       9        0.51
-#> 25 bgmyc-mptp            18      14       8        0.5 
-#> 26 gmyc-morph            21      16       9        0.49
-#> 27 abgd-mptp             19      14       8        0.48
-#> 28 gmyc-percent          21      12       8        0.48
-#> 29 morph-ptp             16      17       8        0.48
-#> 30 morph-mptp            16      14       7        0.47
+#> 25 gmyc-morph            21      16       9        0.49
+#> 26 abgd-mptp             19      14       8        0.48
+#> 27 bgmyc-mptp            19      14       8        0.48
+#> 28 percent-gmyc          12      21       8        0.48
+#> 29 ptp-morph             17      16       8        0.48
+#> 30 mptp-morph            14      16       7        0.47
 #> 31 asap-locmin           14      21       8        0.46
 #> 32 gmyc-mptp             21      14       8        0.46
-#> 33 mptp-percent          14      12       6        0.46
+#> 33 percent-mptp          12      14       6        0.46
 #> 34 locmin-morph          21      16       8        0.43
 #> 35 locmin-percent        21      12       7        0.42
 #> 36 percent-treedist      12       7       4        0.42
 #> 37 locmin-mptp           21      14       7        0.4 
 #> 38 asap-treedist         14       7       4        0.38
-#> 39 mptp-treedist         14       7       4        0.38
-#> 40 ptp-treedist          17       7       4        0.33
+#> 39 treedist-mptp          7      14       4        0.38
+#> 40 treedist-ptp           7      17       4        0.33
 #> 41 abgd-treedist         19       7       4        0.31
-#> 42 bgmyc-treedist        18       7       3        0.24
-#> 43 gmyc-treedist         21       7       3        0.21
-#> 44 locmin-treedist       21       7       3        0.21
-#> 45 morph-treedist        16       7       2        0.17
+#> 42 treedist-bgmyc         7      19       3        0.23
+#> 43 locmin-treedist       21       7       3        0.21
+#> 44 treedist-gmyc          7      21       3        0.21
+#> 45 treedist-morph         7      16       2        0.17
 ```
 
 By checking the results, all comparisons including treedist have a low
@@ -881,34 +882,34 @@ visualizing our results.
 all_delims_df <- dplyr::select(all_delims_df, -treedist)
 
 report_delim(all_delims_df)
-#> ℹ Joined delimitations have a total of 44 unique species partitions.
+#> ℹ Joined delimitations have a total of 43 unique species partitions.
 #> ℹ Check below the number of species partitions per method:
 #> 
 #> 
 #> |method  | partitions|
 #> |:-------|----------:|
-#> |gmyc    |         21|
 #> |locmin  |         21|
+#> |gmyc    |         21|
 #> |abgd    |         19|
-#> |bgmyc   |         18|
+#> |bgmyc   |         19|
 #> |ptp     |         17|
 #> |morph   |         16|
 #> |asap    |         14|
 #> |mptp    |         14|
 #> |percent |         12|
 #> # A tibble: 137 × 10
-#>    labels     abgd  asap  bgmyc gmyc  locmin morph mptp  ptp   percent
-#>    <chr>      <chr> <chr> <chr> <chr> <chr>  <chr> <chr> <chr> <chr>  
-#>  1 MZ504301.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   
-#>  2 MZ504318.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   
-#>  3 MZ504341.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   
-#>  4 MZ504337.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   
-#>  5 MZ504342.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   
-#>  6 MZ504304.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   
-#>  7 MZ504332.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   
-#>  8 MZ504343.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   
-#>  9 MZ504315.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   
-#> 10 MZ504345.1 sp1   sp20  sp1   sp1   sp1    sp37  sp1   sp1   sp41   
+#>    labels     abgd  asap  locmin percent bgmyc gmyc  mptp  ptp   morph
+#>    <chr>      <chr> <chr> <chr>  <chr>   <chr> <chr> <chr> <chr> <chr>
+#>  1 MZ504301.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 
+#>  2 MZ504318.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 
+#>  3 MZ504341.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 
+#>  4 MZ504337.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 
+#>  5 MZ504342.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 
+#>  6 MZ504304.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 
+#>  7 MZ504332.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 
+#>  8 MZ504343.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 
+#>  9 MZ504315.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 
+#> 10 MZ504345.1 sp1   sp20  sp1    sp40    sp1   sp1   sp1   sp1   sp36 
 #> # ℹ 127 more rows
 ```
 
