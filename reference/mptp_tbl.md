@@ -123,7 +123,7 @@ ptp_df
 #> ---
 #> Backtrace:
 #>      ▆
-#>   1. └─pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+#>   1. └─pkgdown::build_site_github_pages(...)
 #>   2.   └─pkgdown::build_site(...)
 #>   3.     └─pkgdown:::build_site_local(...)
 #>   4.       └─pkgdown::build_reference(...)
@@ -187,7 +187,7 @@ try(mptp_df)
 #> ---
 #> Backtrace:
 #>      ▆
-#>   1. └─pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+#>   1. └─pkgdown::build_site_github_pages(...)
 #>   2.   └─pkgdown::build_site(...)
 #>   3.     └─pkgdown:::build_site_local(...)
 #>   4.       └─pkgdown::build_reference(...)

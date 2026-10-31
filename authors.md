@@ -26,13 +26,13 @@ Source:
 [`DESCRIPTION`](https://github.com/legalLab/delimtools/blob/main/DESCRIPTION)
 
 Bittencourt P, Collins R, Hrbek T (2026). *delimtools: Helper Functions
-for Species Delimitation Analysis*. R package version 0.3.5,
+for Species Delimitation Analysis*. R package version 0.4.1,
 <https://github.com/legalLab/delimtools>.
 
     @Manual{,
       title = {delimtools: Helper Functions for Species Delimitation Analysis},
       author = {Pedro Bittencourt and Rupert Collins and Tomas Hrbek},
       year = {2026},
-      note = {R package version 0.3.5},
+      note = {R package version 0.4.1},
       url = {https://github.com/legalLab/delimtools},
     }

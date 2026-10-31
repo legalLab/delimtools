@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">delimtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,12 +36,6 @@
       <ul class="navbar-nav me-auto">
 <li class="active nav-item"><a class="nav-link" href="../articles/delimtools.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/install.html">Installing Species Delimitation Softwares</a></li>
-  </ul>
-</li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -64,7 +58,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Introduction to delimtools</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/legalLab/delimtools/blob/main/vignettes/articles/delimtools.Rmd" class="external-link"><code>vignettes/articles/delimtools.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/legalLab/delimtools/blob/main/vignettes/delimtools.Rmd" class="external-link"><code>vignettes/delimtools.Rmd</code></a></small>
       <div class="d-none name"><code>delimtools.Rmd</code></div>
     </div>
 
@@ -196,14 +190,14 @@ consequences in delimitation analyses. We can use the function
 the alignment, therefore it will be necessary to realign the dataset
 after calling <code>clean_dna</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">clean_geophagus</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clean_dna.html">clean_dna</a></span><span class="op">(</span><span class="va">geophagus</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">geophagus_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clean_dna.html">clean_dna</a></span><span class="op">(</span><span class="va">geophagus</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: <span style="color: #BBBB00;">⚠</span> You have missing data <span style="color: #0000BB;">"('N','-' '?')"</span> or ambiguity inside your sequence, i.e.</span></span>
 <span><span class="co">#&gt; not padding the ends, and this may have unintended consequences later, as they</span></span>
 <span><span class="co">#&gt; have now been removed!</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The names of the samples are below.</span></span>
 <span><span class="co">#&gt; GU701784.1, GU701785.1</span></span>
 <span><span class="co"># and display</span></span>
-<span><span class="va">clean_geophagus</span></span>
+<span><span class="va">geophagus_clean</span></span>
 <span><span class="co">#&gt; 354 DNA sequences in binary format stored in a list.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mean sequence length: 646.198 </span></span>
@@ -223,21 +217,21 @@ after calling <code>clean_dna</code>.</p>
 <span><span class="co">#&gt;     a     c     g     t </span></span>
 <span><span class="co">#&gt; 0.237 0.282 0.178 0.303 </span></span>
 <span><span class="co">#&gt; (Total: 228.75 kb)</span></span></code></pre></div>
-<p>The presence of identical sequences (haplotypes) in an aligment will
+<p>The presence of identical sequences (haplotypes) in an alignment will
 overestimate the number of lineages detected by tree-based species
 delimitation methods (e.g. bGMYC, GMYC, PTP, mPTP). Therefore it is best
 practice to collapse identical haplotypes into unique haplotypes. This
 is accomplished by calling the <code>hap_collapse</code> function. By
 default the function will also call <code>clean_dna</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">collapsed_geophagus</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hap_collapse.html">hap_collapse</a></span><span class="op">(</span><span class="va">geophagus</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">geophagus_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hap_collapse.html">hap_collapse</a></span><span class="op">(</span><span class="va">geophagus</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: <span style="color: #BBBB00;">⚠</span> You have missing data <span style="color: #0000BB;">"('N','-' '?')"</span> or ambiguity inside your sequence, i.e.</span></span>
 <span><span class="co">#&gt; not padding the ends, and this may have unintended consequences later, as they</span></span>
 <span><span class="co">#&gt; have now been removed!</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The names of the samples are below.</span></span>
 <span><span class="co">#&gt; GU701784.1, GU701785.1</span></span>
 <span><span class="co"># and display</span></span>
-<span><span class="va">collapsed_geophagus</span></span>
+<span><span class="va">geophagus_collapsed</span></span>
 <span><span class="co">#&gt; 137 DNA sequences in binary format stored in a list.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mean sequence length: 643.007 </span></span>
@@ -262,14 +256,14 @@ default the function will also call <code>clean_dna</code>.</p>
 This result may vary if setting <code>collapseSubstrings</code> to
 <code>FALSE</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">collapsed_geophagus</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hap_collapse.html">hap_collapse</a></span><span class="op">(</span><span class="va">geophagus</span>, collapseSubstrings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">geophagus_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hap_collapse.html">hap_collapse</a></span><span class="op">(</span><span class="va">geophagus</span>, collapseSubstrings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: <span style="color: #BBBB00;">⚠</span> You have missing data <span style="color: #0000BB;">"('N','-' '?')"</span> or ambiguity inside your sequence, i.e.</span></span>
 <span><span class="co">#&gt; not padding the ends, and this may have unintended consequences later, as they</span></span>
 <span><span class="co">#&gt; have now been removed!</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The names of the samples are below.</span></span>
 <span><span class="co">#&gt; GU701784.1, GU701785.1</span></span>
 <span><span class="co"># and display</span></span>
-<span><span class="va">collapsed_geophagus</span></span>
+<span><span class="va">geophagus_collapsed</span></span>
 <span><span class="co">#&gt; 246 DNA sequences in binary format stored in a list.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mean sequence length: 639.764 </span></span>
@@ -350,13 +344,9 @@ haplotype:</p>
 <p>After preparing your data (alignments and phylogenetic trees), the
 next step it to run species delimitation analyses and combine them into
 a single <code>tbl_df</code>. As of v0.3.0, <code>delimtools</code>
-includes as part of the package executables of the ABGD, ASAP, GMYC,
-bGMYC, PTP and mPTP methods, therefore, it requires no outside
-dependencies to run these delimitation methods. However,
-<code>delimtools</code> maintains backward compatibility, and will run
-external executables if so desired. Please check <a href="https://legallab.github.io/delimtools/articles/install.html" class="external-link">Installing
-Species Delimitation Software</a> to know which software
-<code>delimtools</code> supports.</p>
+includes executables of the ABGD, ASAP, GMYC, bGMYC, PTP and mPTP
+methods, therefore, it requires no outside dependencies to run these
+delimitation methods.</p>
 <p>Following are examples of species delimitation methods implemented in
 <code>delimtools</code>. The first three methods are distance-based
 methods and thus use the full aligned sequence matrix. Subsequent
@@ -370,9 +360,9 @@ a time-tree (<code>geophagus_beast</code>) as part of this package.</p>
 </h4>
 <p>The ABGD method is run by executing the <code>abgd</code> function
 and giving it an <code><a href="https://rdrr.io/pkg/ape/man/DNAbin.html" class="external-link">ape::DNAbin</a></code> object which is a S3 R object
-containing an aligned FASTA file. It will also accept aligned FASTA and
-Phylip distance matrix. The result is then transformed into a table
-using the <code>abgd_tbl</code> function.</p>
+containing an aligned FASTA file. It will also accept a path to an
+aligned FASTA. The result is then transformed into a table using the
+<code>abgd_tbl</code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># geophagus - the `ape::DNAbin` object supplied with this package</span></span>
 <span></span>
@@ -402,8 +392,8 @@ using the <code>abgd_tbl</code> function.</p>
 </h4>
 <p>The ASAP method is run by executing the <code>asap</code> function
 and giving it an <code><a href="https://rdrr.io/pkg/ape/man/DNAbin.html" class="external-link">ape::DNAbin</a></code> object. It will also accept a
-distance matrix. The result is then transformed into a table using the
-<code>asap_tbl</code> function.</p>
+path to an aligned FASTA. The result is then transformed into a table
+using the <code>asap_tbl</code> function.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># geophagus - the `ape::DNAbin` object supplied with this package</span></span>
 <span></span>
@@ -434,14 +424,15 @@ distance matrix. The result is then transformed into a table using the
 function <code>localMinima</code>. This function requires a genetic
 distance matrix as input for analysis.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dist_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ape/man/dist.dna.html" class="external-link">dist.dna</a></span><span class="op">(</span><span class="va">geophagus</span>, model <span class="op">=</span> <span class="st">"raw"</span>, pairwise.deletion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">dist_mat</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/dist.dna.html" class="external-link">dist.dna</a></span><span class="op">(</span><span class="va">geophagus</span>, model <span class="op">=</span> <span class="st">"raw"</span>, pairwise.deletion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">locmin</span> <span class="op">&lt;-</span> <span class="fu">spider</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spider/man/localMinima.html" class="external-link">localMinima</a></span><span class="op">(</span><span class="va">dist_mat</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.006828358 0.018994392 0.040791871 0.055999413 0.067151612 0.082105695</span></span></code></pre></div>
 <p>We can plot the <code>locmin</code> object to select the threshold.
 We will use the first value of the <code>locmin</code> object:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">locmin</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">locmin</span><span class="op">$</span><span class="va">localMinima</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">locmin</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">locmin</span><span class="op">$</span><span class="va">localMinima</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="delimtools_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="662.4"></p>
 <p>Since <code>Local Minima</code> output is a numeric vector, we need
 to extract the results using <code>locmin_tbl</code>.</p>
@@ -463,16 +454,18 @@ to extract the results using <code>locmin_tbl</code>.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> MZ504337.1      1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> MZ504299.1      1</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 344 more rows</span></span></span></code></pre></div>
-<p>We can also use patristic distances to generate species partitions as
+<p>We can use patristic distances to generate species partitions as
 well. Using the <code>geophagus_beast</code> tree, we can apply a
 threshold to classify tips of the tree by using its branch lengths:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dist_mat_tr</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/cophenetic.phylo.html" class="external-link">cophenetic.phylo</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">geophagus_beast</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">as.dist</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">dist_mat_tr</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/cophenetic.phylo.html" class="external-link">cophenetic.phylo</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">geophagus_beast</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">as.dist</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">locmin_tr</span> <span class="op">&lt;-</span> <span class="fu">spider</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spider/man/localMinima.html" class="external-link">localMinima</a></span><span class="op">(</span><span class="va">dist_mat_tr</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.1114476 0.2020889 0.3527801</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">locmin_tr</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">locmin_tr</span><span class="op">$</span><span class="va">localMinima</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">locmin_tr</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">locmin_tr</span><span class="op">$</span><span class="va">localMinima</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="delimtools_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="662.4"></p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -500,9 +493,9 @@ threshold to classify tips of the tree by using its branch lengths:</p>
 <div class="section level3">
 <h3 id="fixed-threshold">Fixed threshold<a class="anchor" aria-label="anchor" href="#fixed-threshold"></a>
 </h3>
-<p>We can also use <code>locmin_tbl</code> to create a species partition
-using a fixed threshold. For example, we can use a threshold of 2% to
-generate species partitions:</p>
+<p>Finally, we can also use <code>locmin_tbl</code> to create a species
+partition using a fixed threshold. For example, we can use a threshold
+of 2% to generate species partitions:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">percent_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/locmin_tbl.html">locmin_tbl</a></span><span class="op">(</span><span class="va">dist_mat</span>, threshold <span class="op">=</span> <span class="fl">0.02</span>, delimname <span class="op">=</span> <span class="st">"percent"</span><span class="op">)</span></span>
 <span></span>
@@ -527,16 +520,22 @@ generate species partitions:</p>
 <p>The GMYC method is run by executing the <code>gmyc</code> function
 and giving it an <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">ape::phylo</a></code> object. The GMYC method
 requires an ultrametric tree file of class <code>phylo</code> as input
-for analysis. We can convert our <code>geophagus_beast</code> treedata
-object into a <code>phylo</code> object by using
+for analysis. BEAST trees generated in Tree Annotator need to be read in
+using the <code>treeio:read.beast()</code> function, and then need to be
+converted into a <code>phylo</code> object by using
 <code><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">ape::as.phylo</a></code>.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># geophagus_beast - the Newick formatted ultrametric phylogenetic tree object supplied with this package</span></span>
+<code class="sourceCode R"><span><span class="co"># geophagus_beast - the Nexus formatted ultrametric phylogenetic tree object supplied with this package</span></span>
 <span></span>
-<span><span class="va">beast_tree</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">geophagus_beast</span><span class="op">)</span></span>
-<span><span class="va">gmyc_delim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gmyc.html">gmyc</a></span><span class="op">(</span><span class="va">beast_tree</span><span class="op">)</span></span></code></pre></div>
-<p>Now, lets check the <code>summary</code>:</p>
+<span><span class="va">path_to_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/geophagus_beast.nex"</span>, package <span class="op">=</span> <span class="st">"delimtools"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">beast_tree</span> <span class="op">&lt;-</span> <span class="fu">treeio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/treeio/man/beast-parser.html" class="external-link">read.beast</a></span><span class="op">(</span><span class="va">path_to_file</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Run delimitation.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gmyc_delim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gmyc.html">gmyc</a></span><span class="op">(</span><span class="va">beast_tree</span><span class="op">)</span></span></code></pre></div>
+<p>Now, lets check the <code>summary</code>:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">gmyc_delim</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Result of GMYC species delimitation</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -555,7 +554,7 @@ object into a <code>phylo</code> object by using
 <span><span class="co">#&gt;  threshold time: -0.0164289</span></span></code></pre></div>
 <p>And let’s transform the results into a table using the
 <code>gmyc_tbl</code> function.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gmyc_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gmyc_tbl.html">gmyc_tbl</a></span><span class="op">(</span><span class="va">gmyc_delim</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># print the dataframe</span></span>
@@ -581,13 +580,13 @@ object into a <code>phylo</code> object by using
 <p>The bGMYC method is run by executing the <code>bgmyc</code> function
 and giving it an <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">ape::phylo</a></code> object. The bGMYC method
 requires an ultrametric tree file of class <code>phylo</code> as input
-for analysis. We can convert our <code>geophagus_beast</code> treedata
-object into a <code>phylo</code> object by using
+for analysis. BEAST trees generated in Tree Annotator need to be read in
+using the <code>treeio:read.beast()</code> function, and then need to be
+converted into a <code>phylo</code> object by using
 <code><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">ape::as.phylo</a></code>.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># geophagus_beast - the Newick formatted ultrametric phylogenetic tree object supplied with this package</span></span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># beast_tree already loaded and converted</span></span>
 <span></span>
-<span><span class="va">beast_tree</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">geophagus_beast</span><span class="op">)</span></span>
 <span><span class="va">bgmyc_delim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bgmyc.html">bgmyc</a></span><span class="op">(</span><span class="va">beast_tree</span><span class="op">)</span></span>
 <span><span class="co">#&gt; bGMYC (C engine): 137 tips, 11000 MCMC steps, 100 post-burnin samples</span></span>
 <span><span class="co">#&gt; 10%</span></span>
@@ -606,7 +605,7 @@ object into a <code>phylo</code> object by using
 <code>bgmyc_tbl</code> function. By default, <code>0.05</code> is used
 as default posterior probability threshold for clustering samples into
 species partitions.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bgmyc_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bgmyc_tbl.html">bgmyc_tbl</a></span><span class="op">(</span><span class="va">bgmyc_delim</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">bgmyc_df</span><span class="op">)</span></span>
@@ -632,27 +631,67 @@ species partitions.</p>
 function. Specifying the arguments (“multi” for mPTP; “single” for PTP)
 in the parameters determines which analysis is performed; the default is
 “multi” for mPTP. The <code>mptp</code> function accepts either phylo
-tree object or a Newick tree file.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># geophagus_raxml - the Newick formatted phylogenetic tree object supplied with this package</span></span>
+tree object or a Newick tree file. We can use either
+<code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">ape::read.tree()</a></code> or <code><a href="https://rdrr.io/pkg/treeio/man/read.newick.html" class="external-link">treeio::read.newick()</a></code> to
+read in our Newick file; it will be automatically stored as
+<code>phylo</code> object.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># geophagus_beast - the Newick formatted phylogenetic tree object supplied with this package</span></span>
 <span></span>
-<span><span class="va">mptp_delim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mptp.html">mptp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">geophagus_raxml</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">path_to_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/geophagus_raxml.nwk"</span>, package <span class="op">=</span> <span class="st">"delimtools"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">raxml_tree</span> <span class="op">&lt;-</span> <span class="fu">treeio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/treeio/man/read.newick.html" class="external-link">read.newick</a></span><span class="op">(</span><span class="va">path_to_file</span><span class="op">)</span></span></code></pre></div>
+<p>Run delimitation.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mptp_delim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mptp.html">mptp</a></span><span class="op">(</span><span class="va">raxml_tree</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Score Null Model: 681.702507</span></span>
 <span><span class="co">#&gt; Number of delimited species: 14</span></span>
+<span><span class="va">mptp_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mptp_tbl.html">mptp_tbl</a></span><span class="op">(</span><span class="va">mptp_delim</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">mptp_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mptp_tbl.html">mptp_tbl</a></span><span class="op">(</span><span class="va">mptp_delim</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mptp_df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 137 × 2</span></span></span>
+<span><span class="co">#&gt;    labels      mptp</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> MZ051794.1     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> MZ050845.1     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> MZ051032.1     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> MZ051706.1     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> MZ504576.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> MZ504578.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> MZ504579.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> MZ504588.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> MZ504587.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> MZ504592.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 127 more rows</span></span></span></code></pre></div>
+<p>For convenience we have made a ptp() wrapper around mptp() that
+defaults to the “single” argument of the method parameter.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># geophagus_raxml - the Newick formatted phylogenetic tree object supplied with this package</span></span>
 <span></span>
-<span><span class="va">ptp_delim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mptp.html">mptp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">geophagus_raxml</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"single"</span><span class="op">)</span></span>
+<span><span class="va">ptp_delim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ptp.html">ptp</a></span><span class="op">(</span><span class="va">raxml_tree</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Score Null Model: 681.702507</span></span>
 <span><span class="co">#&gt; Number of delimited species: 17</span></span>
+<span><span class="va">ptp_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mptp_tbl.html">mptp_tbl</a></span><span class="op">(</span><span class="va">ptp_delim</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ptp_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mptp_tbl.html">mptp_tbl</a></span><span class="op">(</span><span class="va">ptp_delim</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ptp_df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 137 × 2</span></span></span>
+<span><span class="co">#&gt;    labels       ptp</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> MZ051794.1     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> MZ050845.1     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> MZ051032.1     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> MZ051706.1     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> MZ504576.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> MZ504578.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> MZ504579.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> MZ504588.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> MZ504587.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> MZ504592.1     2</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 127 more rows</span></span></span></code></pre></div>
 <p>To estimate a minimum branch length for your dataset, use
 <code>minbr_len</code>.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/min_brlen.html">min_brlen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">geophagus_raxml</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/min_brlen.html">min_brlen</a></span><span class="op">(</span><span class="va">raxml_tree</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Printing 5 smallest tip-to-tip distances in a tree with 137 tips ...</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -671,7 +710,7 @@ tree object or a Newick tree file.</p>
 into a species partition by using <code>morph_tbl</code>. For the
 <code>geophagus</code> dataset, we will use the scientific names in
 <code>geophagus_info</code> to accomplish this.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">morph_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/morph_tbl.html">morph_tbl</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="va">geophagus_info</span><span class="op">$</span><span class="va">gbAccession</span>, </span>
 <span>                      sppVector <span class="op">=</span> <span class="va">geophagus_info</span><span class="op">$</span><span class="va">scientificName</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">labels</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">haps_df</span><span class="op">$</span><span class="va">labels</span><span class="op">)</span></span>
@@ -702,7 +741,7 @@ each method has its own rankings, we need to recode them prior to any
 further analysis. For this task, we can use <code>delim_join</code>.
 This function takes a <code>list</code> of species partitions to recode
 and then join.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_delims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">abgd_df</span>, <span class="va">asap_df</span>, <span class="va">bgmyc_df</span>, <span class="va">gmyc_df</span>, </span>
 <span>                   <span class="va">locmin_df</span>, <span class="va">morph_df</span>, <span class="va">mptp_df</span>, <span class="va">ptp_df</span>, </span>
 <span>                   <span class="va">percent_df</span>, <span class="va">treedist_df</span><span class="op">)</span></span>
@@ -734,7 +773,7 @@ and then join.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> `delim 2` has 137 rows and 2 columns</span></span></code></pre></div>
 <p>We can summarize the <code>all_delims_df</code> object by using the
 <code>report_delim</code> function.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/report_delim.html">report_delim</a></span><span class="op">(</span><span class="va">all_delims_df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Joined delimitations have a total of <span style="font-weight: bold;">45</span> unique species partitions.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Check below the number of species partitions per method:</span></span>
@@ -768,7 +807,7 @@ and then join.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 127 more rows</span></span></span></code></pre></div>
 <p>We can also check the match ratio statistics of Ahrens et al (2014)
 using <code>match_ratio</code>.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/match_ratio.html">match_ratio</a></span><span class="op">(</span><span class="va">all_delims_df</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">match_ratio</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>            <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>n<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span></span>
@@ -824,7 +863,7 @@ using <code>match_ratio</code>.</p>
 low <code>match_ratio</code>. Since species partitions with very low
 <code>match_ratio</code> values can impact consensus calculations, we
 will remove treedist before visualizing our results.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_delims_df</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">all_delims_df</span>, <span class="op">-</span><span class="va">treedist</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/report_delim.html">report_delim</a></span><span class="op">(</span><span class="va">all_delims_df</span><span class="op">)</span></span>
@@ -865,8 +904,13 @@ will remove treedist before visualizing our results.</p>
 This function will plot a phylogenetic tree alongside with the results
 contained in <code>all_delims_df</code>. We will use the
 <code>geophagus_beast</code> tree to visualize the results.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># geophagus_beast - the Nexus formatted ultrametric phylogenetic tree object used for visualization</span></span>
+<span></span>
+<span><span class="va">path_to_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/geophagus_beast.nex"</span>, package <span class="op">=</span> <span class="st">"delimtools"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">geophagus_tree</span> <span class="op">&lt;-</span> <span class="fu">treeio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/treeio/man/beast-parser.html" class="external-link">read.beast</a></span><span class="op">(</span><span class="va">path_to_file</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># customize tip labels of the tree</span></span>
 <span><span class="va">tip_tab</span> <span class="op">&lt;-</span> <span class="va">geophagus_info</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gbAccession</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">geophagus_beast</span><span class="op">@</span><span class="va">phylo</span><span class="op">$</span><span class="va">tip.label</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -885,7 +929,7 @@ contained in <code>all_delims_df</code>. We will use the
 <span>               col_vec <span class="op">=</span> <span class="va">cols</span>,</span>
 <span>               hexpand <span class="op">=</span> <span class="fl">0.7</span>,</span>
 <span>               widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="delimtools_files/figure-html/unnamed-chunk-33-1.png" class="r-plt" alt="" width="1152"></p>
+<p><img src="delimtools_files/figure-html/unnamed-chunk-35-1.png" class="r-plt" alt="" width="1152"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

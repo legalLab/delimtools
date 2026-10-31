@@ -150,14 +150,14 @@ dataset after calling `clean_dna`.
 
 ``` r
 
-clean_geophagus <- clean_dna(geophagus)
+geophagus_clean <- clean_dna(geophagus)
 #> Warning: ⚠ You have missing data "('N','-' '?')" or ambiguity inside your sequence, i.e.
 #> not padding the ends, and this may have unintended consequences later, as they
 #> have now been removed!
 #> ℹ The names of the samples are below.
 #> GU701784.1, GU701785.1
 # and display
-clean_geophagus
+geophagus_clean
 #> 354 DNA sequences in binary format stored in a list.
 #> 
 #> Mean sequence length: 646.198 
@@ -179,7 +179,7 @@ clean_geophagus
 #> (Total: 228.75 kb)
 ```
 
-The presence of identical sequences (haplotypes) in an aligment will
+The presence of identical sequences (haplotypes) in an alignment will
 overestimate the number of lineages detected by tree-based species
 delimitation methods (e.g. bGMYC, GMYC, PTP, mPTP). Therefore it is best
 practice to collapse identical haplotypes into unique haplotypes. This
@@ -188,14 +188,14 @@ function will also call `clean_dna`.
 
 ``` r
 
-collapsed_geophagus <- hap_collapse(geophagus)
+geophagus_collapsed <- hap_collapse(geophagus)
 #> Warning: ⚠ You have missing data "('N','-' '?')" or ambiguity inside your sequence, i.e.
 #> not padding the ends, and this may have unintended consequences later, as they
 #> have now been removed!
 #> ℹ The names of the samples are below.
 #> GU701784.1, GU701785.1
 # and display
-collapsed_geophagus
+geophagus_collapsed
 #> 137 DNA sequences in binary format stored in a list.
 #> 
 #> Mean sequence length: 643.007 
@@ -223,14 +223,14 @@ setting `collapseSubstrings` to `FALSE`:
 
 ``` r
 
-collapsed_geophagus <- hap_collapse(geophagus, collapseSubstrings = FALSE)
+geophagus_collapsed <- hap_collapse(geophagus, collapseSubstrings = FALSE)
 #> Warning: ⚠ You have missing data "('N','-' '?')" or ambiguity inside your sequence, i.e.
 #> not padding the ends, and this may have unintended consequences later, as they
 #> have now been removed!
 #> ℹ The names of the samples are below.
 #> GU701784.1, GU701785.1
 # and display
-collapsed_geophagus
+geophagus_collapsed
 #> 246 DNA sequences in binary format stored in a list.
 #> 
 #> Mean sequence length: 639.764 
@@ -316,14 +316,9 @@ collapse_others(data = geophagus_info,
 
 After preparing your data (alignments and phylogenetic trees), the next
 step it to run species delimitation analyses and combine them into a
-single `tbl_df`. As of v0.3.0, `delimtools` includes as part of the
-package executables of the ABGD, ASAP, GMYC, bGMYC, PTP and mPTP
-methods, therefore, it requires no outside dependencies to run these
-delimitation methods. However, `delimtools` maintains backward
-compatibility, and will run external executables if so desired. Please
-check [Installing Species Delimitation
-Software](https://legallab.github.io/delimtools/articles/install.html)
-to know which software `delimtools` supports.
+single `tbl_df`. As of v0.3.0, `delimtools` includes executables of the
+ABGD, ASAP, GMYC, bGMYC, PTP and mPTP methods, therefore, it requires no
+outside dependencies to run these delimitation methods.
 
 Following are examples of species delimitation methods implemented in
 `delimtools`. The first three methods are distance-based methods and
@@ -338,9 +333,9 @@ convenience of this vignette, we provide the full data matrix
 
 The ABGD method is run by executing the `abgd` function and giving it an
 [`ape::DNAbin`](https://rdrr.io/pkg/ape/man/DNAbin.html) object which is
-a S3 R object containing an aligned FASTA file. It will also accept
-aligned FASTA and Phylip distance matrix. The result is then transformed
-into a table using the `abgd_tbl` function.
+a S3 R object containing an aligned FASTA file. It will also accept a
+path to an aligned FASTA. The result is then transformed into a table
+using the `abgd_tbl` function.
 
 ``` r
 
@@ -372,8 +367,8 @@ print(abgd_df)
 
 The ASAP method is run by executing the `asap` function and giving it an
 [`ape::DNAbin`](https://rdrr.io/pkg/ape/man/DNAbin.html) object. It will
-also accept a distance matrix. The result is then transformed into a
-table using the `asap_tbl` function.
+also accept a path to an aligned FASTA. The result is then transformed
+into a table using the `asap_tbl` function.
 
 ``` r
 
@@ -408,7 +403,7 @@ for analysis.
 
 ``` r
 
-dist_mat <- dist.dna(geophagus, model = "raw", pairwise.deletion = TRUE)
+dist_mat <- ape::dist.dna(geophagus, model = "raw", pairwise.deletion = TRUE)
 
 locmin <- spider::localMinima(dist_mat)
 #> [1] 0.006828358 0.018994392 0.040791871 0.055999413 0.067151612 0.082105695
@@ -419,7 +414,8 @@ first value of the `locmin` object:
 
 ``` r
 
-plot(locmin) |> abline(v=locmin$localMinima[1],col="red")
+plot(locmin) |> 
+  abline(v=locmin$localMinima[1],col="red")
 ```
 
 ![](delimtools_files/figure-html/unnamed-chunk-16-1.png)
@@ -448,18 +444,20 @@ print(locmin_df)
 #> # ℹ 344 more rows
 ```
 
-We can also use patristic distances to generate species partitions as
-well. Using the `geophagus_beast` tree, we can apply a threshold to
-classify tips of the tree by using its branch lengths:
+We can use patristic distances to generate species partitions as well.
+Using the `geophagus_beast` tree, we can apply a threshold to classify
+tips of the tree by using its branch lengths:
 
 ``` r
 
-dist_mat_tr <- ape::cophenetic.phylo(as.phylo(geophagus_beast)) |> as.dist()
+dist_mat_tr <- ape::cophenetic.phylo(as.phylo(geophagus_beast)) |> 
+  as.dist()
 
 locmin_tr <- spider::localMinima(dist_mat_tr)
 #> [1] 0.1114476 0.2020889 0.3527801
 
-plot(locmin_tr) |> abline(v=locmin_tr$localMinima[1],col="red")
+plot(locmin_tr) |> 
+  abline(v=locmin_tr$localMinima[1],col="red")
 ```
 
 ![](delimtools_files/figure-html/unnamed-chunk-18-1.png)
@@ -490,9 +488,9 @@ print(treedist_df)
 
 ### Fixed threshold
 
-We can also use `locmin_tbl` to create a species partition using a fixed
-threshold. For example, we can use a threshold of 2% to generate species
-partitions:
+Finally, we can also use `locmin_tbl` to create a species partition
+using a fixed threshold. For example, we can use a threshold of 2% to
+generate species partitions:
 
 ``` r
 
@@ -520,15 +518,25 @@ print(percent_df)
 The GMYC method is run by executing the `gmyc` function and giving it an
 [`ape::phylo`](https://rdrr.io/pkg/ape/man/read.tree.html) object. The
 GMYC method requires an ultrametric tree file of class `phylo` as input
-for analysis. We can convert our `geophagus_beast` treedata object into
-a `phylo` object by using
+for analysis. BEAST trees generated in Tree Annotator need to be read in
+using the `treeio:read.beast()` function, and then need to be converted
+into a `phylo` object by using
 [`ape::as.phylo`](https://rdrr.io/pkg/ape/man/as.phylo.html).
 
 ``` r
 
-# geophagus_beast - the Newick formatted ultrametric phylogenetic tree object supplied with this package
+# geophagus_beast - the Nexus formatted ultrametric phylogenetic tree object supplied with this package
 
-beast_tree <- ape::as.phylo(geophagus_beast)
+path_to_file <- system.file("extdata/geophagus_beast.nex", package = "delimtools")
+
+beast_tree <- treeio::read.beast(path_to_file) |>
+  ape::as.phylo()
+```
+
+Run delimitation.
+
+``` r
+
 gmyc_delim <- gmyc(beast_tree)
 ```
 
@@ -584,15 +592,15 @@ print(gmyc_df)
 The bGMYC method is run by executing the `bgmyc` function and giving it
 an [`ape::phylo`](https://rdrr.io/pkg/ape/man/read.tree.html) object.
 The bGMYC method requires an ultrametric tree file of class `phylo` as
-input for analysis. We can convert our `geophagus_beast` treedata object
-into a `phylo` object by using
+input for analysis. BEAST trees generated in Tree Annotator need to be
+read in using the `treeio:read.beast()` function, and then need to be
+converted into a `phylo` object by using
 [`ape::as.phylo`](https://rdrr.io/pkg/ape/man/as.phylo.html).
 
 ``` r
 
-# geophagus_beast - the Newick formatted ultrametric phylogenetic tree object supplied with this package
+# beast_tree already loaded and converted
 
-beast_tree <- ape::as.phylo(geophagus_beast)
 bgmyc_delim <- bgmyc(beast_tree)
 #> bGMYC (C engine): 137 tips, 11000 MCMC steps, 100 post-burnin samples
 #> 10%
@@ -640,35 +648,81 @@ We can run both PTP and mPTP analysis by using the `mptp` function.
 Specifying the arguments (“multi” for mPTP; “single” for PTP) in the
 parameters determines which analysis is performed; the default is
 “multi” for mPTP. The `mptp` function accepts either phylo tree object
-or a Newick tree file.
+or a Newick tree file. We can use either
+[`ape::read.tree()`](https://rdrr.io/pkg/ape/man/read.tree.html) or
+[`treeio::read.newick()`](https://rdrr.io/pkg/treeio/man/read.newick.html)
+to read in our Newick file; it will be automatically stored as `phylo`
+object.
 
 ``` r
 
-# geophagus_raxml - the Newick formatted phylogenetic tree object supplied with this package
+# geophagus_beast - the Newick formatted phylogenetic tree object supplied with this package
 
-mptp_delim <- mptp(as.phylo(geophagus_raxml))
-#> Score Null Model: 681.702507
-#> Number of delimited species: 14
+path_to_file <- system.file("extdata/geophagus_raxml.nwk", package = "delimtools")
 
-mptp_df <- mptp_tbl(mptp_delim)
+raxml_tree <- treeio::read.newick(path_to_file)
 ```
 
+Run delimitation.
+
+``` r
+
+mptp_delim <- mptp(raxml_tree)
+#> Score Null Model: 681.702507
+#> Number of delimited species: 14
+mptp_df <- mptp_tbl(mptp_delim)
+
+print(mptp_df)
+#> # A tibble: 137 × 2
+#>    labels      mptp
+#>    <chr>      <int>
+#>  1 MZ051794.1     1
+#>  2 MZ050845.1     1
+#>  3 MZ051032.1     1
+#>  4 MZ051706.1     1
+#>  5 MZ504576.1     2
+#>  6 MZ504578.1     2
+#>  7 MZ504579.1     2
+#>  8 MZ504588.1     2
+#>  9 MZ504587.1     2
+#> 10 MZ504592.1     2
+#> # ℹ 127 more rows
+```
+
+For convenience we have made a ptp() wrapper around mptp() that defaults
+to the “single” argument of the method parameter.
+
 ``` r
 
 # geophagus_raxml - the Newick formatted phylogenetic tree object supplied with this package
 
-ptp_delim <- mptp(as.phylo(geophagus_raxml), method = "single")
+ptp_delim <- ptp(raxml_tree)
 #> Score Null Model: 681.702507
 #> Number of delimited species: 17
-
 ptp_df <- mptp_tbl(ptp_delim)
+
+print(ptp_df)
+#> # A tibble: 137 × 2
+#>    labels       ptp
+#>    <chr>      <int>
+#>  1 MZ051794.1     1
+#>  2 MZ050845.1     1
+#>  3 MZ051032.1     1
+#>  4 MZ051706.1     1
+#>  5 MZ504576.1     2
+#>  6 MZ504578.1     2
+#>  7 MZ504579.1     2
+#>  8 MZ504588.1     2
+#>  9 MZ504587.1     2
+#> 10 MZ504592.1     2
+#> # ℹ 127 more rows
 ```
 
 To estimate a minimum branch length for your dataset, use `minbr_len`.
 
 ``` r
 
-min_brlen(as.phylo(geophagus_raxml))
+min_brlen(raxml_tree)
 #> ℹ Printing 5 smallest tip-to-tip distances in a tree with 137 tips ...
 #> 
 #> 
@@ -898,6 +952,11 @@ results.
 
 ``` r
 
+# geophagus_beast - the Nexus formatted ultrametric phylogenetic tree object used for visualization
+
+path_to_file <- system.file("extdata/geophagus_beast.nex", package = "delimtools")
+
+geophagus_tree <- treeio::read.beast(path_to_file)
 
 # customize tip labels of the tree
 tip_tab <- geophagus_info |> 
@@ -919,4 +978,4 @@ delim_autoplot(all_delims_df,
                widths = c(0.5, 0.5))
 ```
 
-![](delimtools_files/figure-html/unnamed-chunk-33-1.png)
+![](delimtools_files/figure-html/unnamed-chunk-35-1.png)

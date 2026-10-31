@@ -1,5 +1,233 @@
 # Changelog
 
+## delimtools 0.4.1
+
+### New functions
+
+- [`ptp()`](../reference/ptp.md) and
+  [`ptp_tbl()`](../reference/ptp_tbl.md) added as aliases of
+  [`mptp()`](../reference/mptp.md) /
+  [`mptp_tbl()`](../reference/mptp_tbl.md), with `method` defaulting to
+  `"single"` (single-rate PTP) instead of
+  [`mptp()`](../reference/mptp.md)’s own default of `"multi"`
+  (multi-rate mPTP).
+
+### Improvements
+
+- [`abgd_tbl()`](../reference/abgd_tbl.md) and
+  [`asap_tbl()`](../reference/asap_tbl.md) now auto-detect and parse the
+  SPART matricial text format, in addition to each tool’s own native
+  webserver/CLI output, wherever they read a results file (the
+  `webserver` argument, and the file the CLI run itself produces).
+  Detection and parsing are handled by new internal `.is_spart_file()` /
+  `.read_spart()` (`R/spart.R`), following the grammar of
+  <https://github.com/iTaxoTools/SpartParser>. A SPART file with more
+  than one spartition yields one column per spartition, named
+  `{delimname}_1`, `{delimname}_2`, etc.
+
+- [`gmyc()`](../reference/gmyc.md) and
+  [`bgmyc()`](../reference/bgmyc.md) now accept a `treeio`-style
+  `"treedata"` object (e.g. from
+  [`treeio::read.beast()`](https://rdrr.io/pkg/treeio/man/beast-parser.html))
+  directly, converting it to `phylo` internally before use.
+
+- [`mptp()`](../reference/mptp.md) /
+  [`mptp_mcmc()`](../reference/mptp_mcmc.md) gained input validation
+  consistent with
+  [`gmyc()`](../reference/gmyc.md)/[`bgmyc()`](../reference/bgmyc.md):
+  class, duplicate tip labels, a minimum of 3 taxa, and polytomy
+  detection. A polytomous tree previously failed with the misleading
+  `"mPTP: tree is neither rooted nor unrooted Newick."`; it now reports
+  the actual problem and points to
+  [`ape::multi2di()`](https://rdrr.io/pkg/ape/man/multi2di.html).
+
+- [`mptp()`](../reference/mptp.md) /
+  [`mptp_mcmc()`](../reference/mptp_mcmc.md) now emit a
+  [`message()`](https://rdrr.io/r/base/message.html) when an unrooted
+  input tree is rooted automatically (on the tip with the single longest
+  terminal branch — not midpoint rooting) and no `outgroup` was
+  supplied, matching a notice the older
+  [`mptp_tbl()`](../reference/mptp_tbl.md) CLI path already gave.
+
+### Bug fixes
+
+- [`abgd()`](../reference/abgd.md): fixed a segfault on any alignment
+  containing a pair of sequences that share no non-gap site (reachable
+  with the default `model = "simple"`) — the embedded C code’s
+  `fprintf()` / `fclose()` calls operated on a `NULL` file handle left
+  over from the original CGI tool; replaced with a clear R-level
+  `error()` naming the offending pair.
+
+- [`abgd()`](../reference/abgd.md): removed a `system("mv ...")` call in
+  the embedded C code, left over from the original CGI tool and never
+  reachable from R, but the kind of call CRAN reviewers flag by hand
+  regardless of reachability.
+
+- [`asap()`](../reference/asap.md): fixed sequence pairs with no
+  overlapping site being silently reported as distance `0`
+  (i.e. identical) for every distance model other than `"simple"` —
+  [`ape::dist.dna()`](https://rdrr.io/pkg/ape/man/dist.dna.html)
+  correctly returns `NaN` for these, which was then unconditionally
+  coerced to `0`. Now raises a clear error naming the offending pairs,
+  for every model.
+
+- Internal `asap_exit_properly()` was a no-op under the R wrapper for
+  all of ASAP’s “should never happen” internal assertions
+  (memory-allocation failures, invalid internal state), silently letting
+  execution continue on bad state instead of stopping; it now always
+  halts via R’s `error()`.
+
+- [`mptp()`](../reference/mptp.md) /
+  [`mptp_mcmc()`](../reference/mptp_mcmc.md): fixed a NULL-pointer crash
+  in the embedded mPTP C engine — the `stdout`/`stderr` macros were only
+  lazily initialized as a side effect of one unrelated internal
+  function, so any `fprintf()` to either stream that ran first (which
+  happened on essentially every default run) segfaulted. Both macros now
+  resolve through a function that always returns a valid stream.
+
+- [`get_dwc()`](../reference/get_dwc.md) /
+  [`as_dwc()`](../reference/as_dwc.md): fixed three compounding bugs —
+  the Darwin Core distribution files have no header row (the first term
+  was silently dropped by
+  [`readr::read_csv()`](https://readr.tidyverse.org/reference/read_delim.html)),
+  `type = "all"` requested a nonexistent `all_dwc_vertical.csv` (the
+  real file is `dwc_vertical.csv`), and the `type` argument was
+  mistakenly reused as a column-name selector instead of the actual term
+  column.
+
+### Internal changes
+
+- `.github/workflows/pkgdown.yaml`: the “Update home page” step was
+  pointed at a different package’s files (`vignettes/VCFArrow.md`, a
+  `P_vaillantii.jpeg` image) left over from the template it was copied
+  from; it now builds the home page from this package’s own vignette
+  (`vignettes/delimtools.Rmd`), knitted so its live code actually runs,
+  with figures routed through `man/figures/` so pkgdown can serve them.
+  The build step force-cleans `docs/` past a one-time pkgdown ownership
+  check, and stages/restores `installs/install.md` around it.
+
+- `vignettes/delimtools.Rmd` promoted from a pkgdown-only article
+  (previously `vignettes/articles/`) to a real, `R CMD check`-built
+  vignette.
+
+- `install.Rmd` moved out of `docs/` (pkgdown’s own build destination,
+  which it fully owns and cleans on every build) into `installs/`, as
+  `installs/install.Rmd`, alongside a rendered `installs/install.md`.
+
+## delimtools 0.3.5
+
+### Breaking changes
+
+- Removed all remaining direct calls to `bGMYC::`/`splits::` from
+  [`bgmyc_tbl()`](../reference/bgmyc_tbl.md),
+  [`gmyc_tbl()`](../reference/gmyc_tbl.md), and
+  [`delim_join()`](../reference/delim_join.md) — these now call
+  delimtools’ own native engines unconditionally.
+
+### Bug fixes
+
+- Fixed an alignment-verification bug:
+  [`ape::read.FASTA()`](https://rdrr.io/pkg/ape/man/read.dna.html)
+  returns a list-form `DNAbin` (one vector per sequence) rather than a
+  matrix, but
+  [`abgd()`](../reference/abgd.md)/[`asap()`](../reference/asap.md)’s
+  shared input check tested
+  [`is.matrix()`](https://rdrr.io/r/base/matrix.html) directly, wrongly
+  rejecting validly-aligned list-form input. Now coerces via
+  [`as.matrix()`](https://rdrr.io/r/base/matrix.html) and only rejects
+  on genuine length mismatches.
+
+- Fixed several `R CMD check` ERRORs/WARNINGs/NOTEs ahead of CRAN
+  submission: stale `check_identifiers.Rd` regenerated; undocumented
+  `tr`/ `interval` arguments in
+  [`confidence_intervals()`](../reference/confidence_intervals.md)
+  documented explicitly instead of via a broken
+  `@inheritParams splits::gmyc`; examples that called
+  `bGMYC::`/`splits::` directly (an unstated-dependency WARNING, and
+  neither package is on CRAN) reworked to use delimtools’ own
+  [`gmyc()`](../reference/gmyc.md)/[`bgmyc()`](../reference/bgmyc.md),
+  including a hand-built legacy `singlebgmyc` example for
+  [`bgmyc_tbl()`](../reference/bgmyc_tbl.md) that no longer needs
+  `bGMYC` installed; stale Rd cross-references `[gmyc][splits::gmyc]` /
+  `[spec.list][splits::spec.list]` repointed to delimtools’ own
+  functions.
+
+- `R-CMD-check.yaml` (macOS): installs XQuartz, needed by `ggtree`’s
+  `ggiraph`/`gdtools` dependency chain at package-load time.
+
+- `R-CMD-check.yaml`: `ubuntu-latest (devel)` leg marked
+  `continue-on-error` — its recurring `bit64`/install-stage failures are
+  upstream RSPM/P3M binary-vs-R-devel-ABI mismatches, not a delimtools
+  bug.
+
+- `test-coverage.yaml`: fixed `fail_ci_if_error` logic, which previously
+  hard-failed on every push regardless of whether a `CODECOV_TOKEN`
+  secret was actually configured.
+
+### Internal changes
+
+- Compiled `.o` files no longer end up in the built source tarball (an
+  executable `cleanup` script, run automatically by R, removes them).
+
+- `LICENSE` added to `.Rbuildignore`.
+
+- `.Rd` files regenerated for all functions touched by the `bGMYC`/
+  `splits` removal; README refreshed for v0.3.x.
+
+## delimtools 0.3.4
+
+### Breaking changes
+
+- Removed the `bGMYC` package dependency: species delimitation and the
+  legacy `singlebgmyc`-object path in
+  [`bgmyc_tbl()`](../reference/bgmyc_tbl.md) now run on delimtools’ own
+  native engine; the option to analyze legacy `bGMYC` output is
+  retained.
+
+### Internal changes
+
+- `build-binaries.yaml`: added an XQuartz install step for macOS.
+
+- README updated for v0.3.x.
+
+## delimtools 0.3.3
+
+### Breaking changes
+
+- [`abgd()`](../reference/abgd.md)’s first argument renamed from `file`
+  to `x`. Both [`abgd()`](../reference/abgd.md) and
+  [`asap()`](../reference/asap.md) now take only a path to an aligned
+  FASTA file or an aligned `DNAbin` object — distance matrices are no
+  longer accepted directly; distances are always computed internally
+  from the sequences (fixes
+  [\#28](https://github.com/legalLab/delimtools/issues/28)).
+
+### Internal changes
+
+- Added shared internal input validator `.read_aligned_dna()`
+  (`R/asap.R`), used by both [`abgd()`](../reference/abgd.md) and
+  [`asap()`](../reference/asap.md).
+
+## delimtools 0.3.2
+
+### Internal changes
+
+- `src/Makevars`: subdirectory build rules reordered (most specific
+  first, catch-all last) to prevent a silent-bug risk.
+
+- [`confidence_intervals()`](../reference/confidence_intervals.md):
+  `splits::gmyc()` call replaced with
+  [`delimtools::gmyc()`](../reference/gmyc.md).
+
+- [`match_ratio()`](../reference/match_ratio.md): namespace-qualified
+  function calls.
+
+- Old/unused dependencies removed from `DESCRIPTION`;
+  `Imports`/`Suggests` updated.
+
+- `build-binaries.yaml` added, to build platform binaries and generate
+  GitHub releases.
+
 ## delimtools 0.3.0.9014
 
 ### Breaking changes
