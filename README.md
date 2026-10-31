@@ -1,3 +1,4 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # delimtools <img src="man/figures/logo.png" align="right" height="138"  />
@@ -18,14 +19,11 @@ you find a problem, please report it with as much detail as possible in
 version is completely stand alone, no longer depending on third party
 binaries or R dependencies no longer available on CRAN. The affected
 functions, however, retain their legacy behavior for now and
-instructions for installing the third party binaries and R dependencies
-are provided at
-<https://legallab.github.io/delimtools/articles/install.html>. A
-tutorial vignette running through all major package functionality is
-found at
-<https://legallab.github.io/delimtools/articles/delimtools.html>.
+instructions for [installing the third party binaries and R dependencies
+are provided
+at](https://github.com/legalLab/delimtools/blob/main/docs/install.md).
 
-## delimtools v0.3.x - Announcement
+## delimtools - Announcement
 
 As of v0.3.0, `delimtools` provides native R ports for all species
 delimitation software currently supported by this package. This means
@@ -47,20 +45,22 @@ functions in earlier versions, making the full `delimtools` pipeline
 longer need to install or configure standalone executables to run any of
 the supported methods. All currently implemented wrappers (\*\_tbl()
 functions) will continue to be available for comparative purposes for
-some time, but will eventually be deprecated in the next updates.
+some time, but will eventually be deprecated in the upcoming updates.
 
 ## Overview
 
 This is the official GitHub repository for the R package `delimtools`
-([Bittencourt, Collins & Hrbek,
-2026](https://doi.org/10.1139/gen-2025-0119)).
+([Bittencourt, Collins &
+Hrbek, 2026](https://doi.org/10.1139/gen-2025-0119)).
 
 Single-lucus species delimitation analyses have been implemented in a
 diversity of packages that use different methods to delimit species.
-These include GMYC ([Monaghan et al.,
-2009](https://doi.org/10.1093/sysbio/syp027)), bGMYC ([Reid & Carstens,
-2012](https://doi.org/10.1186/1471-2148-12-196)), mPTP ([Kapli et al.,
-2017](https://doi.org/10.1093/bioinformatics/btx025)) and ASAP
+These include GMYC ([Monaghan et
+al., 2009](https://doi.org/10.1093/sysbio/syp027)), bGMYC ([Reid &
+Carstens, 2012](https://doi.org/10.1186/1471-2148-12-196)), mPTP ([Kapli
+et al., 2017](https://doi.org/10.1093/bioinformatics/btx025)), ABGD
+([Puillandre et
+al., 2011](https://doi.org/10.1111/j.1365-294X.2011.05239.x)) and ASAP
 ([Puillandre et al., 2020](https://doi.org/10.1111/1755-0998.13281)).
 These software run on different platforms (e.g. R, Unix, webservers),
 and also do not output their results in a consistent format to allow
@@ -109,32 +109,27 @@ pak::pak("legalLab/delimtools")
 # or alternately
 devtools::install_github("legalLab/delimtools")
 # Windows and macOS binaries are also provided with each release
-install.packages("https://github.com/legalLab/delimtools/releases/download/v0.3.5/delimtools_0.3.5.zip", repos = NULL, type = "win.binary")
-install.packages("https://github.com/legalLab/delimtools/releases/download/v0.3.5/delimtools_0.3.5.tgz", repos = NULL, type = "mac.binary")
+install.packages("https://github.com/legalLab/delimtools/releases/download/v0.4.0/delimtools_0.4.0.zip", repos = NULL, type = "win.binary")
+install.packages("https://github.com/legalLab/delimtools/releases/download/v0.4.0/delimtools_0.4.0.tgz", repos = NULL, type = "mac.binary")
 ```
 
 Or a specific version via renv:
 
 ``` r
-renv::install("LegalLab/delimtools@v0.1.0")
+renv::install("legalLab/delimtools@v0.1.0")
 ```
 
 ## Examples
 
 Here, we will demonstrate plotting a single-locus species delimitation
-analysis of a *Geophagus* eartheater cichlid dataset ([Ximenes et al.,
-2021](https://doi.org/10.7717/peerj.12443)) using a diversity of
+analysis of a *Geophagus* eartheater cichlid dataset ([Ximenes et
+al., 2021](https://doi.org/10.7717/peerj.12443)) using a diversity of
 methods. A tutorial vignette running through all major package
-functionality is found at
-<https://legallab.github.io/delimtools/articles/delimtools.html>.
+functionality is found in the
+[vignette](https://legallab.github.io/delimtools/).
 
-<figure>
-<img
-src="https://raw.githubusercontent.com/boopsboops/delimtools-testing/79d6257c9ae4b7da1047e5ffa9ef1a04b4139dae/assets/geophagus_redhead_tapajos.jpg"
-alt="Redhead Eartheater Geophagus pyrocephalus" />
-<figcaption aria-hidden="true">Redhead Eartheater <em>Geophagus
-pyrocephalus</em></figcaption>
-</figure>
+![Redhead Eartheater *Geophagus
+pyrocephalus*](https://raw.githubusercontent.com/boopsboops/delimtools-testing/79d6257c9ae4b7da1047e5ffa9ef1a04b4139dae/assets/geophagus_redhead_tapajos.jpg)
 
 ``` r
 library(delimtools)
@@ -159,20 +154,27 @@ delim_autoplot(delim = geophagus_delims,
                col_vec = cols,
                hexpand = 0.7,
                widths = c(0.5, 0.5))
+#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `linewidth` instead.
+#> ℹ The deprecated feature was likely used in the ggtree package.
+#>   Please report the issue at <https://github.com/YuLab-SMU/ggtree/issues>.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 ```
 
 ![](man/figures/README-example-1.png)<!-- -->
 
 ## Current contributors
 
-- [Pedro S. Bittencourt](https://github.com/pedrosenna)
-- [Rupert A. Collins](https://github.com/boopsboops)
-- [Tomas Hrbek](https://github.com/killidude)
+  - [Pedro S. Bittencourt](https://github.com/pedrosenna)
+  - [Rupert A. Collins](https://github.com/boopsboops)
+  - [Tomas Hrbek](https://github.com/killidude)
 
 ## Meta
 
-- Please [report here any issues or bugs or
-  suggestions](https://github.com/legalLab/delimtools/issues).
-- License: MIT.
-- Get citation information for `delimtools` in R by running
-  `citation(package='delimtools')`.
+  - Please [report here any issues or bugs or
+    suggestions](https://github.com/legalLab/delimtools/issues).
+  - License: MIT.
+  - Get citation information for `delimtools` in R by running
+    `citation(package='delimtools')`.
