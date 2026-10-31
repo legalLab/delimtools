@@ -525,7 +525,7 @@ using the <code>treeio:read.beast()</code> function, and then need to be
 converted into a <code>phylo</code> object by using
 <code><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">ape::as.phylo</a></code>.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># geophagus_beast - the Nexus formatted ultrametric phylogenetic tree object supplied with this package</span></span>
+<code class="sourceCode R"><span><span class="co"># beast_tree - the Nexus formatted ultrametric phylogenetic tree object supplied with this package</span></span>
 <span></span>
 <span><span class="va">path_to_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/geophagus_beast.nex"</span>, package <span class="op">=</span> <span class="st">"delimtools"</span><span class="op">)</span></span>
 <span></span>
@@ -636,7 +636,7 @@ tree object or a Newick tree file. We can use either
 read in our Newick file; it will be automatically stored as
 <code>phylo</code> object.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># geophagus_beast - the Newick formatted phylogenetic tree object supplied with this package</span></span>
+<code class="sourceCode R"><span><span class="co"># raxml_tree - the Newick formatted phylogenetic tree object supplied with this package</span></span>
 <span></span>
 <span><span class="va">path_to_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/geophagus_raxml.nwk"</span>, package <span class="op">=</span> <span class="st">"delimtools"</span><span class="op">)</span></span>
 <span></span>
@@ -664,14 +664,15 @@ read in our Newick file; it will be automatically stored as
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> MZ504592.1     2</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 127 more rows</span></span></span></code></pre></div>
 <p>For convenience we have made a ptp() wrapper around mptp() that
-defaults to the “single” argument of the method parameter.</p>
+defaults to the “single” argument of the method parameter. Similarly, we
+also made a ptp_tbl() wrapper around mptp_tbl().</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># geophagus_raxml - the Newick formatted phylogenetic tree object supplied with this package</span></span>
+<code class="sourceCode R"><span><span class="co"># raxml_tree already loaded and converted</span></span>
 <span></span>
 <span><span class="va">ptp_delim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ptp.html">ptp</a></span><span class="op">(</span><span class="va">raxml_tree</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Score Null Model: 681.702507</span></span>
 <span><span class="co">#&gt; Number of delimited species: 17</span></span>
-<span><span class="va">ptp_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mptp_tbl.html">mptp_tbl</a></span><span class="op">(</span><span class="va">ptp_delim</span><span class="op">)</span></span>
+<span><span class="va">ptp_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ptp_tbl.html">ptp_tbl</a></span><span class="op">(</span><span class="va">ptp_delim</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ptp_df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 137 × 2</span></span></span>

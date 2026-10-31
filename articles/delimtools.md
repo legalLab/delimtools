@@ -525,7 +525,7 @@ into a `phylo` object by using
 
 ``` r
 
-# geophagus_beast - the Nexus formatted ultrametric phylogenetic tree object supplied with this package
+# beast_tree - the Nexus formatted ultrametric phylogenetic tree object supplied with this package
 
 path_to_file <- system.file("extdata/geophagus_beast.nex", package = "delimtools")
 
@@ -656,7 +656,7 @@ object.
 
 ``` r
 
-# geophagus_beast - the Newick formatted phylogenetic tree object supplied with this package
+# raxml_tree - the Newick formatted phylogenetic tree object supplied with this package
 
 path_to_file <- system.file("extdata/geophagus_raxml.nwk", package = "delimtools")
 
@@ -690,16 +690,17 @@ print(mptp_df)
 ```
 
 For convenience we have made a ptp() wrapper around mptp() that defaults
-to the “single” argument of the method parameter.
+to the “single” argument of the method parameter. Similarly, we also
+made a ptp_tbl() wrapper around mptp_tbl().
 
 ``` r
 
-# geophagus_raxml - the Newick formatted phylogenetic tree object supplied with this package
+# raxml_tree already loaded and converted
 
 ptp_delim <- ptp(raxml_tree)
 #> Score Null Model: 681.702507
 #> Number of delimited species: 17
-ptp_df <- mptp_tbl(ptp_delim)
+ptp_df <- ptp_tbl(ptp_delim)
 
 print(ptp_df)
 #> # A tibble: 137 × 2

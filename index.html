@@ -413,7 +413,7 @@
 <h3 id="gmyc">GMYC<a class="anchor" aria-label="anchor" href="#gmyc"></a>
 </h3>
 <p>The GMYC method is run by executing the <code>gmyc</code> function and giving it an <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">ape::phylo</a></code> object. The GMYC method requires an ultrametric tree file of class <code>phylo</code> as input for analysis. BEAST trees generated in Tree Annotator need to be read in using the <code>treeio:read.beast()</code> function, and then need to be converted into a <code>phylo</code> object by using <code><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">ape::as.phylo</a></code>.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co"># geophagus_beast - the Nexus formatted ultrametric phylogenetic tree object supplied with this package</span></span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co"># beast_tree - the Nexus formatted ultrametric phylogenetic tree object supplied with this package</span></span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>path_to_file <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata/geophagus_beast.nex"</span>, <span class="at">package =</span> <span class="st">"delimtools"</span>)</span>
 <span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a></span>
@@ -477,7 +477,7 @@
 <span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a><span class="co">#&gt; 90%</span></span>
 <span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a><span class="co">#&gt; 100%</span></span>
 <span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a><span class="co">#&gt; Acceptance rates (py / pc / t):</span></span>
-<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="co">#&gt; 0.5302  0.8366  0.3504</span></span></code></pre></div>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="co">#&gt; 0.5384  0.8507  0.3472</span></span></code></pre></div>
 <p>The results then need to be transformed into a table using the <code>bgmyc_tbl</code> function. By default, <code>0.05</code> is used as default posterior probability threshold for clustering samples into species partitions.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>bgmyc_df <span class="ot">&lt;-</span> <span class="fu">bgmyc_tbl</span>(bgmyc_delim)</span>
 <span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a></span>
@@ -501,7 +501,7 @@
 <h3 id="ptp-and-mptp">PTP and mPTP<a class="anchor" aria-label="anchor" href="#ptp-and-mptp"></a>
 </h3>
 <p>We can run both PTP and mPTP analysis by using the <code>mptp</code> function. Specifying the arguments (“multi” for mPTP; “single” for PTP) in the parameters determines which analysis is performed; the default is “multi” for mPTP. The <code>mptp</code> function accepts either phylo tree object or a Newick tree file. We can use either <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">ape::read.tree()</a></code> or <code><a href="https://rdrr.io/pkg/treeio/man/read.newick.html" class="external-link">treeio::read.newick()</a></code> to read in our Newick file; it will be automatically stored as <code>phylo</code> object.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co"># geophagus_beast - the Newick formatted phylogenetic tree object supplied with this package</span></span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co"># raxml_tree - the Newick formatted phylogenetic tree object supplied with this package</span></span>
 <span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>path_to_file <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata/geophagus_raxml.nwk"</span>, <span class="at">package =</span> <span class="st">"delimtools"</span>)</span>
 <span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a></span>
@@ -527,13 +527,13 @@
 <span id="cb27-18"><a href="#cb27-18" tabindex="-1"></a><span class="co">#&gt;  9 MZ504587.1     2</span></span>
 <span id="cb27-19"><a href="#cb27-19" tabindex="-1"></a><span class="co">#&gt; 10 MZ504592.1     2</span></span>
 <span id="cb27-20"><a href="#cb27-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 127 more rows</span></span></code></pre></div>
-<p>For convenience we have made a ptp() wrapper around mptp() that defaults to the “single” argument of the method parameter.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co"># geophagus_raxml - the Newick formatted phylogenetic tree object supplied with this package</span></span>
+<p>For convenience we have made a ptp() wrapper around mptp() that defaults to the “single” argument of the method parameter. Similarly, we also made a ptp_tbl() wrapper around mptp_tbl().</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co"># raxml_tree already loaded and converted</span></span>
 <span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>ptp_delim <span class="ot">&lt;-</span> <span class="fu">ptp</span>(raxml_tree)</span>
 <span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co">#&gt; Score Null Model: 681.702507</span></span>
 <span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co">#&gt; Number of delimited species: 17</span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>ptp_df <span class="ot">&lt;-</span> <span class="fu">mptp_tbl</span>(ptp_delim)</span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>ptp_df <span class="ot">&lt;-</span> <span class="fu">ptp_tbl</span>(ptp_delim)</span>
 <span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a></span>
 <span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a><span class="fu">print</span>(ptp_df)</span>
 <span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a><span class="co">#&gt; # A tibble: 137 × 2</span></span>
