@@ -218,7 +218,7 @@ The GMYC method is run by executing the `gmyc` function and giving it an `ape::p
 Tree Annotator need to be read in using the `treeio:read.beast()` function, and then need to be converted into a `phylo` object by using `ape::as.phylo`.
 
 ```{r}
-# geophagus_beast - the Nexus formatted ultrametric phylogenetic tree object supplied with this package
+# beast_tree - the Nexus formatted ultrametric phylogenetic tree object supplied with this package
 
 path_to_file <- system.file("extdata/geophagus_beast.nex", package = "delimtools")
 
@@ -271,7 +271,7 @@ print(bgmyc_df)
 We can run both PTP and mPTP analysis by using the `mptp` function. Specifying the arguments ("multi" for mPTP; "single" for PTP) in the parameters determines which analysis is performed; the default is "multi" for mPTP. The `mptp` function accepts either phylo tree object or a Newick tree file. We can use either `ape::read.tree()` or `treeio::read.newick()` to read in our Newick file; it will be automatically stored as `phylo` object.
 
 ```{r}
-# geophagus_beast - the Newick formatted phylogenetic tree object supplied with this package
+# raxml_tree - the Newick formatted phylogenetic tree object supplied with this package
 
 path_to_file <- system.file("extdata/geophagus_raxml.nwk", package = "delimtools")
 
@@ -287,13 +287,13 @@ mptp_df <- mptp_tbl(mptp_delim)
 print(mptp_df)
 ```
 
-For convenience we have made a ptp() wrapper around mptp() that defaults to the "single" argument of the method parameter.
+For convenience we have made a ptp() wrapper around mptp() that defaults to the "single" argument of the method parameter. Similarly, we also made a ptp_tbl() wrapper around mptp_tbl().
 
 ```{r}
-# geophagus_raxml - the Newick formatted phylogenetic tree object supplied with this package
+# raxml_tree already loaded and converted
 
 ptp_delim <- ptp(raxml_tree)
-ptp_df <- mptp_tbl(ptp_delim)
+ptp_df <- ptp_tbl(ptp_delim)
 
 print(ptp_df)
 ```
