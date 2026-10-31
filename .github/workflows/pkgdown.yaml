@@ -36,8 +36,80 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
 
+      - name: Stage install.md
+        # Render installs/install.Rmd to installs/install.md, with its title
+        # (from its YAML header) prepended, since md_document drops it.
+        run: |
+          dir.create("pkgdown", showWarnings = FALSE)
+
+          title <- sub('^title:\\s*"?([^"]+)"?\\s*$', "\\1",
+                       grep("^title:", readLines("installs/install.Rmd"), value = TRUE)[1])
+
+          rmarkdown::render("installs/install.Rmd", output_format = "md_document",
+                             output_file = "install_staged.md",
+                             output_dir = "pkgdown",
+                             quiet = TRUE, envir = new.env())
+
+          writeLines(
+            c(paste("#", title), "", readLines("pkgdown/install_staged.md")),
+            "pkgdown/install_staged.md"
+          )
+        shell: Rscript {0}
+
+      - name: Update home page
+        # pkgdown builds the home page from pkgdown/index.md: the vignette
+        # (vignettes/delimtools.Rmd), knitted so its R code actually
+        # runs, with its title (from its YAML header) but without author and
+        # date, and the README's badges, which pkgdown shows in the sidebar
+        # (Dev status)
+        run: |
+          dir.create("pkgdown", showWarnings = FALSE)
+
+          vignette <- "vignettes/delimtools.Rmd"
+          title <- sub('^title:\\s*"?([^"]+)"?\\s*$', "\\1",
+                       grep("^title:", readLines(vignette), value = TRUE)[1])
+
+          # Figures must land under man/figures/ (one of the two directories
+          # pkgdown will actually copy images from into the built site) --
+          # knitr still writes an absolute path into the body, so rewrite it
+          # back to a path relative to the project root.
+          rmarkdown::render(vignette, output_format = "md_document",
+                             output_file = "home.md",
+                             output_dir = "man/figures",
+                             quiet = TRUE, envir = new.env())
+          body <- readLines("man/figures/home.md")
+          body <- gsub("!\\[\\]\\(.*?man/figures/", "![](man/figures/", body)
+          unlink("man/figures/home.md")
+
+          badges <- readLines("README.md")
+          badges <- badges[(grep("badges: start", badges) + 1):
+                            (grep("badges: end", badges) - 1)]
+
+          writeLines(
+            c("<!-- pkgdown/index.md (the pkgdown home page) is generated",
+              "     from vignettes/delimtools.Rmd; see the",
+              "     \"Update home page\" step in .github/workflows/pkgdown.yaml -->",
+              "",
+              paste("#", title),
+              "",
+              badges,
+              "",
+              body),
+            "pkgdown/index.md"
+          )
+        shell: Rscript {0}
+
       - name: Build site
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        # force = TRUE is a no-op on a fresh checkout (docs/ won't exist yet),
+        # kept only as a safeguard in case a stale docs/ from a previous run
+        # is still lying around and isn't recognized as pkgdown's own output.
+        run: |
+          pkgdown::clean_site(force = TRUE)
+          pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE, clean = FALSE)
+        shell: Rscript {0}
+
+      - name: Add install.md to site
+        run: file.copy("pkgdown/install_staged.md", "installs/install.md", overwrite = TRUE)
         shell: Rscript {0}
 
       - name: Deploy to GitHub pages 🚀
