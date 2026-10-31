@@ -324,9 +324,10 @@ print(morph_df)
 Since we have several species partitions, we need to merge them into a single data frame in order to visualize the results. However, since each method has its own rankings, we need to recode them prior to any further analysis. For this task, we can use `delim_join`. This function takes a `list` of species partitions to recode and then join.
 
 ```{r message= FALSE}
-all_delims <- list(abgd_df, asap_df, bgmyc_df, gmyc_df, 
-                   locmin_df, morph_df, mptp_df, ptp_df, 
-                   percent_df, treedist_df)
+all_delims <- list(abgd_df, asap_df, locmin_df, percent_df, treedist_df,
+                   bgmyc_df, gmyc_df,
+                   mptp_df, ptp_df,
+                   morph_df)
 
 all_delims_df <- delim_join(all_delims)
 ```
