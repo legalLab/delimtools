@@ -18,10 +18,9 @@ you find a problem, please report it with as much detail as possible in
 [Issues](https://github.com/LegalLab/delimtools/issues). The current
 version is completely stand alone, no longer depending on third party
 binaries or R dependencies no longer available on CRAN. The affected
-functions, however, retain their legacy behavior for now and
-instructions for [installing the third party binaries and R dependencies
-are provided
-at](https://github.com/legalLab/delimtools/blob/main/docs/install.md).
+functions, however, retain their legacy behavior for now. Follow these
+[instructions](https://github.com/legalLab/delimtools/blob/main/installs/install.md)
+for installing the third party binaries and R dependencies.
 
 ## delimtools - Announcement
 
@@ -94,7 +93,7 @@ BiocManager::install("ggtree")
 ## Installation
 
 To install `delimtools` you may execute the following commands. We
-recommend the usage of the latest CRAN release always.
+recommend using the latest CRAN release.
 
 Latest stable version from CRAN
 
@@ -109,8 +108,8 @@ pak::pak("legalLab/delimtools")
 # or alternately
 devtools::install_github("legalLab/delimtools")
 # Windows and macOS binaries are also provided with each release
-install.packages("https://github.com/legalLab/delimtools/releases/download/v0.4.0/delimtools_0.4.0.zip", repos = NULL, type = "win.binary")
-install.packages("https://github.com/legalLab/delimtools/releases/download/v0.4.0/delimtools_0.4.0.tgz", repos = NULL, type = "mac.binary")
+install.packages("https://github.com/legalLab/delimtools/releases/download/v0.4.1/delimtools_0.4.1.zip", repos = NULL, type = "win.binary")
+install.packages("https://github.com/legalLab/delimtools/releases/download/v0.4.1/delimtools_0.4.1.tgz", repos = NULL, type = "mac.binary")
 ```
 
 Or a specific version via renv:
@@ -121,12 +120,11 @@ renv::install("legalLab/delimtools@v0.1.0")
 
 ## Examples
 
-Here, we will demonstrate plotting a single-locus species delimitation
+Here, we demonstrate plotting a single-locus species delimitation
 analysis of a *Geophagus* eartheater cichlid dataset ([Ximenes et
 al., 2021](https://doi.org/10.7717/peerj.12443)) using a diversity of
-methods. A tutorial vignette running through all major package
-functionality is found in the
-[vignette](https://legallab.github.io/delimtools/).
+methods. A tutorial running through all major package functionality
+is found in the [vignette](https://legallab.github.io/delimtools/).
 
 ![Redhead Eartheater *Geophagus
 pyrocephalus*](https://raw.githubusercontent.com/boopsboops/delimtools-testing/79d6257c9ae4b7da1047e5ffa9ef1a04b4139dae/assets/geophagus_redhead_tapajos.jpg)
