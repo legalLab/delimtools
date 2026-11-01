@@ -593,7 +593,7 @@ bgmyc_delim <- bgmyc(beast_tree)
 #> 90%
 #> 100%
 #> Acceptance rates (py / pc / t):
-#> 0.5384  0.8507  0.3472
+#> 0.5375  0.8330  0.3508
 ```
 
 The results then need to be transformed into a table using the
