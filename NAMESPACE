@@ -54,17 +54,27 @@ export(ptp)
 export(ptp_tbl)
 export(report_delim)
 export(spec.list)
-importFrom(ape,branching.times)
-importFrom(ape,dist.dna)
-importFrom(ape,is.binary)
-importFrom(ape,is.ultrametric)
-importFrom(ape,read.dna)
+importFrom(ape,
+  branching.times,
+  dist.dna,
+  is.binary,
+  is.ultrametric,
+  read.dna
+)
 importFrom(ggtree,"%<+%")
 importFrom(methods,is)
-importFrom(rlang,":=")
-importFrom(rlang,.data)
-importFrom(stats,optim)
-importFrom(stats,pchisq)
-importFrom(stats,rpois)
-importFrom(stats,setNames)
+importFrom(rlang,
+  ":=",
+  .data
+)
+importFrom(stats,
+  optim,
+  pchisq,
+  rpois,
+  setNames
+)
+importFrom(tools,
+  file_path_as_absolute,
+  file_path_sans_ext
+)
 useDynLib(delimtools, .registration = TRUE)

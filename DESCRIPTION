@@ -1,7 +1,7 @@
 Type: Package
 Package: delimtools
 Title: Helper Functions for Species Delimitation Analysis
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: c(
     person("Pedro", "Bittencourt", , "pedro.sennabittencourt@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-4074-3541")),
@@ -54,6 +54,7 @@ Suggests:
     spider,
     tibble,
     tidytree,
+    treeio,
     vctrs,
     withr
 Encoding: UTF-8
@@ -65,3 +66,4 @@ Packaged: 2025-03-05 21:16:14 UTC; pedro
 URL: https://github.com/legalLab/delimtools, https://legallab.github.io/delimtools/
 BugReports: https://github.com/legalLab/delimtools/issues
 VignetteBuilder: knitr
+Additional_repositories: https://bioconductor.org/packages/release/bioc

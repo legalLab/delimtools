@@ -7,6 +7,10 @@
 ^README-.*\.png$
 ^CRAN-SUBMISSION$
 ^install$
+^installs$
+^benchmark$
+^issues$
+^cleanup$
 ^repos$
 ^_pkgdown\.yml$
 ^docs$

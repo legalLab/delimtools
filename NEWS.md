@@ -1,3 +1,19 @@
+# delimtools 0.4.2
+
+## Bug fixes
+
+* `abgd_tbl()`: fixed a crash (`object 'delim' not found`) when parsing
+  ABGD's native (non-SPART) `webserver` results format — a
+  `delim <- ... |> mutate(... nrow(delim) ...)` pipe referenced `delim`
+  before it existed. Now uses `dplyr::row_number()`.
+
+* `asap_tbl()`: the cleanup of ASAP's incidental working-directory output
+  files (`*.res.cvs`, `*_distmat.txt`) called `tools::file_path_as_absolute()`
+  before checking whether those files existed, which errors on a
+  nonexistent path instead of letting the subsequent `file.exists()` guard
+  handle it; it now builds the candidate paths without requiring them to
+  exist first.
+
 # delimtools 0.4.1
 
 ## New functions
@@ -69,6 +85,23 @@
   `all_dwc_vertical.csv` (the real file is `dwc_vertical.csv`), and the
   `type` argument was mistakenly reused as a column-name selector instead
   of the actual term column.
+
+* `get_dwc()`, `as_dwc()`, `dwc_terms()`: their examples read a live
+  GitHub-hosted data source and previously failed CRAN's automated checks
+  outright when that resource's format changed upstream. These examples
+  are now wrapped in `\dontrun{}`, since they inherently depend on a
+  remote resource outside our control.
+
+* `DESCRIPTION`: added `Additional_repositories` pointing at the
+  Bioconductor release repository. `ggtree` (Imports) and `treeio` (now
+  declared in Suggests; it was already used, unguarded, in the vignette)
+  are Bioconductor packages, and without this field they could be reported
+  as unavailable on some CRAN check flavors.
+
+* `.Rbuildignore`: `installs/` (renamed from `install/` some time ago) was
+  never added under its new name, so it — along with untracked
+  `benchmark/` and `issues/` directories — leaked into the built package
+  as non-standard top-level content.
 
 ## Internal changes
 
