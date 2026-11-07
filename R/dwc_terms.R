@@ -18,8 +18,12 @@
 #' Pedro S. Bittencourt, Rupert A. Collins.
 #'
 #' @examples
-#' dwc <- get_dwc(type= "simple")
+#' \dontrun{
+#' # get_dwc() reads from a remote repository, so this example is not run
+#' # automatically.
+#' dwc <- get_dwc(type = "simple")
 #' dwc_terms(dwc, c("genus", "scientificName"))
+#' }
 #'
 #' @export
 dwc_terms <- function(dwc, terms){

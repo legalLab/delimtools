@@ -27,7 +27,11 @@ containing the most recent accepted terms as a vector and a \link[tibble:tbl_df]
 terms, definitions, examples and details about each one of them.
 }
 \examples{
-dwc <- get_dwc(type= "simple") 
+\dontrun{
+# get_dwc() reads from a remote repository, so this example is not run
+# automatically.
+dwc <- get_dwc(type = "simple")
+}
 
 }
 \author{

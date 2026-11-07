@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
 
-Helpers functions to process, analyse, and visualize the output of single locus species delimitation methods. For full functionality, please install suggested software at \url{https://legallab.github.io/delimtools/articles/install.html}.
+Helpers functions to process, analyse, and visualize the output of single locus species delimitation methods.
 }
 \seealso{
 Useful links:

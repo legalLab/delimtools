@@ -27,10 +27,6 @@ by the user. If \code{terms} and column names do not match in length or if \code
 are not found in Darwin Core standard, an error will be printed on \code{Console}.
 }
 \examples{
-
-# get dwc terms and definitions
-dwc <- get_dwc(type = "simple")
-
 # create a data frame with sample metadata
 my_df <- tibble::tibble(
   species = c("sp1", "sp2", "sp3"),
@@ -39,8 +35,14 @@ my_df <- tibble::tibble(
   collector = c("John", "Robert", "David")
 )
 
+\dontrun{
+# get_dwc() reads from a remote repository, so this part of the example
+# is not run automatically.
+dwc <- get_dwc(type = "simple")
+
 # rename columns
 as_dwc(dwc, my_df, terms = c("scientificName", "locality", "catalogNumber", "recordedBy"))
+}
 
 }
 \author{

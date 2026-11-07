@@ -7,6 +7,7 @@
 #' @importFrom rlang := .data
 #' @importFrom ape branching.times is.ultrametric is.binary dist.dna read.dna
 #' @importFrom stats optim pchisq setNames rpois
+#' @importFrom tools file_path_as_absolute file_path_sans_ext
 #' @useDynLib delimtools, .registration = TRUE
 ## usethis namespace: end
 NULL

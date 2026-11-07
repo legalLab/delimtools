@@ -21,10 +21,6 @@
 #' Pedro S. Bittencourt, Rupert A. Collins.
 #'
 #' @examples
-#'
-#' # get dwc terms and definitions
-#' dwc <- get_dwc(type = "simple")
-#'
 #' # create a data frame with sample metadata
 #' my_df <- tibble::tibble(
 #'   species = c("sp1", "sp2", "sp3"),
@@ -33,8 +29,14 @@
 #'   collector = c("John", "Robert", "David")
 #' )
 #'
+#' \dontrun{
+#' # get_dwc() reads from a remote repository, so this part of the example
+#' # is not run automatically.
+#' dwc <- get_dwc(type = "simple")
+#'
 #' # rename columns
 #' as_dwc(dwc, my_df, terms = c("scientificName", "locality", "catalogNumber", "recordedBy"))
+#' }
 #'
 #' @export
 as_dwc <- function(dwc, data, terms) {

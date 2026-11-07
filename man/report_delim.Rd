@@ -19,11 +19,10 @@ an object of class \link[tibble:tbl_df]{tbl_df}].
 }
 \details{
 For each column in \code{delim}, \code{report_delim()} will calculate the
-number of unique partitions and print them to \code{Console}. If \code{delim} is an output from \verb{*_tbl()},
-\code{report_delim()} will get unique species partitions using \link[vctrs:vec_unique_count]{vec_unique_count}.
-If \code{delim} is an output from \link{delim_join} or \link{delim_consensus}, values are summarized by using
-\link[dplyr:n_distinct]{n_distinct} with \code{na.rm = TRUE}. This is to prevent any columns with
-NA values to be interpreted as species partitions.
+number of unique partitions and print them to \code{Console}, using
+\link[dplyr:n_distinct]{n_distinct} with \code{na.rm = TRUE} whether \code{delim} is a single-method
+output from \verb{*_tbl()} or a multi-method output from \link{delim_join} or \link{delim_consensus}.
+This is to prevent any columns with NA values from being interpreted as species partitions.
 }
 \examples{
 

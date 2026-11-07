@@ -20,8 +20,10 @@ differences in its dimensions, labels, and values.
 \code{check_delim()} will check if two or more species delimitation outputs have
 different dimensions (rows, columns), if labels are the same or if there are
 any duplicated or absent labels, and if there are any NA values or if partitions
-were set using non numeric values. If \code{TRUE} for any of the cases listed above,
-\code{check_delim()} will return an error.
+were set using non numeric values. Each table is compared against the first table
+in \code{list}. Any of the cases listed above triggers a \code{cli::cli_warn()} describing
+the issue, and \code{check_delim()} returns \code{FALSE}. If none of the cases are found for
+any pairwise comparison, \code{check_delim()} returns \code{TRUE}.
 }
 \examples{
 
@@ -46,5 +48,5 @@ check_delim(list(delim_1, delim_2, delim_3))
 
 }
 \author{
-Pedro S. Bittencourt, Rupert A. Collins.
+Pedro S. Bittencourt, Rupert A. Collins, Tomas Hrbek.
 }
