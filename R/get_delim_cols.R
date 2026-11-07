@@ -40,7 +40,7 @@
 #' 
 #' @export
 get_delim_cols <- function(p, delimname= NULL, hap_tbl= NULL){
-  
+
   # get a ggplot_built object
   p_build <- ggplot2::ggplot_build(p)
   

@@ -48,7 +48,7 @@ delim_autoplot2 <- function(delim, tr, consensus = TRUE, n_match = NULL,
   
   # check if `patchwork` is installed
   rlang::check_installed("patchwork", reason = "to run `delim_autoplot` properly.")
-  
+
   if (!methods::is(tr, "treedata")) {
     cli::cli_abort(c("Tree file must be from class {.cls treedata}.",
       "i" = "You've supplied a tree file of class {.cls {class(tr)}}",
