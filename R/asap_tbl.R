@@ -88,11 +88,11 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
   # check if `readr` is installed
   rlang::check_installed("readr", reason= "to execute `ASAP` properly.")
   
-  if(!is.null(webserver) && !file.exists(webserver)) {
+  if (!is.null(webserver) && !file.exists(webserver)) {
     cli::cli_abort("Please provide a valid path to an ASAP results file.")
   }
   
-  if(!is.null(webserver) && file.exists(webserver)) {
+  if (!is.null(webserver) && file.exists(webserver)) {
 
     if (.is_spart_file(webserver)) {
       delim <- .read_spart(webserver, delimname = delimname)
@@ -108,20 +108,20 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
     return(delim)
   }
   
-  if(!file.exists(exe)){
+  if (!file.exists(exe)){
     cli::cli_abort("Please provide a valid path to the ASAP executable file.")
   }
   
-  if(missing(model)){
+  if (missing(model)){
     model <- 1
     cli::cli_warn("{cli::col_yellow({cli::symbol$warning})} Evolutionary model not specified. Using p-distance as default model.")
   }
   
-  if(is.null(outfolder)){
+  if (is.null(outfolder)){
     outfolder <- tempdir()
   }
   
-  if(!dir.exists(outfolder)){
+  if (!dir.exists(outfolder)){
     cli::cli_abort("Error: Please provide a valid results directory.")
   }
   
@@ -147,22 +147,20 @@ asap_tbl <- function(infile, exe = NULL, haps = NULL, model = 3, outfolder = NUL
       dplyr::mutate(asap = as.integer(.data$asap))
   }
   
-  if(!is.null(haps)){
-    
+  if (!is.null(haps)){
     delim <- delim |>
       dplyr::filter(labels %in% haps)
   }
   
   # clean up rogue files
+  rogue1 <- glue::glue("{basename(infile)}.res.cvs")
+  rogue2 <- glue::glue("{basename(infile)}_distmat.txt")
   
-  rogue1 <- tools::file_path_as_absolute(glue::glue("{basename(infile)}.res.cvs"))
-  rogue2 <- tools::file_path_as_absolute(glue::glue("{basename(infile)}_distmat.txt"))
+  if (file.exists(rogue1)) {file.copy(rogue1,glue::glue("{tempdir()}/{basename(rogue1)}"))}
+  if (file.exists(rogue2)) {file.copy(rogue2,glue::glue("{tempdir()}/{basename(rogue2)}"))}
   
-  if(file.exists(rogue1)) {file.copy(rogue1,glue::glue("{tempdir()}/{basename(rogue1)}"))}
-  if(file.exists(rogue2)) {file.copy(rogue2,glue::glue("{tempdir()}/{basename(rogue2)}"))}
-  
-  if(file.exists(rogue1)) {file.remove(rogue1)}
-  if(file.exists(rogue2)) {file.remove(rogue2)}
+  if (file.exists(rogue1)) {file.remove(rogue1)}
+  if (file.exists(rogue2)) {file.remove(rogue2)}
   
   cli::cli_alert_info("ASAP files are located in directory '{outfolder}'.")
   
