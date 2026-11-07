@@ -1,9 +1,7 @@
 # Helper Functions for Species Delimitation Analysis
 
 Helpers functions to process, analyse, and visualize the output of
-single locus species delimitation methods. For full functionality,
-please install suggested software at
-<https://legallab.github.io/delimtools/articles/install.html>.
+single locus species delimitation methods.
 
 ## See also
 

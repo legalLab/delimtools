@@ -63,5 +63,5 @@ cols <- delim_brewer(geophagus_delims, package = "randomcoloR")
 #> Warning: ⚠ Argument `seed` not found. Using `Sys.time()` as seed.
 #> ℹ For reproducibility, you may want to set a custom `seed` instead. `seed` is
 #>   printed below:
-#> 2026-11-01 14:46:23.332935
+#> 2026-11-07 16:38:46.548431
 ```

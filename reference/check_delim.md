@@ -25,12 +25,17 @@ A single logical value, `TRUE` or `FALSE`.
 `check_delim()` will check if two or more species delimitation outputs
 have different dimensions (rows, columns), if labels are the same or if
 there are any duplicated or absent labels, and if there are any NA
-values or if partitions were set using non numeric values. If `TRUE` for
-any of the cases listed above, `check_delim()` will return an error.
+values or if partitions were set using non numeric values. Each table is
+compared against the first table in `list`. Any of the cases listed
+above triggers a
+[`cli::cli_warn()`](https://cli.r-lib.org/reference/cli_abort.html)
+describing the issue, and `check_delim()` returns `FALSE`. If none of
+the cases are found for any pairwise comparison, `check_delim()` returns
+`TRUE`.
 
 ## Author
 
-Pedro S. Bittencourt, Rupert A. Collins.
+Pedro S. Bittencourt, Rupert A. Collins, Tomas Hrbek.
 
 ## Examples
 

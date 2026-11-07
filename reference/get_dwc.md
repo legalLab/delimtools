@@ -40,5 +40,9 @@ Pedro S. Bittencourt, Rupert A. Collins
 ## Examples
 
 ``` r
-dwc <- get_dwc(type= "simple") 
+if (FALSE) { # \dontrun{
+# get_dwc() reads from a remote repository, so this example is not run
+# automatically.
+dwc <- get_dwc(type = "simple")
+} # }
 ```

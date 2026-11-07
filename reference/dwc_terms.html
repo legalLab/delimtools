@@ -9,7 +9,7 @@ each one of them."><meta property="og:image" content="/logo.svg"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">delimtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,21 +73,12 @@ the term, followed by its definition and examples.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dwc</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_dwc.html">get_dwc</a></span><span class="op">(</span>type<span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># get_dwc() reads from a remote repository, so this example is not run</span></span></span>
+<span class="r-in"><span><span class="co"># automatically.</span></span></span>
+<span class="r-in"><span><span class="va">dwc</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_dwc.html">get_dwc</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">dwc_terms</span><span class="op">(</span><span class="va">dwc</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"genus"</span>, <span class="st">"scientificName"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> • genus: The full scientific name of the genus in which the dwc:Taxon is</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> classified. Examples: `Puma`; `Monoclea`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> • scientificName: The full scientific name, with authorship and date</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> information if known. When forming part of a dwc:Identification, this should be</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> the name in lowest level taxonomic rank that can be determined. Examples:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `Coleoptera` (order); `Vespertilionidae` (family); `Manis` (genus); `Ctenomys</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> sociabilis` (genus + specificEpithet); `Ambystoma tigrinum diaboli` (genus +</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> specificEpithet + infraspecificEpithet); `Roptrocerus typographi (Györfi,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1952)` (genus + specificEpithet + scientificNameAuthorship); `Quercus agrifolia</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> var. oxyadenia (Torr.) J.T. Howell` (genus + specificEpithet + taxonRank +</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> infraspecificEpithet + scientificNameAuthorship); `×Agropogon littoralis (Sm.)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> C. E. Hubb.`; `Mentha ×smithiana R. A. Graham`; `Agrostis stolonifera L. ×</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Polypogon monspeliensis (L.) Desf.`</span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

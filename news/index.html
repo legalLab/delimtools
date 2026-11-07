@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">delimtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,14 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.2" id="delimtools-042">delimtools 0.4.2<a class="anchor" aria-label="anchor" href="#delimtools-042"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-4-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-2"></a></h3>
+<ul><li><p><code><a href="../reference/abgd_tbl.html">abgd_tbl()</a></code>: fixed a crash (<code>object 'delim' not found</code>) when parsing ABGD’s native (non-SPART) <code>webserver</code> results format — a <code>delim &lt;- ... |&gt; mutate(... nrow(delim) ...)</code> pipe referenced <code>delim</code> before it existed. Now uses <code><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">dplyr::row_number()</a></code>.</p></li>
+<li><p><code><a href="../reference/asap_tbl.html">asap_tbl()</a></code>: the cleanup of ASAP’s incidental working-directory output files (<code>*.res.cvs</code>, <code>*_distmat.txt</code>) called <code><a href="https://rdrr.io/r/tools/fileutils.html" class="external-link">tools::file_path_as_absolute()</a></code> before checking whether those files existed, which errors on a nonexistent path instead of letting the subsequent <code><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists()</a></code> guard handle it; it now builds the candidate paths without requiring them to exist first.</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.1" id="delimtools-041">delimtools 0.4.1<a class="anchor" aria-label="anchor" href="#delimtools-041"></a></h2>
 <div class="section level3">
 <h3 id="new-functions-0-4-1">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-4-1"></a></h3>
@@ -54,6 +62,9 @@
 <li><p>Internal <code>asap_exit_properly()</code> was a no-op under the R wrapper for all of ASAP’s “should never happen” internal assertions (memory-allocation failures, invalid internal state), silently letting execution continue on bad state instead of stopping; it now always halts via R’s <code>error()</code>.</p></li>
 <li><p><code><a href="../reference/mptp.html">mptp()</a></code> / <code><a href="../reference/mptp_mcmc.html">mptp_mcmc()</a></code>: fixed a NULL-pointer crash in the embedded mPTP C engine — the <code>stdout</code>/<code>stderr</code> macros were only lazily initialized as a side effect of one unrelated internal function, so any <code>fprintf()</code> to either stream that ran first (which happened on essentially every default run) segfaulted. Both macros now resolve through a function that always returns a valid stream.</p></li>
 <li><p><code><a href="../reference/get_dwc.html">get_dwc()</a></code> / <code><a href="../reference/as_dwc.html">as_dwc()</a></code>: fixed three compounding bugs — the Darwin Core distribution files have no header row (the first term was silently dropped by <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">readr::read_csv()</a></code>), <code>type = "all"</code> requested a nonexistent <code>all_dwc_vertical.csv</code> (the real file is <code>dwc_vertical.csv</code>), and the <code>type</code> argument was mistakenly reused as a column-name selector instead of the actual term column.</p></li>
+<li><p><code><a href="../reference/get_dwc.html">get_dwc()</a></code>, <code><a href="../reference/as_dwc.html">as_dwc()</a></code>, <code><a href="../reference/dwc_terms.html">dwc_terms()</a></code>: their examples read a live GitHub-hosted data source and previously failed CRAN’s automated checks outright when that resource’s format changed upstream. These examples are now wrapped in <code>\dontrun{}</code>, since they inherently depend on a remote resource outside our control.</p></li>
+<li><p><code>DESCRIPTION</code>: added <code>Additional_repositories</code> pointing at the Bioconductor release repository. <code>ggtree</code> (Imports) and <code>treeio</code> (now declared in Suggests; it was already used, unguarded, in the vignette) are Bioconductor packages, and without this field they could be reported as unavailable on some CRAN check flavors.</p></li>
+<li><p><code>.Rbuildignore</code>: <code>installs/</code> (renamed from <code>install/</code> some time ago) was never added under its new name, so it — along with untracked <code>benchmark/</code> and <code>issues/</code> directories — leaked into the built package as non-standard top-level content.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="internal-changes-0-4-1">Internal changes<a class="anchor" aria-label="anchor" href="#internal-changes-0-4-1"></a></h3>

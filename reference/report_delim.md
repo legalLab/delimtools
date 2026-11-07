@@ -29,15 +29,12 @@ an object of class
 ## Details
 
 For each column in `delim`, `report_delim()` will calculate the number
-of unique partitions and print them to `Console`. If `delim` is an
-output from `*_tbl()`, `report_delim()` will get unique species
-partitions using
-[vec_unique_count](https://vctrs.r-lib.org/reference/vec_unique.html).
-If `delim` is an output from [delim_join](delim_join.md) or
-[delim_consensus](delim_consensus.md), values are summarized by using
+of unique partitions and print them to `Console`, using
 [n_distinct](https://dplyr.tidyverse.org/reference/n_distinct.html) with
-`na.rm = TRUE`. This is to prevent any columns with NA values to be
-interpreted as species partitions.
+`na.rm = TRUE` whether `delim` is a single-method output from `*_tbl()`
+or a multi-method output from [delim_join](delim_join.md) or
+[delim_consensus](delim_consensus.md). This is to prevent any columns
+with NA values from being interpreted as species partitions.
 
 ## Author
 

@@ -45,10 +45,6 @@ Pedro S. Bittencourt, Rupert A. Collins.
 ## Examples
 
 ``` r
-
-# get dwc terms and definitions
-dwc <- get_dwc(type = "simple")
-
 # create a data frame with sample metadata
 my_df <- tibble::tibble(
   species = c("sp1", "sp2", "sp3"),
@@ -57,12 +53,12 @@ my_df <- tibble::tibble(
   collector = c("John", "Robert", "David")
 )
 
+if (FALSE) { # \dontrun{
+# get_dwc() reads from a remote repository, so this part of the example
+# is not run automatically.
+dwc <- get_dwc(type = "simple")
+
 # rename columns
 as_dwc(dwc, my_df, terms = c("scientificName", "locality", "catalogNumber", "recordedBy"))
-#> # A tibble: 3 × 4
-#>   scientificName locality catalogNumber recordedBy
-#>   <chr>          <chr>    <chr>         <chr>     
-#> 1 sp1            loc1     M01           John      
-#> 2 sp2            loc2     M02           Robert    
-#> 3 sp3            loc3     M03           David     
+} # }
 ```

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">delimtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,11 +61,10 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>For each column in <code>delim</code>, <code>report_delim()</code> will calculate the
-number of unique partitions and print them to <code>Console</code>. If <code>delim</code> is an output from <code>*_tbl()</code>,
-<code>report_delim()</code> will get unique species partitions using <a href="https://vctrs.r-lib.org/reference/vec_unique.html" class="external-link">vec_unique_count</a>.
-If <code>delim</code> is an output from <a href="delim_join.html">delim_join</a> or <a href="delim_consensus.html">delim_consensus</a>, values are summarized by using
-<a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a> with <code>na.rm = TRUE</code>. This is to prevent any columns with
-NA values to be interpreted as species partitions.</p>
+number of unique partitions and print them to <code>Console</code>, using
+<a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a> with <code>na.rm = TRUE</code> whether <code>delim</code> is a single-method
+output from <code>*_tbl()</code> or a multi-method output from <a href="delim_join.html">delim_join</a> or <a href="delim_consensus.html">delim_consensus</a>.
+This is to prevent any columns with NA values from being interpreted as species partitions.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
