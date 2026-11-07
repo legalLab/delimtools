@@ -593,7 +593,7 @@ bgmyc_delim <- bgmyc(beast_tree)
 #> 90%
 #> 100%
 #> Acceptance rates (py / pc / t):
-#> 0.5290  0.8425  0.3530
+#> 0.5252  0.8393  0.3450
 ```
 
 The results then need to be transformed into a table using the
@@ -794,7 +794,7 @@ report_delim(all_delims_df)
 #> |locmin   |         21|
 #> |gmyc     |         21|
 #> |abgd     |         19|
-#> |bgmyc    |         17|
+#> |bgmyc    |         18|
 #> |ptp      |         17|
 #> |morph    |         16|
 #> |asap     |         14|
@@ -829,29 +829,29 @@ match_ratio(all_delims_df) |>
 #>    <chr>              <int>   <int>   <int>       <dbl>
 #>  1 abgd-locmin           19      21      17        0.85
 #>  2 asap-percent          14      12      10        0.77
-#>  3 bgmyc-morph           17      16      12        0.73
-#>  4 abgd-ptp              19      17      13        0.72
-#>  5 asap-bgmyc            14      17      11        0.71
-#>  6 asap-ptp              14      17      11        0.71
-#>  7 locmin-gmyc           21      21      15        0.71
-#>  8 bgmyc-gmyc            17      21      13        0.68
+#>  3 bgmyc-gmyc            18      21      15        0.77
+#>  4 abgd-bgmyc            19      18      14        0.76
+#>  5 bgmyc-ptp             18      17      13        0.74
+#>  6 abgd-ptp              19      17      13        0.72
+#>  7 asap-ptp              14      17      11        0.71
+#>  8 locmin-gmyc           21      21      15        0.71
 #>  9 gmyc-ptp              21      17      13        0.68
-#> 10 abgd-bgmyc            19      17      12        0.67
-#> 11 asap-morph            14      16      10        0.67
-#> 12 bgmyc-ptp             17      17      11        0.65
+#> 10 asap-morph            14      16      10        0.67
+#> 11 locmin-bgmyc          21      18      13        0.67
+#> 12 bgmyc-morph           18      16      11        0.65
 #> 13 mptp-ptp              14      17      10        0.65
 #> 14 asap-mptp             14      14       9        0.64
 #> 15 locmin-ptp            21      17      12        0.63
-#> 16 percent-bgmyc         12      17       9        0.62
+#> 16 asap-bgmyc            14      18      10        0.62
 #> 17 percent-ptp           12      17       9        0.62
 #> 18 abgd-asap             19      14      10        0.61
 #> 19 abgd-gmyc             19      21      12        0.6 
-#> 20 abgd-percent          19      12       9        0.58
-#> 21 bgmyc-mptp            17      14       9        0.58
-#> 22 locmin-bgmyc          21      17      11        0.58
-#> 23 percent-morph         12      16       8        0.57
-#> 24 abgd-morph            19      16       9        0.51
-#> 25 asap-gmyc             14      21       9        0.51
+#> 20 percent-bgmyc         12      18       9        0.6 
+#> 21 abgd-percent          19      12       9        0.58
+#> 22 percent-morph         12      16       8        0.57
+#> 23 abgd-morph            19      16       9        0.51
+#> 24 asap-gmyc             14      21       9        0.51
+#> 25 bgmyc-mptp            18      14       8        0.5 
 #> 26 gmyc-morph            21      16       9        0.49
 #> 27 abgd-mptp             19      14       8        0.48
 #> 28 percent-gmyc          12      21       8        0.48
@@ -868,7 +868,7 @@ match_ratio(all_delims_df) |>
 #> 39 treedist-mptp          7      14       4        0.38
 #> 40 treedist-ptp           7      17       4        0.33
 #> 41 abgd-treedist         19       7       4        0.31
-#> 42 treedist-bgmyc         7      17       3        0.25
+#> 42 treedist-bgmyc         7      18       3        0.24
 #> 43 locmin-treedist       21       7       3        0.21
 #> 44 treedist-gmyc          7      21       3        0.21
 #> 45 treedist-morph         7      16       2        0.17
@@ -892,7 +892,7 @@ report_delim(all_delims_df)
 #> |locmin  |         21|
 #> |gmyc    |         21|
 #> |abgd    |         19|
-#> |bgmyc   |         17|
+#> |bgmyc   |         18|
 #> |ptp     |         17|
 #> |morph   |         16|
 #> |asap    |         14|

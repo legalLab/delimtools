@@ -477,7 +477,7 @@
 <span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a><span class="co">#&gt; 90%</span></span>
 <span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a><span class="co">#&gt; 100%</span></span>
 <span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a><span class="co">#&gt; Acceptance rates (py / pc / t):</span></span>
-<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="co">#&gt; 0.5290  0.8425  0.3530</span></span></code></pre></div>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="co">#&gt; 0.5252  0.8393  0.3450</span></span></code></pre></div>
 <p>The results then need to be transformed into a table using the <code>bgmyc_tbl</code> function. By default, <code>0.05</code> is used as default posterior probability threshold for clustering samples into species partitions.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>bgmyc_df <span class="ot">&lt;-</span> <span class="fu">bgmyc_tbl</span>(bgmyc_delim)</span>
 <span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a></span>
@@ -633,7 +633,7 @@
 <span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a><span class="co">#&gt; |locmin   |         21|</span></span>
 <span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a><span class="co">#&gt; |gmyc     |         21|</span></span>
 <span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a><span class="co">#&gt; |abgd     |         19|</span></span>
-<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="co">#&gt; |bgmyc    |         17|</span></span>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="co">#&gt; |bgmyc    |         18|</span></span>
 <span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a><span class="co">#&gt; |ptp      |         17|</span></span>
 <span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a><span class="co">#&gt; |morph    |         16|</span></span>
 <span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a><span class="co">#&gt; |asap     |         14|</span></span>
@@ -663,29 +663,29 @@
 <span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;              &lt;int&gt;   &lt;int&gt;   &lt;int&gt;       &lt;dbl&gt;</span></span>
 <span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a><span class="co">#&gt;  1 abgd-locmin           19      21      17        0.85</span></span>
 <span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a><span class="co">#&gt;  2 asap-percent          14      12      10        0.77</span></span>
-<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a><span class="co">#&gt;  3 bgmyc-morph           17      16      12        0.73</span></span>
-<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a><span class="co">#&gt;  4 abgd-ptp              19      17      13        0.72</span></span>
-<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a><span class="co">#&gt;  5 asap-bgmyc            14      17      11        0.71</span></span>
-<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a><span class="co">#&gt;  6 asap-ptp              14      17      11        0.71</span></span>
-<span id="cb33-13"><a href="#cb33-13" tabindex="-1"></a><span class="co">#&gt;  7 locmin-gmyc           21      21      15        0.71</span></span>
-<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a><span class="co">#&gt;  8 bgmyc-gmyc            17      21      13        0.68</span></span>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a><span class="co">#&gt;  3 bgmyc-gmyc            18      21      15        0.77</span></span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a><span class="co">#&gt;  4 abgd-bgmyc            19      18      14        0.76</span></span>
+<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a><span class="co">#&gt;  5 bgmyc-ptp             18      17      13        0.74</span></span>
+<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a><span class="co">#&gt;  6 abgd-ptp              19      17      13        0.72</span></span>
+<span id="cb33-13"><a href="#cb33-13" tabindex="-1"></a><span class="co">#&gt;  7 asap-ptp              14      17      11        0.71</span></span>
+<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a><span class="co">#&gt;  8 locmin-gmyc           21      21      15        0.71</span></span>
 <span id="cb33-15"><a href="#cb33-15" tabindex="-1"></a><span class="co">#&gt;  9 gmyc-ptp              21      17      13        0.68</span></span>
-<span id="cb33-16"><a href="#cb33-16" tabindex="-1"></a><span class="co">#&gt; 10 abgd-bgmyc            19      17      12        0.67</span></span>
-<span id="cb33-17"><a href="#cb33-17" tabindex="-1"></a><span class="co">#&gt; 11 asap-morph            14      16      10        0.67</span></span>
-<span id="cb33-18"><a href="#cb33-18" tabindex="-1"></a><span class="co">#&gt; 12 bgmyc-ptp             17      17      11        0.65</span></span>
+<span id="cb33-16"><a href="#cb33-16" tabindex="-1"></a><span class="co">#&gt; 10 asap-morph            14      16      10        0.67</span></span>
+<span id="cb33-17"><a href="#cb33-17" tabindex="-1"></a><span class="co">#&gt; 11 locmin-bgmyc          21      18      13        0.67</span></span>
+<span id="cb33-18"><a href="#cb33-18" tabindex="-1"></a><span class="co">#&gt; 12 bgmyc-morph           18      16      11        0.65</span></span>
 <span id="cb33-19"><a href="#cb33-19" tabindex="-1"></a><span class="co">#&gt; 13 mptp-ptp              14      17      10        0.65</span></span>
 <span id="cb33-20"><a href="#cb33-20" tabindex="-1"></a><span class="co">#&gt; 14 asap-mptp             14      14       9        0.64</span></span>
 <span id="cb33-21"><a href="#cb33-21" tabindex="-1"></a><span class="co">#&gt; 15 locmin-ptp            21      17      12        0.63</span></span>
-<span id="cb33-22"><a href="#cb33-22" tabindex="-1"></a><span class="co">#&gt; 16 percent-bgmyc         12      17       9        0.62</span></span>
+<span id="cb33-22"><a href="#cb33-22" tabindex="-1"></a><span class="co">#&gt; 16 asap-bgmyc            14      18      10        0.62</span></span>
 <span id="cb33-23"><a href="#cb33-23" tabindex="-1"></a><span class="co">#&gt; 17 percent-ptp           12      17       9        0.62</span></span>
 <span id="cb33-24"><a href="#cb33-24" tabindex="-1"></a><span class="co">#&gt; 18 abgd-asap             19      14      10        0.61</span></span>
 <span id="cb33-25"><a href="#cb33-25" tabindex="-1"></a><span class="co">#&gt; 19 abgd-gmyc             19      21      12        0.6 </span></span>
-<span id="cb33-26"><a href="#cb33-26" tabindex="-1"></a><span class="co">#&gt; 20 abgd-percent          19      12       9        0.58</span></span>
-<span id="cb33-27"><a href="#cb33-27" tabindex="-1"></a><span class="co">#&gt; 21 bgmyc-mptp            17      14       9        0.58</span></span>
-<span id="cb33-28"><a href="#cb33-28" tabindex="-1"></a><span class="co">#&gt; 22 locmin-bgmyc          21      17      11        0.58</span></span>
-<span id="cb33-29"><a href="#cb33-29" tabindex="-1"></a><span class="co">#&gt; 23 percent-morph         12      16       8        0.57</span></span>
-<span id="cb33-30"><a href="#cb33-30" tabindex="-1"></a><span class="co">#&gt; 24 abgd-morph            19      16       9        0.51</span></span>
-<span id="cb33-31"><a href="#cb33-31" tabindex="-1"></a><span class="co">#&gt; 25 asap-gmyc             14      21       9        0.51</span></span>
+<span id="cb33-26"><a href="#cb33-26" tabindex="-1"></a><span class="co">#&gt; 20 percent-bgmyc         12      18       9        0.6 </span></span>
+<span id="cb33-27"><a href="#cb33-27" tabindex="-1"></a><span class="co">#&gt; 21 abgd-percent          19      12       9        0.58</span></span>
+<span id="cb33-28"><a href="#cb33-28" tabindex="-1"></a><span class="co">#&gt; 22 percent-morph         12      16       8        0.57</span></span>
+<span id="cb33-29"><a href="#cb33-29" tabindex="-1"></a><span class="co">#&gt; 23 abgd-morph            19      16       9        0.51</span></span>
+<span id="cb33-30"><a href="#cb33-30" tabindex="-1"></a><span class="co">#&gt; 24 asap-gmyc             14      21       9        0.51</span></span>
+<span id="cb33-31"><a href="#cb33-31" tabindex="-1"></a><span class="co">#&gt; 25 bgmyc-mptp            18      14       8        0.5 </span></span>
 <span id="cb33-32"><a href="#cb33-32" tabindex="-1"></a><span class="co">#&gt; 26 gmyc-morph            21      16       9        0.49</span></span>
 <span id="cb33-33"><a href="#cb33-33" tabindex="-1"></a><span class="co">#&gt; 27 abgd-mptp             19      14       8        0.48</span></span>
 <span id="cb33-34"><a href="#cb33-34" tabindex="-1"></a><span class="co">#&gt; 28 percent-gmyc          12      21       8        0.48</span></span>
@@ -702,7 +702,7 @@
 <span id="cb33-45"><a href="#cb33-45" tabindex="-1"></a><span class="co">#&gt; 39 treedist-mptp          7      14       4        0.38</span></span>
 <span id="cb33-46"><a href="#cb33-46" tabindex="-1"></a><span class="co">#&gt; 40 treedist-ptp           7      17       4        0.33</span></span>
 <span id="cb33-47"><a href="#cb33-47" tabindex="-1"></a><span class="co">#&gt; 41 abgd-treedist         19       7       4        0.31</span></span>
-<span id="cb33-48"><a href="#cb33-48" tabindex="-1"></a><span class="co">#&gt; 42 treedist-bgmyc         7      17       3        0.25</span></span>
+<span id="cb33-48"><a href="#cb33-48" tabindex="-1"></a><span class="co">#&gt; 42 treedist-bgmyc         7      18       3        0.24</span></span>
 <span id="cb33-49"><a href="#cb33-49" tabindex="-1"></a><span class="co">#&gt; 43 locmin-treedist       21       7       3        0.21</span></span>
 <span id="cb33-50"><a href="#cb33-50" tabindex="-1"></a><span class="co">#&gt; 44 treedist-gmyc          7      21       3        0.21</span></span>
 <span id="cb33-51"><a href="#cb33-51" tabindex="-1"></a><span class="co">#&gt; 45 treedist-morph         7      16       2        0.17</span></span></code></pre></div>
@@ -719,7 +719,7 @@
 <span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a><span class="co">#&gt; |locmin  |         21|</span></span>
 <span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a><span class="co">#&gt; |gmyc    |         21|</span></span>
 <span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a><span class="co">#&gt; |abgd    |         19|</span></span>
-<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a><span class="co">#&gt; |bgmyc   |         17|</span></span>
+<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a><span class="co">#&gt; |bgmyc   |         18|</span></span>
 <span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a><span class="co">#&gt; |ptp     |         17|</span></span>
 <span id="cb34-15"><a href="#cb34-15" tabindex="-1"></a><span class="co">#&gt; |morph   |         16|</span></span>
 <span id="cb34-16"><a href="#cb34-16" tabindex="-1"></a><span class="co">#&gt; |asap    |         14|</span></span>
