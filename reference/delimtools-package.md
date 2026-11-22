@@ -28,7 +28,8 @@ Authors:
   copyright holder\]
 
 - Tomas Hrbek <hrbek@evoamazon.net>
-  ([ORCID](https://orcid.org/0000-0003-3239-7068)) \[contributor\]
+  ([ORCID](https://orcid.org/0000-0003-3239-7068)) \[contributor,
+  copyright holder\]
 
 Other contributors:
 

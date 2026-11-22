@@ -8,7 +8,7 @@
 - **Rupert Collins**. Author, contributor, copyright holder.
   [](https://orcid.org/0000-0002-9135-1169)
 
-- **Tomas Hrbek**. Author, contributor.
+- **Tomas Hrbek**. Author, contributor, copyright holder.
   [](https://orcid.org/0000-0003-3239-7068)
 
 - **Tomas Flouri**. Contributor.  
