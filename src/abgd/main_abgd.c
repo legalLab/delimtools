@@ -62,7 +62,7 @@
 static char DEBUG;
 static short verbose;
 #define SIGN( a ) ( ( (a) > 0 )?1: ( ((a)==0)?0:-1)  )
-static int Increase(const void *v1, const void *v2){  	return (int)SIGN( *((double *)v1) - *((double *)v2));  };
+static int Increase(const void *v1, const void *v2){  	return (int)SIGN( *((double *)v1) - *((double *)v2));  }
 #undef SIGN
 
 /*Read one fasta sequence in a file pointer store it in a fastaseq struct

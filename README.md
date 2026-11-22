@@ -49,25 +49,25 @@ some time, but will eventually be deprecated in the upcoming updates.
 ## Overview
 
 This is the official GitHub repository for the R package `delimtools`
-([Bittencourt, Collins &
-Hrbek, 2026](https://doi.org/10.1139/gen-2025-0119)).
+([Bittencourt, Collins & Hrbek,
+2026](https://doi.org/10.1139/gen-2025-0119)).
 
 Single-lucus species delimitation analyses have been implemented in a
 diversity of packages that use different methods to delimit species.
-These include GMYC ([Monaghan et
-al., 2009](https://doi.org/10.1093/sysbio/syp027)), bGMYC ([Reid &
-Carstens, 2012](https://doi.org/10.1186/1471-2148-12-196)), mPTP ([Kapli
-et al., 2017](https://doi.org/10.1093/bioinformatics/btx025)), ABGD
-([Puillandre et
-al., 2011](https://doi.org/10.1111/j.1365-294X.2011.05239.x)) and ASAP
-([Puillandre et al., 2020](https://doi.org/10.1111/1755-0998.13281)).
-These software run on different platforms (e.g. R, Unix, webservers),
-and also do not output their results in a consistent format to allow
-easy comparison. To address these shortcomings we have developed a suite
-of functions in the `delimtools` package that replicate the behavior of
-these software, and then standardize and simplify the output of these
-functions. This then permits comparison of the delimitation analyses,
-and unified visualization of the delimitation results.
+These include GMYC ([Monaghan et al.,
+2009](https://doi.org/10.1093/sysbio/syp027)), bGMYC ([Reid & Carstens,
+2012](https://doi.org/10.1186/1471-2148-12-196)), mPTP ([Kapli et al.,
+2017](https://doi.org/10.1093/bioinformatics/btx025)), ABGD ([Puillandre
+et al., 2011](https://doi.org/10.1111/j.1365-294X.2011.05239.x)) and
+ASAP ([Puillandre et al.,
+2020](https://doi.org/10.1111/1755-0998.13281)). These software run on
+different platforms (e.g. R, Unix, webservers), and also do not output
+their results in a consistent format to allow easy comparison. To
+address these shortcomings we have developed a suite of functions in the
+`delimtools` package that replicate the behavior of these software, and
+then standardize and simplify the output of these functions. This then
+permits comparison of the delimitation analyses, and unified
+visualization of the delimitation results.
 
 ## Dependencies
 
@@ -121,13 +121,18 @@ renv::install("legalLab/delimtools@v0.1.0")
 ## Examples
 
 Here, we demonstrate plotting a single-locus species delimitation
-analysis of a *Geophagus* eartheater cichlid dataset ([Ximenes et
-al., 2021](https://doi.org/10.7717/peerj.12443)) using a diversity of
-methods. A tutorial running through all major package functionality
-is found in the [vignette](https://legallab.github.io/delimtools/).
+analysis of a *Geophagus* eartheater cichlid dataset ([Ximenes et al.,
+2021](https://doi.org/10.7717/peerj.12443)) using a diversity of
+methods. A tutorial running through all major package functionality is
+found in the [vignette](https://legallab.github.io/delimtools/).
 
-![Redhead Eartheater *Geophagus
-pyrocephalus*](https://raw.githubusercontent.com/boopsboops/delimtools-testing/79d6257c9ae4b7da1047e5ffa9ef1a04b4139dae/assets/geophagus_redhead_tapajos.jpg)
+<figure>
+<img
+src="https://raw.githubusercontent.com/boopsboops/delimtools-testing/79d6257c9ae4b7da1047e5ffa9ef1a04b4139dae/assets/geophagus_redhead_tapajos.jpg"
+alt="Redhead Eartheater Geophagus pyrocephalus" />
+<figcaption aria-hidden="true">Redhead Eartheater <em>Geophagus
+pyrocephalus</em></figcaption>
+</figure>
 
 ``` r
 library(delimtools)
@@ -165,14 +170,14 @@ delim_autoplot(delim = geophagus_delims,
 
 ## Current contributors
 
-  - [Pedro S. Bittencourt](https://github.com/pedrosenna)
-  - [Rupert A. Collins](https://github.com/boopsboops)
-  - [Tomas Hrbek](https://github.com/killidude)
+- [Pedro S. Bittencourt](https://github.com/pedrosenna)
+- [Rupert A. Collins](https://github.com/boopsboops)
+- [Tomas Hrbek](https://github.com/killidude)
 
 ## Meta
 
-  - Please [report here any issues or bugs or
-    suggestions](https://github.com/legalLab/delimtools/issues).
-  - License: MIT.
-  - Get citation information for `delimtools` in R by running
-    `citation(package='delimtools')`.
+- Please [report here any issues or bugs or
+  suggestions](https://github.com/legalLab/delimtools/issues).
+- License: MIT.
+- Get citation information for `delimtools` in R by running
+  `citation(package='delimtools')`.

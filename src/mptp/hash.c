@@ -20,7 +20,7 @@
 */
 
 #include "mptp.h"
-
+#include <stdint.h>
 
 /* Daniel J. Bernstein 2a hash function */
 unsigned long hash_djb2a(char * s)
@@ -37,16 +37,16 @@ unsigned long hash_djb2a(char * s)
 /* Fowler–Noll–Vo 1a hash function */
 unsigned long hash_fnv(char * s)
 {
-  unsigned long hash = 14695981039346656037UL;
-  unsigned long c;
+  uint64_t hash = UINT64_C(14695981039346656037);
+  uint64_t c;
 
-  while ((c = (unsigned long)*s++))
+  while ((c = (uint64_t)(unsigned char)*s++))
   {
     hash ^= c;
-    hash *= 1099511628211UL;
+    hash *= UINT64_C(1099511628211);
   }
 
-  return hash;
+  return (unsigned long)hash;
 }
 
 static ht_item_t * hashitem_create(unsigned long key, void * value)

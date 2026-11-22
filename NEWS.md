@@ -1,6 +1,6 @@
 # delimtools 0.4.2
 
-## Bug fixes
+## Bug fixes and CRAN compliance
 
 * `abgd_tbl()`: fixed a crash (`object 'delim' not found`) when parsing
   ABGD's native (non-SPART) `webserver` results format — a
@@ -13,6 +13,27 @@
   nonexistent path instead of letting the subsequent `file.exists()` guard
   handle it; it now builds the candidate paths without requiring them to
   exist first.
+  
+  * Removed a stray semicolon after the closing brace of the `Increase()`
+  comparison function in `src/abgd/main_abgd.c`, which triggered a
+  `-Wpedantic` warning ("ISO C does not allow extra ';' outside of a
+  function").
+
+* Fixed integer-overflow warnings (`-Woverflow`) in `src/mptp/hash.c`
+  on platforms where `unsigned long` is 32 bits (e.g. 64-bit Windows).
+  `hash_fnv()` now performs the FNV-1a computation with fixed-width
+  `uint64_t` constants (`UINT64_C()`), so the offset basis and prime are
+  no longer silently truncated.
+
+* `hash_fnv()` now processes input bytes as `unsigned char`, avoiding
+  sign extension for non-ASCII characters (e.g. accented sequence labels).
+  Hash values for such labels differ from previous versions; this only
+  affects the internal hash table and has no effect on results.
+
+## Internal
+
+* The modifications above were made to bundled third-party code (ABGD and
+  mPTP). The original copyright and licence notices are preserved.
 
 # delimtools 0.4.1
 
