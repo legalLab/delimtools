@@ -17,3 +17,5 @@
 ^pkgdown$
 ^\.github$
 ^vignettes/articles$
+^src/.*\.o$
+^src/.*\.so$
