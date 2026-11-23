@@ -32,8 +32,14 @@
 #  pragma GCC diagnostic ignored "-Wunused-variable"
 #  pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 #  pragma GCC diagnostic ignored "-Wunused-function"
-#  pragma GCC diagnostic ignored "-Wformat-overflow"
-#  pragma GCC diagnostic ignored "-Wstringop-overflow"
+#  if defined(__GNUC__) && !defined(__clang__)
+/* -Wformat-overflow / -Wstringop-overflow are GCC-only: Clang (incl. Apple
+   clang) does not recognize them and warns "-Wunknown-warning-option" if
+   they are passed to #pragma GCC diagnostic ignored, which R CMD check
+   then flags as a "significant warning" during installation. */
+#    pragma GCC diagnostic ignored "-Wformat-overflow"
+#    pragma GCC diagnostic ignored "-Wstringop-overflow"
+#  endif
 #  pragma GCC diagnostic ignored "-Wimplicit-function-declaration"
 #  pragma GCC diagnostic ignored "-Warray-bounds"
 #  pragma GCC diagnostic ignored "-Wmisleading-indentation"
