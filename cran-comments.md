@@ -20,7 +20,7 @@ at a drat repo and R-Forge) are no longer dependencies -- `bgmyc()`/`gmyc()`
 now reimplement the relevant algorithms natively.
 
 While addressing the above, a full function-by-function audit also turned
-up and fixed two latent bugs unrelated to the CRAN check report:
+up and fixed several latent bugs unrelated to the CRAN check report:
 
 * `abgd_tbl()` crashed when parsing ABGD's native (non-SPART) webserver
   results format, due to a self-referencing `nrow(delim)` inside the pipe
@@ -29,6 +29,20 @@ up and fixed two latent bugs unrelated to the CRAN check report:
   up ASAP's incidental working-directory output files, because
   `tools::file_path_as_absolute()` requires the target file to already
   exist.
+* `src/abgd/abgdCore.c` and `src/abgd/main_abgd.c` ignored two GCC-only
+  warning names (`-Wformat-overflow`, `-Wstringop-overflow`) under Clang as
+  well as GCC; Clang doesn't recognize them and reports
+  `-Wunknown-warning-option` instead, which showed up as an installation
+  WARNING under `R CMD check --as-cran` on macOS (Apple clang). Those two
+  are now only ignored under real GCC.
+* `src/mptp/hash.c`: `hash_fnv()`'s FNV-1a offset basis and prime were
+  written as plain integer literals wider than 32 bits, silently truncated
+  on platforms where `unsigned long` is 32 bits (e.g. 64-bit Windows),
+  triggering `-Woverflow`. It now computes the hash with explicit
+  `uint64_t`/`UINT64_C()` constants.
+* A stray semicolon after the closing brace of the `Increase()` comparison
+  function in `src/abgd/main_abgd.c` triggered a `-Wpedantic` warning
+  ("ISO C does not allow extra ';' outside of a function"); removed.
 
 ## R CMD check results
 

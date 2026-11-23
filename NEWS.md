@@ -1,3 +1,17 @@
+# delimtools 0.4.3
+
+## Bug fixes and CRAN compliance
+
+* `src/abgd/abgdCore.c`, `src/abgd/main_abgd.c`: the `-Wformat-overflow` and
+  `-Wstringop-overflow` warning names in the shared
+  `#pragma GCC diagnostic ignored` block are GCC-only — Clang (including
+  Apple clang, used by the macOS CI runner) doesn't recognize them and
+  emits `-Wunknown-warning-option` for each, which `R CMD check --as-cran`
+  then reports as a "significant warning" during installation, failing
+  `R-CMD-check.yaml` on macOS. Those two are now only ignored under real
+  GCC (`defined(__GNUC__) && !defined(__clang__)`); the rest of the block,
+  which both compilers recognize, is unchanged.
+
 # delimtools 0.4.2
 
 ## Bug fixes and CRAN compliance
