@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">delimtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,14 @@
       <small>Source: <a href="https://github.com/legalLab/delimtools/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.3" id="delimtools-043">delimtools 0.4.3<a class="anchor" aria-label="anchor" href="#delimtools-043"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-and-cran-compliance-0-4-3">Bug fixes and CRAN compliance<a class="anchor" aria-label="anchor" href="#bug-fixes-and-cran-compliance-0-4-3"></a></h3>
+<ul><li>
+<code>src/abgd/abgdCore.c</code>, <code>src/abgd/main_abgd.c</code>: the <code>-Wformat-overflow</code> and <code>-Wstringop-overflow</code> warning names in the shared <code>#pragma GCC diagnostic ignored</code> block are GCC-only — Clang (including Apple clang, used by the macOS CI runner) doesn’t recognize them and emits <code>-Wunknown-warning-option</code> for each, which <code>R CMD check --as-cran</code> then reports as a “significant warning” during installation, failing <code>R-CMD-check.yaml</code> on macOS. Those two are now only ignored under real GCC (<code>defined(__GNUC__) &amp;&amp; !defined(__clang__)</code>); the rest of the block, which both compilers recognize, is unchanged.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.2" id="delimtools-042">delimtools 0.4.2<a class="anchor" aria-label="anchor" href="#delimtools-042"></a></h2>
 <div class="section level3">
